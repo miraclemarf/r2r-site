@@ -1,5 +1,4 @@
-$color: #2ecc71;
-
-.example {
-    background-color: $color;
-}
+@charset "UTF-8";
+//CUSTOM R2R
+@import 'r2r-variables';
+@import "../node_modules/bootstrap/scss/bootstrap.scss";

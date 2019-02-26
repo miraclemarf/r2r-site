@@ -1,0 +1,40 @@
+{
+  "name": "r2r",
+  "version": "1.0.0",
+  "description": "R2R Site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=development PORT=3000 node server.js",
+    "build": "next build",
+    "start": "cross-env NODE_ENV=production PORT=8000 node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miraclemarf/r2r-site.git"
+  },
+  "keywords": [
+    "next",
+    "js"
+  ],
+  "author": "Marfy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miraclemarf/r2r-site/issues"
+  },
+  "homepage": "https://github.com/miraclemarf/r2r-site#readme",
+  "dependencies": {
+    "@zeit/next-sass": "^1.0.1",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "isomorphic-unfetch": "^3.0.0",
+    "js-cookie": "^2.2.0",
+    "next": "^8.0.3",
+    "next-cookies": "^1.1.2",
+    "node-sass": "^4.11.0",
+    "query-string": "^6.2.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "reactstrap": "^7.1.0"
+  }
+}

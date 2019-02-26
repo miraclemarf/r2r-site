@@ -1,0 +1,12 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+/npm-debug.log
+
+.next/
+node_modules/
+.env
+.DS_Store
+package-lock.json
+/.env.production

@@ -38,5 +38,8 @@
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "reactstrap": "^7.1.0"
+  },
+  "devDependencies": {
+    "json-server": "^0.14.2"
   }
 }

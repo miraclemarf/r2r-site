@@ -1,5 +1,7 @@
 import React from 'react'
 import Head from "next/head"
+import Nav from './fragments/nav'
+import Footer from './fragments/footer'
 import Styles from '../styles/style.scss'
 
 
@@ -14,9 +16,11 @@ export default class extends React.Component{
                     <style dangerouslySetInnerHTML={{__html: Styles}}/>
                     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"/>
                 </Head>
+                <Nav />
                 <MainBody>
                     {this.props.children}
                 </MainBody>
+                <Footer />
             </React.Fragment>
         )
     }

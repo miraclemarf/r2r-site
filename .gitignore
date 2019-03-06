@@ -8,5 +8,6 @@ npm-debug.log*
 node_modules/
 .env
 .DS_Store
+db.json
 package-lock.json
 /.env.production

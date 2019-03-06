@@ -1,4 +1,5 @@
 const next = require('next');
+const jsonServer = require('json-server')
 const express = require('express');
 const csrf = require('csurf');
 var bodyParser = require('body-parser')
@@ -19,6 +20,12 @@ process.on('uncaughtException', function(err) {
   process.env.NODE_ENV = process.env.NODE_ENV || 'production'
   process.env.PORT = process.env.PORT || 80
   
+
+  
+const router = jsonServer.router('db.json')
+//const middlewares = jsonServer.defaults()
+
+
   // Initialize Next.js
   const app = next({
     dir: '.',
@@ -35,6 +42,18 @@ process.on('uncaughtException', function(err) {
       //csrfProtection
     ]
     server.use(middlewares)    
+
+    server.use((req, res, next) => {
+      if (req.method === 'POST') {
+        req.body.createdAt = Date.now()
+      }
+      // Continue to JSON Server router
+      next()
+    })
+    
+    
+    // Use default router
+    server.use('/api', router)
 
     server.all('*', (req, res) => {
         let nextRequestHandler = app.getRequestHandler()

@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Rheiborn_Sans_Clean';
+  src: url('Rheiborn_Sans_Clean.eot');
+  src: url('Rheiborn_Sans_Clean.eot?#iefix') format('embedded-opentype'),
+       url('Rheiborn_Sans_Clean.svg#Rheiborn_Sans_Clean') format('svg'),
+       url('Rheiborn_Sans_Clean.ttf') format('truetype'),
+       url('Rheiborn_Sans_Clean.woff') format('woff'),
+       url('Rheiborn_Sans_Clean.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+

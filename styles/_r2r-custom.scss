@@ -1,0 +1,67 @@
+@import "../node_modules/bootstrap/scss/_functions.scss";
+@import "../node_modules/bootstrap/scss/_variables.scss";
+
+//R2R Font Base
+$font-family-base: 'Open Sans',
+sans-serif;
+
+.text-sm {
+    font-size: $font-size-sm
+}
+
+.title-section {
+    font-family: 'Rheiborn_Sans_Clean';
+}
+
+
+//R2R Color
+$primary:#1C3D8D;
+$theme-colors: ("primary": #1C3D8D,
+"secondary": #F5BC1F,
+"info":#2CD097,
+"dark":#333333,
+"gray":#666666,
+"gray80":#808080,
+"black":$black);
+
+//R2R NAV
+$navbar-dark-color: $white;
+$navbar-dark-hover-color: $white;
+$navbar-dark-active-color: $white;
+$navbar-dark-disabled-color: $white;
+$navbar-dark-toggler-icon-bg: str-replace(url("/static/slicing/icon_hamburger.svg"), "#", "%23");
+$navbar-dark-toggler-border-color: rgba($white, 0);
+
+.r2r-custom .navbar-toggler-icon {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.r2r-custom .nav-link {
+    font-family: 'Rheiborn_Sans_Clean';
+}
+
+
+@media screen and (max-width: 767px) {
+    .r2r-custom .navbar-collapse {
+        background-color: black;
+    }
+}
+
+//R2R BTN
+$input-btn-font-family: 'Rheiborn_Sans_Clean';
+$btn-border-radius: 0;
+$btn-border-radius-lg: 0;
+$btn-border-radius-sm: 0;
+
+.r2r-custom .btn {
+    font-size: $font-size-base*1.7;
+}
+
+.r2r-custom .btn-info {
+    color: $white;
+}
+
+.r2r-custom .btn-secondary {
+    color: $primary
+}

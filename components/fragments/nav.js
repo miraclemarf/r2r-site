@@ -33,7 +33,7 @@ export default class extends React.Component {
 			<div className="position-absolute w-100" style={{ zIndex: 10 }}>
 				<Navbar className="bg-transparent my-3" dark expand="md">
 					<NavbarBrand href="/">
-						<img src="/static/slicing/logo_ring2ring_full.svg" />
+						<span className="h3 icon-logo_ring2ring_full"></span>
 					</NavbarBrand>
 					<NavbarToggler className="p-0" onClick={this.toggle} />
 					<Collapse
@@ -46,7 +46,7 @@ export default class extends React.Component {
 							{this.state.isMobile ? (
 								<div>
 									<div className="text-right pt-3">
-										<img onClick={this.toggle} src="/static/slicing/icon_close.svg" />
+										<img onClick={this.toggle} src="/static/slicing/img/icon_close.svg" />
 									</div>
 									<div className="d-flex justify-content-center my-4">
 										<a href="" className="d-block w-100 mr-2 btn btn-info ">
@@ -111,7 +111,7 @@ export default class extends React.Component {
 
 									<div className="d-flex justify-content-between mt-4 mb-3">
 										<div className="d-block w-50">
-											<img height="20" src="/static/slicing/logo_ring2ring_full.svg" />
+											<span className="h4 text-white icon-logo_ring2ring_full"></span>
 										</div>
 										<div className="d-block" style={{ width: '33%' }}>
 											<div className="d-flex justify-content-between text-white h4">

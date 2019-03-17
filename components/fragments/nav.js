@@ -33,7 +33,7 @@ export default class extends React.Component {
 			<div className="position-absolute w-100" style={{ zIndex: 10 }}>
 				<Navbar className="bg-transparent my-3" dark expand="md">
 					<NavbarBrand href="/">
-						<span className="h3 icon-logo_ring2ring_full"></span>
+						<span className="h2 icon-logo_ring2ring_full"></span>
 					</NavbarBrand>
 					<NavbarToggler className="p-0" onClick={this.toggle} />
 					<Collapse

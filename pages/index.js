@@ -51,7 +51,7 @@ export default class extends Page {
 						</div>
 						<div className="pt-3 my-4 mx-3 border-top">
 							<h1 className="h2 title-section mb-3">Testimonial</h1>
-    							<div class="sliderMobile d-flex align-items-stretch">
+    							<div className="sliderMobile d-flex align-items-stretch">
 									{this.props.testimonials.map((item, key) => 
 										<div className="mr-3">
 											<TextImgCard key={key} {...item} />
@@ -61,7 +61,7 @@ export default class extends Page {
 						</div>
 						<div className="p-3 bg-dark">
 							<h1 className="h2 title-section text-white mb-3">Gallery</h1>
-    							<div class="sliderMobile d-flex align-items-stretch">
+    							<div className="sliderMobile d-flex align-items-stretch">
 									{this.props.gallery.map((item, key) => 
 										<div className="mr-3">
 											<TextImgCard key={key} {...item} isLandscape={true} />

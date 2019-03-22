@@ -35,7 +35,7 @@ export default class extends Page {
 		};
 	}
 	async componentDidMount() {
-		if (typeof window != 'undefined') {
+		if (process.browser) {
 			try {
 				const tripsData = await getLatestTrips();
 				const galleryData = await getLatestGallery();
@@ -44,7 +44,7 @@ export default class extends Page {
 					gallery: galleryData
 				});
 			} catch (e) {
-				props.error = 'Unable to fetch AsyncData on server';
+				console.log(e);
 			}
 		}
 	}

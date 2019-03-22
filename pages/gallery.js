@@ -32,14 +32,15 @@ export default class extends Page {
 		};
 	}
 	async componentDidMount() {
-		if (typeof window != 'undefined') {
+		if (process.browser) {
 			try {
 				const galleryData = await getLatestGallery();
 				this.setState({
 					gallery: galleryData
 				});
 			} catch (e) {
-				props.error = 'Unable to fetch AsyncData on server';
+				console.log(e);
+                
 			}
 		}
 	}

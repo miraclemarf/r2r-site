@@ -15,14 +15,33 @@ class MyApp extends App {
 		return { pageProps };
 	}
 
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			...props.pageProps
+		};
+	}
+
+	componentDidUpdate(prevProps) {
+		if (prevProps.pageProps !== this.props.pageProps) {
+			if (this.props.router.asPath == '/gallery') {
+				this.setState({
+					nav: 'blue',
+					footer: 'transparent'
+				});
+			}
+		}
+	}
+
 	render() {
 		const { Component, pageProps } = this.props;
 
 		return (
 			<Container>
-				<Nav />
+				<Nav {...pageProps} {...this.state} />
 				<Component {...pageProps} {...this.state} />
-				<Footer />
+				<Footer {...pageProps} {...this.state} />
 			</Container>
 		);
 	}

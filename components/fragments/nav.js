@@ -30,8 +30,8 @@ export default class extends React.Component {
 	}
 	render() {
 		return (
-			<div className="position-absolute w-100" style={{ zIndex: 10 }}>
-				<Navbar className="bg-transparent my-3" dark expand="md">
+			<div className={this.props.nav != "blue" ?"position-absolute w-100" : ""} style={{ zIndex: 10 }}>
+				<Navbar className={this.props.nav != "blue" ? "bg-transparent my-3" : "bg-primary mb-3"} dark expand="md">
 					<NavbarBrand href="/">
 						<span className="h2 icon-logo_ring2ring_full"></span>
 					</NavbarBrand>

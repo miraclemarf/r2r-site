@@ -9,7 +9,7 @@ export default ({ ...props }) => (
             </div> : ''}            
             <div className="mx-auto">
             <h2 style={{"lineHeight":"normal"}} className="title-section text-center text-break m-0">{props.title}</h2>
-            {props.subTitle ?  <span className="d-block text-center">{props.subTitle}</span> : ''}            
+            {props.subTitle ?  <span className="d-block text-center">{props.subTitle}</span> : ''}
             </div>
         </div>
     </div>

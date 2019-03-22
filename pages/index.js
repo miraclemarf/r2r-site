@@ -1,9 +1,11 @@
 import React from 'react';
 import fetch from 'isomorphic-unfetch';
-import { Container } from 'reactstrap';
+import Link from 'next/link';
 import MainCover from '../components/mainCover';
 import TripCard from '../components/tripCard';
 import TextImgCard from '../components/textImgCard';
+import BannerHowItWorks from '../components/fragments/bannerHowItWorks';
+import BannerJoinComm from '../components/fragments/bannerJoinComm';
 import Page from '../components/page';
 
 export default class extends Page {
@@ -24,7 +26,6 @@ export default class extends Page {
 				const galleryRes = await fetch('http://localhost:3000/api/gallerys?_start=10&_limit=5');
 				const galleryData = await galleryRes.json();
 
-
 				props.trips = tripsData;
 				props.testimonials = testimonialsData;
 				props.gallery = galleryData;
@@ -44,31 +45,42 @@ export default class extends Page {
 			<div>
 				<MainCover imgCover="https://loremflickr.com/720/1000/potrait,street" withIcon={true} />
 				<div>
-						<div className="my-4 mx-3">
-							<h1 className="h2 title-section mb-3">Next Trips</h1>
-							{this.props.trips.map((item, key) => <TripCard key={key} {...item} />)}
-							<a href="#" className="btn btn-primary d-block">SEE ALL TRIP</a>
-						</div>
-						<div className="pt-3 my-4 mx-3 border-top">
-							<h1 className="h2 title-section mb-3">Testimonial</h1>
-    							<div className="sliderMobile d-flex align-items-stretch">
-									{this.props.testimonials.map((item, key) => 
-										<div className="mr-3">
-											<TextImgCard key={key} {...item} />
-										</div>
-									)}
+					<div className="my-4 mx-3">
+						<h1 className="h2 title-section mb-3">Next Trips</h1>
+						{this.props.trips.map((item, key) => <TripCard key={key} {...item} />)}
+
+						<Link href="/trips">
+							<a href="/trips" className="btn btn-primary d-block">
+								SEE ALL TRIP
+							</a>
+						</Link>
+					</div>
+					<div className="pt-3 my-4 mx-3 border-top">
+						<h1 className="h2 title-section mb-3">Testimonial</h1>
+						<div className="sliderMobile d-flex align-items-stretch">
+							{this.props.testimonials.map((item, key) => (
+								<div key={key} className="mr-3">
+									<TextImgCard {...item} />
 								</div>
+							))}
 						</div>
-						<div className="p-3 bg-dark">
-							<h1 className="h2 title-section text-white mb-3">Gallery</h1>
-    							<div className="sliderMobile d-flex align-items-stretch">
-									{this.props.gallery.map((item, key) => 
-										<div className="mr-3">
-											<TextImgCard key={key} {...item} isLandscape={true} />
-										</div>
-									)}
+					</div>
+					<div>
+						<BannerHowItWorks />
+					</div>
+					<div>
+						<BannerJoinComm />
+					</div>
+					<div className="p-3 bg-dark">
+						<h1 className="h2 title-section text-white mb-3">Gallery</h1>
+						<div className="sliderMobile d-flex align-items-stretch">
+							{this.props.gallery.map((item, key) => (
+								<div key={key} className="mr-3">
+									<TextImgCard {...item} isLandscape={true} />
 								</div>
+							))}
 						</div>
+					</div>
 				</div>
 			</div>
 		);

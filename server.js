@@ -55,6 +55,15 @@ const router = jsonServer.router('db.json')
     // Use default router
     server.use('/api', router)
 
+    server.get('/testimonial/:id', (req, res) => {
+      const actualPage = '/detailTestimonial'
+      return app.render(req, res, actualPage)
+    })
+    server.get('/gallery/:id', (req, res) => {
+      const actualPage = '/detailGallery'
+      return app.render(req, res, actualPage)
+    })
+
     server.all('*', (req, res) => {
         let nextRequestHandler = app.getRequestHandler()
         return nextRequestHandler(req, res)

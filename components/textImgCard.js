@@ -6,7 +6,7 @@ export default ({ ...props }) => (
             {!props.isLandscape ? 
             <div className="position-absolute align-self-start">
                 <img src="/static/slicing/img/icon_play_video.svg" />
-            </div> : ''}            
+            </div> : ''}
             <div className="mx-auto">
             <h2 style={{"lineHeight":"normal"}} className="title-section text-center text-break m-0">{props.title}</h2>
             {props.subTitle ?  <span className="d-block text-center">{props.subTitle}</span> : ''}

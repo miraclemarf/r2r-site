@@ -1,6 +1,21 @@
 @import "../node_modules/bootstrap/scss/_functions.scss";
 @import "../node_modules/bootstrap/scss/_variables.scss";
 
+//R2R Color
+$primary: #1c3d8d;
+$dark: #333333;
+$gray: #666666;
+$theme-colors: (
+	"primary": #1c3d8d,
+	"secondary": #f5bc1f,
+	"info":#2cd097,
+	"dark":#333333,
+	"gray":#666666,
+	"gray80":#808080,
+	"grayF2":#f2f2f2,
+	"black":$black
+);
+
 //R2R Font Base
 $font-family-base: 'Open Sans', sans-serif;
 
@@ -10,19 +25,23 @@ $font-family-base: 'Open Sans', sans-serif;
 
 .title-section {
 	font-family: 'Rheiborn_Sans_Clean';
+	&__with-border {
+		color: $dark;
+		position: relative;
+	}
+	&__with-border::before {
+		content: '';
+		background-color: $gray;
+		height: 1px;
+		width: 30px;
+		margin: 0 auto 0;
+		display: block;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: -10px;
+	}
 }
-
-//R2R Color
-$primary: #1c3d8d;
-$theme-colors: (
-	"primary": #1c3d8d,
-	"secondary": #f5bc1f,
-	"info":#2cd097,
-	"dark":#333333,
-	"gray":#666666,
-	"gray80":#808080,
-	"black":$black
-);
 
 //R2R Text
 .r2r-custom .line-normal {

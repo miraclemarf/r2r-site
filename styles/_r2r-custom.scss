@@ -5,6 +5,8 @@
 $primary: #1c3d8d;
 $dark: #333333;
 $gray: #666666;
+$gray80: #808080;
+$softgray: #cccccc;
 $theme-colors: (
 	"primary": #1c3d8d,
 	"secondary": #f5bc1f,
@@ -13,6 +15,7 @@ $theme-colors: (
 	"gray":#666666,
 	"gray80":#808080,
 	"grayF2":#f2f2f2,
+	"softgray":#cccccc,
 	"black":$black
 );
 
@@ -139,4 +142,33 @@ $pagination-padding-x: .7rem;
 .r2r-custom .pagination li:first-child a {
 	border: 2px solid $primary;
 	border-radius: 0;
+}
+
+/* R2R Form */
+$input-height: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2} + #{$input-height-border} + .8em);
+$input-placeholder-color: $gray80;
+$input-font-family: $font-family-base;
+$input-border-radius: 0;
+$input-border-radius-lg: 0;
+$input-border-radius-sm: 0;
+
+.r2r-custom .form-control::-webkit-input-placeholder {
+	/* Chrome/Opera/Safari */
+
+	font-style: italic;
+}
+.r2r-custom .form-control::-moz-placeholder {
+	/* Firefox 19+ */
+
+	font-style: italic;
+}
+.r2r-custom .form-control:-ms-input-placeholder {
+	/* IE 10+ */
+
+	font-style: italic;
+}
+.r2r-custom .form-control:-moz-placeholder {
+	/* Firefox 18- */
+
+	font-style: italic;
 }

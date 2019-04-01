@@ -26,6 +26,30 @@
 	border: 4px solid transparent;
 }
 
+.separatorLine::after {
+	content: '';
+	position: absolute;
+	top: 12px;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	height: 1px;
+	background-color: $softgray;
+	z-index: -1;
+}
+
+.v-divider::after {
+	content: '';
+	position: absolute;
+	top: -2px;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	width: 1px;
+	height: 30px;
+	background-color: $gray;
+}
+
 @media (max-width: 576px) {
 	.sliderMobile {
 		overflow-x: auto;

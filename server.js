@@ -63,6 +63,10 @@ const router = jsonServer.router('db.json')
       const actualPage = '/detailGallery'
       return app.render(req, res, actualPage)
     })
+    server.get('/how-it-works', (req, res) => {
+      const actualPage = '/howItWorks'
+      return app.render(req, res, actualPage)
+    })
 
     server.all('*', (req, res) => {
         let nextRequestHandler = app.getRequestHandler()

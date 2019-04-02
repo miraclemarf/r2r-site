@@ -50,6 +50,14 @@
 	background-color: $gray;
 }
 
+.searchToggle {
+	background: transparent;
+	border: 0;
+	position: absolute;
+	top: 1px;
+	right: 60px;
+}
+
 @media (max-width: 576px) {
 	.sliderMobile {
 		overflow-x: auto;

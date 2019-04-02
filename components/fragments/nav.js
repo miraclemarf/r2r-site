@@ -30,11 +30,14 @@ export default class extends React.Component {
 	}
 	render() {
 		return (
-			<div className={this.props.nav != "blue" ?"position-absolute w-100" : ""} style={{ zIndex: 10 }}>
-				<Navbar className={this.props.nav != "blue" ? "bg-transparent my-1" : "bg-primary"} dark expand="md">
+			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
+				<Navbar className={this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary'} dark expand="md">
 					<NavbarBrand href="/">
-						<span className="h2 icon-logo_ring2ring_full"></span>
+						<span className="h2 icon-logo_ring2ring_full" />
 					</NavbarBrand>
+					<button className="searchToggle">
+						<span className="icon-icon_search text-white h4" />
+					</button>
 					<NavbarToggler className="p-0" onClick={this.toggle} />
 					<Collapse
 						style={{ overflowY: 'auto' }}
@@ -111,7 +114,7 @@ export default class extends React.Component {
 
 									<div className="d-flex justify-content-between mt-4 mb-3">
 										<div className="d-block w-50">
-											<span className="h4 text-white icon-logo_ring2ring_full"></span>
+											<span className="h4 text-white icon-logo_ring2ring_full" />
 										</div>
 										<div className="d-block" style={{ width: '33%' }}>
 											<div className="d-flex justify-content-between text-white h4">

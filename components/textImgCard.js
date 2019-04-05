@@ -1,6 +1,6 @@
 export default ({ ...props }) => (
     <div style={ !props.isLandscape ? {"minWidth":"180px"} : {"minWidth":"250px"}} className="card overlay--img__black border-0 text-white w-100">
-
+    <a href={props.id ? props.section+"/"+props.id : "#"} className="text-white">
         <img className="card-img rounded-0" src={!props.isLandscape ? props.coverPotrait : props.coverLandscape}  />
         <div className={"card-img-overlay d-flex "+ props.iconTextPostion}>
             {!props.isLandscape ? 
@@ -13,6 +13,7 @@ export default ({ ...props }) => (
             {props.subTitle ?  <span className="d-block text-center">{props.subTitle}</span> : ''}
             </div>
         </div>
+        </a> 
     </div>
 
     

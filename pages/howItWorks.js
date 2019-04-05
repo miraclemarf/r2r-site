@@ -80,7 +80,7 @@ export default class extends Page {
 					<div className="sliderMobile d-flex align-items-stretch">
 						{this.state.gallery ? this.state.gallery.map((item, key) => (
 							<div key={key} className="mr-3">
-								<TextImgCard {...item} isLandscape={true} />
+								<TextImgCard {...item} isLandscape={true} iconTextPostion="align-items-center" section="gallery" />
 							</div>
 						)) : ''}
 					</div>

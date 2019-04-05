@@ -65,32 +65,32 @@ export default class extends React.Component {
 							)}
 							<Nav className="text-white" navbar>
 								<NavItem>
-									<NavLink className="h2 m-0" href="/components/">
+									<NavLink className="h2 m-0" href="/">
 										Home
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href="https://github.com/reactstrap/reactstrap">
+									<NavLink className="h2 m-0" href="#">
 										My Trips
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href="https://github.com/reactstrap/reactstrap">
+									<NavLink className="h2 m-0" href="/trips">
 										Trips Package
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href="https://github.com/reactstrap/reactstrap">
+									<NavLink className="h2 m-0" href="/gallery">
 										Gallery
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href="https://github.com/reactstrap/reactstrap">
+									<NavLink className="h2 m-0" href="/community">
 										Community
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0  " href="https://github.com/reactstrap/reactstrap">
+									<NavLink className="h2 m-0  " href="/faq">
 										FAQ
 									</NavLink>
 								</NavItem>
@@ -118,9 +118,9 @@ export default class extends React.Component {
 										</div>
 										<div className="d-block" style={{ width: '33%' }}>
 											<div className="d-flex justify-content-between text-white h4">
-												<span className="icon-facebook" />
-												<span className="icon-instagram" />
-												<span className="icon-youtube-play" />
+												<a href="https://facebook.com" className="text-white"><span className="icon-facebook" /></a>
+												<a href="https://instagram.com" className="text-white"><span className="icon-instagram" /></a>
+												<a href="https://youtube.com" className="text-white"><span className="icon-youtube-play" /></a>
 											</div>
 										</div>
 									</div>

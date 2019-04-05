@@ -154,7 +154,7 @@ export default class extends Page {
 						<div className="sliderMobile d-flex align-items-stretch">
 							{this.state.trips.map((item, key) => (
 								<div key={key} className="mr-3">
-									<TextImgCard {...item} isLandscape={false} />
+									<TextImgCard {...item} isLandscape={false} iconTextPostion="align-items-end" />
 								</div>
 							))}
 						</div>

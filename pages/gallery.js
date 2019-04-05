@@ -47,12 +47,13 @@ export default class extends Page {
 	render() {        
 		return (
 			<div>
+				<div className="py-2" />
 				<h1 className="h2 title-section mx-3 mb-3">TRIPS GALLERY</h1>
 				{this.state.gallery ? (
 					<div>
 						{this.state.gallery.map((item, key) => (
 							<div key={key} className="mb-1">
-								<TextImgCard {...item} isLandscape={true} />
+								<TextImgCard {...item} isLandscape={true} iconTextPostion="align-items-center" section="gallery" />
 							</div>
                         ))}
                         <div className="mt-4 mb-4">

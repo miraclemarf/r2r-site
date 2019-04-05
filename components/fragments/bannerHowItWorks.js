@@ -23,7 +23,7 @@ export default () => (
 						<p className="line-normal">We will take care everything for your trip!</p>
 					</div>
 					<div style={{ minWidth: '130px' }}>
-						<a href="" className="d-block btn btn-secondary btn-sm">
+						<a href="/how-it-works" className="d-block btn btn-secondary btn-sm">
 							LEARN MORE
 						</a>
 					</div>

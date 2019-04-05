@@ -52,10 +52,10 @@ export default class extends React.Component {
 										<img onClick={this.toggle} src="/static/slicing/img/icon_close.svg" />
 									</div>
 									<div className="d-flex justify-content-center my-4">
-										<a href="" className="d-block w-100 mr-2 btn btn-info ">
+										<a href="/login" className="d-block w-100 mr-2 btn btn-info ">
 											LOG IN
 										</a>
-										<a href="" className="d-block w-100 ml-2 btn btn-secondary">
+										<a href="/register" className="d-block w-100 ml-2 btn btn-secondary">
 											REGISTER
 										</a>
 									</div>

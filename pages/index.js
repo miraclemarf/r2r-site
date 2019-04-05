@@ -60,7 +60,7 @@ export default class extends Page {
 						<div className="sliderMobile d-flex align-items-stretch">
 							{this.props.testimonials.map((item, key) => (
 								<div key={key} className="mr-3">
-									<TextImgCard {...item} />
+									<TextImgCard {...item} iconTextPostion="align-items-end" />
 								</div>
 							))}
 						</div>
@@ -83,7 +83,7 @@ export default class extends Page {
 						<div className="sliderMobile d-flex align-items-stretch">
 							{this.props.gallery.map((item, key) => (
 								<div key={key} className="mr-3">
-									<TextImgCard {...item} isLandscape={true} />
+									<TextImgCard {...item} isLandscape={true} iconTextPostion="align-items-center" />
 								</div>
 							))}
 						</div>

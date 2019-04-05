@@ -1,5 +1,6 @@
 import React from 'react';
 import App, { Container } from 'next/app';
+import Head from 'next/head';
 import Nav from '../components/fragments/nav';
 import Footer from '../components/fragments/footer';
 import '../styles/style.scss';
@@ -39,6 +40,9 @@ class MyApp extends App {
 
 		return (
 			<Container>
+				<Head>
+					<title>Road 2 Ring</title>
+				</Head>
 				<Nav {...pageProps} {...this.state} />
 				<Component {...pageProps} {...this.state} />
 				<Footer {...pageProps} {...this.state} />

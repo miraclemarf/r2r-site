@@ -8,7 +8,6 @@ class MyDocument extends Document {
 					<meta charSet="UTF-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1" />
 					<script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
-					<title>Road 2 Ring</title>
 				</Head>
 				<body className="r2r-custom">
 					<Main />

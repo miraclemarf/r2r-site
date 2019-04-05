@@ -48,12 +48,9 @@ export default class extends Page {
 					<div className="my-4 mx-3">
 						<h1 className="h2 title-section mb-3">Next Trips</h1>
 						{this.props.trips.map((item, key) => <TripCard key={key} {...item} />)}
-
-						<Link href="/trips">
 							<a href="/trips" className="btn btn-primary d-block">
 								SEE ALL TRIP
 							</a>
-						</Link>
 					</div>
 					<div className="pt-3 my-4 mx-3 border-top">
 						<h1 className="h2 title-section mb-3">Testimonial</h1>
@@ -74,11 +71,9 @@ export default class extends Page {
 					<div className="p-3 bg-dark">
 						<div className=" d-flex justify-content-between mb-3">
 							<h1 className="h2 title-section text-white m-0">Gallery</h1>
-							<Link href="/gallery">
 								<a href="/gallery" style={{"top":"5px"}} className="text-sm position-relative text-white d-block font-weight-bold">
 									View All
 								</a>
-							</Link>
 						</div>
 						<div className="sliderMobile d-flex align-items-stretch">
 							{this.props.gallery.map((item, key) => (

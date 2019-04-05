@@ -69,7 +69,6 @@ export default class extends Page {
 				<div className="p-3 bg-dark">
 					<div className=" d-flex justify-content-between mb-3">
 						<h1 className="h2 title-section text-white m-0">Gallery</h1>
-						<Link href="/gallery">
 							<a
 								href="/gallery"
 								style={{ top: '5px' }}
@@ -77,7 +76,6 @@ export default class extends Page {
 							>
 								View All
 							</a>
-						</Link>
 					</div>
 					<div className="sliderMobile d-flex align-items-stretch">
 						{this.state.gallery ? this.state.gallery.map((item, key) => (

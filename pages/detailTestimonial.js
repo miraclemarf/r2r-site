@@ -144,11 +144,9 @@ export default class extends Page {
 					<div className="py-2" />
 					<h2 className="title-section text-center title-section__with-border pb-2">Gallery</h2>
 					{this.renderGalleryCol()}
-					<Link href="/gallery">
 						<a href="/gallery" className="mt-2 btn btn-primary d-block">
 							SEE ALL
 						</a>
-					</Link>
 				</div>
 				<div className="container py-4">
 					<h1 className="h3 title-section mb-3 text-primary">MAKE YOUR OWN TRIP!</h1>

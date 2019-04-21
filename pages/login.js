@@ -1,9 +1,11 @@
 import React from 'react';
 import TabMenu from '../components/tabMenu';
 import Page from '../components/page';
+import {login} from '../utils/user'
 
 export default class extends Page {
 	static async getInitialProps({ req }) {
+		
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = await super.getInitialProps({
 			req
@@ -19,7 +21,24 @@ export default class extends Page {
 	constructor(props) {
 		super(props);
 
-		this.state = {};
+		this.state = {
+			email:'',
+			password:'',
+			isSubmitted: false
+		};
+		this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+	}
+	handleChange(e) {
+        const target = e.target, value = target.value, name = target.name;
+        this.setState({ [name]: value });
+    }
+	async handleSubmit(e){
+		e.preventDefault();
+		
+		const postData = {'email':this.state.email, 'password':this.state.password}
+		login(postData)
+		
 	}
 	render() {
 		const tabMenuData = {
@@ -62,11 +81,11 @@ export default class extends Page {
 					<form>
 						<div className="form-group">
 							<label className="text-black text-sm">Email</label>
-							<input type="email" className="form-control" placeholder="Your Email" />
+							<input type="email" name="email" className="form-control" placeholder="Your Email" onChange={this.handleChange} />
 						</div>
 						<div className="form-group">
 							<label className="text-black text-sm">Password</label>
-							<input type="password" className="form-control" placeholder="Your Password" />
+							<input type="password" name="password" className="form-control" placeholder="Your Password" onChange={this.handleChange} />
 						</div>
 						<div className="py-3 mx-3 text-center">
 							<p>
@@ -76,7 +95,7 @@ export default class extends Page {
 							</p>
 						</div>
 						<div>
-							<button className="btn btn-secondary w-100">LOG IN</button>
+							<button className="btn btn-secondary w-100" onClick={this.handleSubmit}>LOG IN</button>
 						</div>
 					</form>
 				</div>

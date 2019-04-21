@@ -57,6 +57,30 @@
 	top: 20px;
 	right: 60px;
 }
+.verticalLine {
+	width: 1px;
+	height: calc(100% - 60px);
+	position: absolute;
+	left: 5px;
+	z-index: 1;
+}
+.verticalLine.bg-dark {
+	height: 100%;
+	z-index: 2;
+	top: 0;
+}
+.abs-border {
+	position: relative;
+}
+.abs-border::after {
+	content: '';
+	position: absolute;
+	width: 1px;
+	height: 100%;
+	background-color: $softgray;
+	top: 0;
+	right: -20px;
+}
 
 @media (max-width: 576px) {
 	.sliderMobile {

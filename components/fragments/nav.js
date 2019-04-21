@@ -31,14 +31,35 @@ export default class extends React.Component {
 	render() {
 		return (
 			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
-				<Navbar className={this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary'} dark expand="md">
+				<Navbar className={(this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary') + " position-relative"} dark expand="md">
 					<NavbarBrand href="/">
-						<span className="h2 icon-logo_ring2ring_full" />
+						{
+							this.props.navTrans ? <span className="h2 icon-logogram_r2r" /> : <span className="h2 icon-logo_ring2ring_full" />
+						}
 					</NavbarBrand>
-					<button className="searchToggle">
-						<span className="icon-icon_search text-white h4" />
-					</button>
-					<NavbarToggler className="p-0" onClick={this.toggle} />
+					{
+						this.props.navTrans ?
+							<div style={{ right: "0", left: "0" }} className="m-auto position-absolute">
+								<div className="d-flex justify-content-center">
+									<div style={{ width: "25px", height: "25px" }} className={(this.props.navTrans.step == 1 ? "border-primary text-primary bg-white" : "border-white text-white") + " border text-sm text-center"}>1</div>
+									<div style={{ width: "25px", height: "25px" }} className={(this.props.navTrans.step == 2 ? "border-primary text-primary bg-white" : "border-white text-white") + " border text-sm text-center mx-2"}>2</div>
+									<div style={{ width: "25px", height: "25px" }} className={(this.props.navTrans.step == 3 ? "border-primary text-primary bg-white" : "border-white text-white") + " border text-sm text-center"}>3</div>
+								</div>
+							</div>
+							:
+							<button className="searchToggle">
+								<span className="icon-icon_search text-white h4" />
+							</button>
+					}
+					{
+						this.props.navTrans ?
+							this.props.selectedPrice ? <div style={{ lineHeight: "18px", marginTop: "-1px" }} className="text-white">
+								<div style={{ fontSize: "70%" }} className="text-sm font-weight-light text-right">TOTAL</div>
+								<div className="h5 font-weight-bold">${this.props.selectedPrice}</div>
+							</div> : ""
+							:
+							<NavbarToggler className="p-0" onClick={this.toggle} />
+					}
 					<Collapse
 						style={{ overflowY: 'auto' }}
 						className={this.state.isMobile ? 'fixed-top h-100' : ''}
@@ -61,8 +82,8 @@ export default class extends React.Component {
 									</div>
 								</div>
 							) : (
-								''
-							)}
+									''
+								)}
 							<Nav className="text-white" navbar>
 								<NavItem>
 									<NavLink className="h2 m-0" href="/">
@@ -126,8 +147,8 @@ export default class extends React.Component {
 									</div>
 								</div>
 							) : (
-								''
-							)}
+									''
+								)}
 						</div>
 					</Collapse>
 				</Navbar>

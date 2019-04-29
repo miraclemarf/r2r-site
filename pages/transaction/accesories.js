@@ -10,6 +10,7 @@ export default class extends React.Component {
         props.navTrans = {step:2}
         props.footer = 'transparent';
         props.idTrip = idTrip;
+        props.transaction={};
 
         return props;
     }

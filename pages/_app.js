@@ -13,24 +13,31 @@ class MyApp extends App {
 		this.state = {
 			...props.pageProps
 		};
-		this.changePrice = this.changePrice.bind(this)
+		/* this.changePrice = this.changePrice.bind(this) */
+		this.transactionState = this.transactionState.bind(this)
 	}
 
-	changePrice(val) {
-		this.setState({selectedPrice:val})		
+	/* changePrice(val) {
+		this.setState({ selectedPrice: val })
+	} */
+	transactionState(data) {
+		this.setState({ transaction: {...data} })
+
 	}
 
 
 	render() {
-		
+
 		const { Component, pageProps } = this.props;
+		console.log(this.state.transaction);
+		
 		return (
 			<Container>
 				<Head>
 					<title>Road 2 Ring</title>
 				</Head>
-				<Nav {...pageProps} selectedPrice={this.state.selectedPrice} />
-				<Component {...pageProps} changePrice={this.changePrice} />
+				<Nav {...pageProps} selectedPrice={this.state.transaction.price ? this.state.transaction.price : ""} />
+				<Component {...pageProps}  transactionState={this.transactionState} transaction={this.state.transaction} />
 				<Footer {...pageProps} />
 			</Container>
 		);

@@ -11,6 +11,16 @@ export default class extends React.Component {
         props.footer = 'transparent';
         props.idTrip = idTrip;
         props.selectedMotorId="";
+        props.transaction = {
+            idTrip:idTrip,
+            meeitingPoint:"",
+            startDate:"",
+            endDate:"",
+            motor:{},
+            accesories:[],
+            price:"",
+            notes:""
+        };
         try {
             const data = await getLatestMotor();
             props.motor = data.object;
@@ -25,9 +35,26 @@ export default class extends React.Component {
         this.state = { ...props };
         this.selectedItem = this.selectedItem.bind(this);
     }
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.selectedMotorId != prevState.selectedMotorId) {
+            this.props.transactionState(this.state.transaction)
+            
+        }
+    }
     selectedItem(e) {
+        const {transaction} = this.state
         const motorId = e.currentTarget.getAttribute('data-id');
-        this.setState({selectedMotorId: motorId})
+        const motorObj = this.state.motor.find((obj) => obj.id === parseInt(motorId))
+        let price =  [...transaction.price]
+        price[1] =motorObj.price
+        this.setState(
+            {
+                selectedMotorId: motorId,
+                transaction:{
+                ...transaction, 
+                motor:motorObj,
+                price: price
+            }})
     }
     renderCardMotor(data, index) {
         return (
@@ -46,6 +73,7 @@ export default class extends React.Component {
 
     }
     render() {
+        
         const { idTrip, motor } = this.state
         return (
             <div>

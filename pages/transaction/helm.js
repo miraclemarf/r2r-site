@@ -10,6 +10,7 @@ export default class extends React.Component {
         props.navTrans = {step:2};
         props.footer = 'transparent';
         props.idTrip = idTrip;
+        props.transaction={};
         props.selectedHelmet= { id: null };
         props.selectedHelmetSize="";
         props.isViewHelm=false
@@ -28,17 +29,30 @@ export default class extends React.Component {
         this.selectedItem = this.selectedItem.bind(this);
         this.selectedSize = this.selectedSize.bind(this);
     }
-
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.selectedHelmet.id != prevState.selectedHelmet.id) {
+            this.props.transactionState(this.state.transaction)
+            
+        }
+    }
     
    
     selectedItem(e) {
+        const {helm, transaction} = this.state
         const helmId = e.currentTarget.getAttribute('data-id');
-        const helm = this.state.helm;
-        const selectedHelm = helm.find((obj) => obj.id === parseInt(helmId))
-        this.setState({
-            selectedHelmet: selectedHelm,
-            navTrans:{step:3}
-        })
+        const selectedHelm = helm.find((obj) => obj.id === parseInt(helmId))        
+        let accesories = [...transaction.accesories]       
+        accesories[0] =selectedHelm
+        let price =  [...transaction.price]
+        price[2] =selectedHelm.price
+        this.setState(
+            {
+                selectedHelmet: selectedHelm,
+                transaction:{
+                ...transaction, 
+                accesories:accesories,
+                price: price
+            }})
     }
     selectedSize(e){
         const size = e.currentTarget.getAttribute('data-size');
@@ -48,6 +62,7 @@ export default class extends React.Component {
         this.setState({ isViewHelm: toogle })
     }
     renderCardHelm(data, index) {
+        
         const { selectedHelmet } = this.state        
         return (
             <div data-id={data.id} onClick={this.selectedItem} key={index} className={(selectedHelmet.id === data.id ? "bg-white border-secondary" : "bg-grayF2 border-grayF2") + " p-3 position-relative"} style={{ borderRadius: "8px", minHeight: "110px", marginBottom: "3em", border: "2px solid" }}>
@@ -97,6 +112,7 @@ export default class extends React.Component {
         )
     }
     render() {
+        console.log(this.state.transaction);
         const { idTrip, helm, selectedHelmet, isViewHelm } = this.state
         return (
             <div>

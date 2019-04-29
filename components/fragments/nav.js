@@ -53,9 +53,9 @@ export default class extends React.Component {
 					}
 					{
 						this.props.navTrans ?
-							this.props.selectedPrice ? <div style={{ lineHeight: "18px", marginTop: "-1px" }} className="text-white">
+							this.props.selectedPrice.length ? <div style={{ lineHeight: "18px", marginTop: "-1px" }} className="text-white">
 								<div style={{ fontSize: "70%" }} className="text-sm font-weight-light text-right">TOTAL</div>
-								<div className="h5 font-weight-bold">${this.props.selectedPrice}</div>
+								<div className="h5 font-weight-bold">${this.props.selectedPrice.reduce((total, amount) => total + amount)}</div>
 							</div> : ""
 							:
 							<NavbarToggler className="p-0" onClick={this.toggle} />

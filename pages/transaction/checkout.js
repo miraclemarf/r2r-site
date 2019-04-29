@@ -8,6 +8,7 @@ export default class extends React.Component {
         props.navTrans = {step:3}
         props.footer = 'transparent';
         props.idTrip = idTrip;
+        props.transaction={};
 
         return props;
     }
@@ -17,6 +18,8 @@ export default class extends React.Component {
         this.state = { ...props };
     }
     render() {
+        console.log(this.state.transaction);
+        
         const { idTrip } = this.state
         return (
             <div>

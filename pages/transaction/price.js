@@ -10,8 +10,17 @@ export default class extends React.Component {
         props.navTrans = { step: 1 }
         props.footer = 'transparent';
         props.idTrip = idTrip;
-        props.selectedPrice='';
-        props.selectedPriceId='';
+        props.selectedPriceId = '';
+        props.transaction = {
+				idTrip:idTrip,
+				meeitingPoint:"",
+				startDate:"",
+				endDate:"",
+				motor:{},
+				accesories:[],
+				price:[],
+				notes:""
+			};
         try {
             const data = await getPriceTrip(idTrip);
             props.price = data.object;
@@ -26,36 +35,48 @@ export default class extends React.Component {
         this.state = { ...props };
         this.selectedItem = this.selectedItem.bind(this);
     }
-    componentDidUpdate(prevProps, prevState){
-        if(this.state.selectedPrice != prevState.selectedPrice){
-            this.props.changePrice(this.state.selectedPrice)
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.selectedPriceId != prevState.selectedPriceId) {
+            this.props.transactionState(this.state.transaction)
         }
     }
     selectedItem(e) {
-        const selectedPrice = e.currentTarget.getAttribute('data-price');
+        const {transaction} = this.state
         const priceId = e.currentTarget.getAttribute('data-id');
-        this.setState({selectedPrice:selectedPrice, selectedPriceId: priceId})        
+        const priceObj = this.state.price.find((obj) => obj.id === parseInt(priceId))
+        let price =  [...transaction.price]
+        price = [priceObj.price]
+        
+        this.setState(
+            {
+                selectedPriceId: priceId,
+                transaction:{
+                ...transaction, 
+                startDate:priceObj.startTrip, 
+                endDate:priceObj.finishTrip, 
+                price: price
+            }})
     }
     renderCardDate(data, index) {
         return (
-            <div onClick={this.selectedItem} key={index} data-id={data.id} data-price={index == 0 ? data.price : "150"} className={(this.state.selectedPriceId == data.id ? "bg-primary border-primary text-white" : "border-softgray")+" border p-3 d-flex justify-content-between align-items-center mb-3"} style={{ borderRadius: "8px", boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.3)" }}>
+            <div onClick={this.selectedItem} key={index} data-id={data.id} data-price={data.price} className={(this.state.selectedPriceId == data.id ? "bg-primary border-primary text-white" : "border-softgray") + " border p-3 d-flex justify-content-between align-items-center mb-3"} style={{ borderRadius: "8px", boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.3)" }}>
                 <div className="abs-border">
                     <h3 className="title-section m-0">
-                    <Moment unix format="DD MMM YY">{data.startTrip/1000}</Moment>
+                        <Moment unix format="DD MMM YY">{data.startTrip / 1000}</Moment>
                     </h3>
                     <h3 className="title-section m-0">
-                    <Moment unix format="DD MMM YY">{data.finishTrip/1000}</Moment>
+                        <Moment unix format="DD MMM YY">{data.finishTrip / 1000}</Moment>
                     </h3>
                 </div>
                 <div className="d-flex align-items-center">
                     <div className="mr-3">
-                        <span className={(this.state.selectedPriceId == data.id ? "text-white":"text-gray80")+" h3 icon-icon_helmet"}></span>
+                        <span className={(this.state.selectedPriceId == data.id ? "text-white" : "text-gray80") + " h3 icon-icon_helmet"}></span>
                     </div>
                     <div style={{ lineHeight: "14px" }}>
                         <div>
                             <h5 className="d-inline">0</h5><span className="text-sm">/10</span>
                         </div>
-                        <div><span className={(this.state.selectedPriceId == data.id ? "text-white":"text-gray80")+" text-sm"}>Riders</span></div>
+                        <div><span className={(this.state.selectedPriceId == data.id ? "text-white" : "text-gray80") + " text-sm"}>Riders</span></div>
                     </div>
                 </div>
                 <div>
@@ -67,14 +88,13 @@ export default class extends React.Component {
     }
     render() {
         const { idTrip, price } = this.state
-        const unixTimestamp = 1555545600000/1000;
         return (
             <div>
                 <div className="py-2"></div>
-                
+
                 <div className="container">
                     <div className="mb-3">
-                        <a className="text-dark h4 title-section" href={"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
+                        <a className="text-dark h4 title-section" href={"/trip/" + idTrip} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                     </div>
                     <div className="bg-grayF2 p-4 d-flex justify-content-between" style={{ borderRadius: "12px" }}>
                         <div>

@@ -6,6 +6,7 @@ import Nav from '../components/fragments/nav';
 import Footer from '../components/fragments/footer';
 import '../styles/style.scss';
 
+
 class MyApp extends App {
 	constructor(props) {
 		super(props);
@@ -29,14 +30,15 @@ class MyApp extends App {
 	render() {
 
 		const { Component, pageProps } = this.props;
-		console.log(this.state.transaction);
+		// console.log(this.state);
+		console.log(this.props);
 		
 		return (
 			<Container>
 				<Head>
 					<title>Road 2 Ring</title>
 				</Head>
-				<Nav {...pageProps} selectedPrice={this.state.transaction.price ? this.state.transaction.price : ""} />
+				<Nav {...pageProps} selectedPrice={this.props.pageProps.navTrans ? this.state.transaction.price ? this.state.transaction.price : "" : ""} />
 				<Component {...pageProps}  transactionState={this.transactionState} transaction={this.state.transaction} />
 				<Footer {...pageProps} />
 			</Container>

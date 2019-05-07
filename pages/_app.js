@@ -36,7 +36,7 @@ class MyApp extends App {
 				<Head>
 					<title>Road 2 Ring</title>
 				</Head>
-				<Nav {...pageProps} selectedPrice={this.state.transaction.price ? this.state.transaction.price : ""} />
+				<Nav {...pageProps} selectedPrice={this.state.transaction ? this.state.transaction.price : ""} />
 				<Component {...pageProps}  transactionState={this.transactionState} transaction={this.state.transaction} />
 				<Footer {...pageProps} />
 			</Container>

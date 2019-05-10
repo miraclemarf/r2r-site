@@ -3,7 +3,10 @@ const path = require('path')
 const Dotenv = require('dotenv-webpack')
 const withSass = require('@zeit/next-sass')
 module.exports = withSass(
-    {webpack: (config, { dev }) => {
+    {
+      
+      assetPrefix: process.env.HOST_DOMAIN + '/preview',
+      webpack: (config, { dev }) => {
         config.plugins = config.plugins || []
       
         config.plugins = [

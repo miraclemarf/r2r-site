@@ -1,13 +1,14 @@
 import React from 'react';
-import { Input } from 'reactstrap';
-import Page from '../../components/page';
 
-export default class Profile extends Page {
-	static async getInitialProps({ req }) {
+import Router from 'next/router';
+import { Input } from 'reactstrap';
+import { auth  } from "../../utils/user"
+
+class Profile extends React.Component {
+	static async getInitialProps(req) {
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = await super.getInitialProps({
-			req
-		});
+		auth(req)
+		let props = {}
 
 		if (typeof window === 'undefined') {
 			try {
@@ -15,6 +16,7 @@ export default class Profile extends Page {
 				props.footer = 'transparent';
 			} catch (e) {}
 		}
+		
 		return props;
 	}
 	constructor(props) {
@@ -24,7 +26,9 @@ export default class Profile extends Page {
             profilePicture: '',
             identityPersonFile: '',
             identityDriverFile: ''
-        };
+		};
+
+		
 
 		this.handleFileSelect = this.handleFileSelect.bind(this);
 		this.clickUpload = this.clickUpload.bind(this);
@@ -190,3 +194,4 @@ export default class Profile extends Page {
 		);
 	}
 }
+export default Profile

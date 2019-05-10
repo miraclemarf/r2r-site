@@ -32,6 +32,19 @@ export const login = async (data) => {
 	}
 };
 
+export const myProfile = async (access_token) => {
+//static async myProfile(access_token) {
+	const url = process.env.API_URL + '/user/profile'
+	const res = await fetch(url,
+		{
+			headers: {
+				Authorization: 'Bearer ' + access_token
+			}
+		})
+	const data = await res.json()
+	return data.object
+}
+
 export const register = async ({ data }) => {
 	console.log(data);
 };
@@ -45,7 +58,8 @@ export const withAuthSync = (WrappedComponent) =>
 		//static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
 		static async getInitialProps(ctx) {
 			const token = auth(ctx);
-
+			
+			
 			const componentProps = WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx));
 
 			return { ...componentProps, token };
@@ -79,7 +93,9 @@ export const withAuthSync = (WrappedComponent) =>
 	};
 
 export const auth = (ctx) => {
+	
 	const { token } = nextCookie(ctx);
+	
 
 	if (ctx.req && !token) {
 		ctx.res.writeHead(302, { Location: '/login' });

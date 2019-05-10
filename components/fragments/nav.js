@@ -1,23 +1,25 @@
 import React from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import {getUser} from '../../utils/user'
+import { getUser } from '../../utils/user'
 
 
 export default class extends React.Component {
-	
+
 	static async getInitialProps({ req }) {
-        let props =  await super.getInitialProps({
+		let props = await super.getInitialProps({
 			req
 		});
-        props.user = "adji";
-        return props;
+
+		return props;
 	}
-	
+
 	constructor(props) {
 		super(props);
 
-		console.log(this.props);
-		
+
+
+
+
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false,
@@ -42,6 +44,7 @@ export default class extends React.Component {
 		});
 	}
 	render() {
+		let {token, user} = this.props;
 		return (
 			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
 				<Navbar className={(this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary') + " position-relative"} dark expand="md">
@@ -85,29 +88,27 @@ export default class extends React.Component {
 									<div className="text-right pt-3">
 										<img onClick={this.toggle} src="/static/slicing/img/icon_close.svg" />
 									</div>
-									{/* <div className="d-flex justify-content-center my-4">
-										<a href="/login" className="d-block w-100 mr-2 btn btn-info ">
-											LOG IN
-										</a>
-										<a href="/register" className="d-block w-100 ml-2 btn btn-secondary">
-											REGISTER
-										</a>
-									</div> */}
-									<div className="d-flex flex-row align-items-center text-white profile mb-3 mt-3">
-										<img
-											className="rounded-circle border border-white"
-											width="40"
-											height="40"
-											src="https://loremflickr.com/100/100/potrait,street"
-										/>
-										<div>
-										<b className="h3 ml-4">AUDREY IJOD</b>
-										</div>
-										<div className="ml-auto text-gray pull-right">
-											logout
-										</div>
+									{
+										token ?
+											<div className="d-flex flex-row align-items-center text-white profile mb-3 mt-3">
+												<img
+													className="rounded-circle border border-white"
+													width="40"
+													height="40"
+													src="https://loremflickr.com/100/100/potrait,street"
+												/>
+												<div>
+													<b className="h3 ml-4">{user.fullName ? user.fullName : user.email.substring(0, user.email.indexOf("@"))}</b>
+												</div>
+												<div className="ml-auto text-gray pull-right">logout</div>
+											</div>
+											:
+											<div className="d-flex justify-content-center my-4">
+												<a href="/login" className="d-block w-100 mr-2 btn btn-info ">LOG IN</a>
+												<a href="/register" className="d-block w-100 ml-2 btn btn-secondary">REGISTER</a>
+											</div>
+									}
 
-									</div>
 								</div>
 							) : (
 									''

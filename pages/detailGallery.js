@@ -91,7 +91,7 @@ export default class extends Page {
 				<SquareCover imgCover="https://loremflickr.com/720/1000/potrait,street" withIcon={true} />
 				<div className="text-center position-relative mb-4">
 					<div className="pt-4">
-						<img height="120" src="/static/slicing/img/destination/Untitled.svg" />
+						<img height="120" src={process.env.HOST_DOMAIN+"/static/slicing/img/destination/Untitled.svg"} />
 					</div>
 					<div className="pt-3 d-flex justify-content-center">
 						<div className="text-center mr-3">

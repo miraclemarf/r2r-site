@@ -40,7 +40,7 @@ export default class extends Page {
 					</a>
 					<a href="#" className="title-section btn btn-sm btn-white d-block text-dark border-dark">
 						<div className="d-flex justify-content-center py-2">
-							<span style={{"background":"url(/static/slicing/icon/Google__G__Logo.svg) no-repeat", "width":"25px", "height":"25px"}} /> <h4 className="mb-0 ml-3">CONTINUE WITH Google</h4>
+							<span style={{"background":"url(/preview/static/slicing/icon/Google__G__Logo.svg) no-repeat", "width":"25px", "height":"25px"}} /> <h4 className="mb-0 ml-3">CONTINUE WITH Google</h4>
 						</div>
 					</a>
 				</div>

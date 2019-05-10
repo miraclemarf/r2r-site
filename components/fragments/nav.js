@@ -81,7 +81,7 @@ export default class extends React.Component {
 							{this.state.isMobile ? (
 								<div>
 									<div className="text-right pt-3">
-										<img onClick={this.toggle} src="./static/slicing/img/icon_close.svg" />
+										<img onClick={this.toggle} src={process.env.HOST_DOMAIN+"/static/slicing/img/icon_close.svg"} />
 									</div>
 									{
 										token ?

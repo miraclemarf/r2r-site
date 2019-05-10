@@ -101,7 +101,7 @@ export default class extends Page {
 						<span>on</span>
 					</div>
 					<div className="pt-3">
-						<img height="120" src="/static/slicing/img/destination/Untitled.svg" />
+						<img height="120" src={process.env.HOST_DOMAIN+"/static/slicing/img/destination/Untitled.svg"} />
 					</div>
 					<div className="pt-3 d-flex justify-content-center">
 						<div className="text-center mr-3">

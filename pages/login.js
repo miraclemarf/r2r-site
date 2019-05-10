@@ -60,7 +60,7 @@ export default class extends Page {
 						<div className="d-flex justify-content-center py-2">
 							<span
 								style={{
-									background: 'url(/static/slicing/icon/Google__G__Logo.svg) no-repeat',
+									background: 'url(/preview/static/slicing/icon/Google__G__Logo.svg) no-repeat',
 									width: '25px',
 									height: '25px'
 								}}

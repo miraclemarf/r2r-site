@@ -10,6 +10,16 @@ export default class extends React.Component {
         let props = {}
         props.idTrip = idTrip;
         props.footer = 'collapse';
+        props.transaction = {
+            idTrip:idTrip,
+            meetingPoint:"",
+            startDate:"",
+            endDate:"",
+            motor:{},
+            accesories:[],
+            price:[],
+            notes:""
+        };
 
         if (typeof window === 'undefined') {
             try {
@@ -17,6 +27,17 @@ export default class extends React.Component {
                 const motorData = await getLatestMotor();
                 props.trip = tripData;
                 props.motor = motorData;
+
+                props.transaction = {
+                    idTrip:idTrip,
+                    meetingPoint:tripData.object.meetingPoint,
+                    startDate:"",
+                    endDate:"",
+                    motor:{},
+                    accesories:[],
+                    price:[],
+                    notes:""
+                };
             } catch (e) {
 
             }
@@ -28,29 +49,41 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = { ...props };
+        
         this.state = {
             trip: props.trip || null,
             motor: props.motor || null,
             id: props.idTrip || ''
-
         };
+        
+
+        
     }
 
     async componentDidMount() {
         const { idTrip } = this.state
+        console.log(this.props);
+        console.log(this.state);
+        
+        
         if (this.state.trip === null) {
             try {
                 const tripData = await getDetailTrip(idTrip);
                 const motorData = await getLatestMotor();
                 this.setState({
                     trip: tripData,
-                    motor: motorData
+                    motor: motorData,
+                    transaction: this.props.transaction,
                 });
             } catch (e) {
                 this.setState({
                     error: "Unable to fetch AsyncData on client"
                 });
             }
+        }
+        if(this.props.transaction.meetingPoint){
+            this.props.transactionState(this.props.transaction)
         }
     }
 
@@ -91,14 +124,16 @@ export default class extends React.Component {
 
     render() {
         const motor = this.state.motor.object;
+        console.log(this.state);
+        
 
-        const { id, coverLandscape, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded, imageRoadCaptain, roadCaptainDescription, facilities, itineraries } = this.state.trip.object
+        const { id, coverLandscape, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded,roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries } = this.state.trip.object
         return (
             <div style={{ "paddingBottom": "4em" }}>
                 <SquareCover imgCover={process.env.HOST_URL + coverLandscape} withIcon={true} iconTrip={process.env.HOST_URL + iconCover} />
                 <div className="container">
                     <div className="py-3">
-                        <span className="text-primary text-sm"><b>Mt. Bromo, Central Java</b></span>
+                        <span className="text-primary text-sm"><b>{location}</b></span>
                     </div>
                     <div>
                         <h2 className="title-section">About the tour</h2>
@@ -199,11 +234,11 @@ export default class extends React.Component {
                             src={process.env.HOST_URL + imageRoadCaptain}
                         />
                         <div className="pt-3">
-                            <h3 className="title-section">Arif Widi </h3>
+                        <h3 className="title-section">{roadCaptainName} </h3>
                         </div>
                     </div>
                     <div>
-                        <p>{roadCaptainDescription} Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua!</p>
+                        <p>{roadCaptainDescription}</p>
                     </div>
                 </div>
                 <div className="fixed-bottom">

@@ -13,7 +13,7 @@ export default class extends React.Component {
         props.selectedMotorId="";
         props.transaction = {
             idTrip:idTrip,
-            meeitingPoint:"",
+            meetingPoint:"",
             startDate:"",
             endDate:"",
             motor:{},
@@ -75,6 +75,8 @@ export default class extends React.Component {
     render() {
         
         const { idTrip, motor } = this.state
+        console.log(this.state);
+        
         return (
             <div>
                 <div className="py-2"></div>

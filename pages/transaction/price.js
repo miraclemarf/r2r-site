@@ -13,7 +13,7 @@ export default class extends React.Component {
         props.selectedPriceId = '';
         props.transaction = {
 				idTrip:idTrip,
-				meeitingPoint:"",
+				meetingPoint:"",
 				startDate:"",
 				endDate:"",
 				motor:{},
@@ -41,6 +41,7 @@ export default class extends React.Component {
         }
     }
     selectedItem(e) {
+        
         const {transaction} = this.state
         const priceId = e.currentTarget.getAttribute('data-id');
         const priceObj = this.state.price.find((obj) => obj.id === parseInt(priceId))
@@ -55,6 +56,7 @@ export default class extends React.Component {
                 startDate:priceObj.startTrip, 
                 endDate:priceObj.finishTrip, 
                 price: price
+                
             }})
     }
     renderCardDate(data, index) {
@@ -74,7 +76,7 @@ export default class extends React.Component {
                     </div>
                     <div style={{ lineHeight: "14px" }}>
                         <div>
-                            <h5 className="d-inline">0</h5><span className="text-sm">/10</span>
+                            <h5 className="d-inline">{data.personPaid}</h5><span className="text-sm">/10</span>
                         </div>
                         <div><span className={(this.state.selectedPriceId == data.id ? "text-white" : "text-gray80") + " text-sm"}>Riders</span></div>
                     </div>
@@ -87,7 +89,9 @@ export default class extends React.Component {
         )
     }
     render() {
-        const { idTrip, price } = this.state
+        const { idTrip, price,transaction } = this.state
+        console.log(this.state);
+        
         return (
             <div>
                 <div className="py-2"></div>
@@ -100,11 +104,8 @@ export default class extends React.Component {
                         <div>
                             <h4 className="title-section text-gray80">MEETING POINT</h4>
                         </div>
-                        <div className="pl-3">
-                            <h5 className="title-section m-0">Stasiun YOGYAKARTA</h5>
-                            <p className="text-sm text-gray80 m-0">
-                                Jl. Pringgokusuman, Pringgokusuman, Gedong Tengen
-                            </p>
+                        <div className="pl-3" dangerouslySetInnerHTML={{ __html: transaction.meetingPoint }}>
+
                         </div>
                     </div>
                     <hr className="border-softgray" />

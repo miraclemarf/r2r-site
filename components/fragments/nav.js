@@ -5,18 +5,8 @@ import {getUser} from '../../utils/user'
 
 export default class extends React.Component {
 	
-	static async getInitialProps({ req }) {
-        let props =  await super.getInitialProps({
-			req
-		});
-        props.user = "adji";
-        return props;
-	}
-	
 	constructor(props) {
 		super(props);
-
-		console.log(this.props);
 		
 		this.toggle = this.toggle.bind(this);
 		this.state = {

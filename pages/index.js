@@ -7,6 +7,7 @@ import TextImgCard from '../components/textImgCard';
 import BannerHowItWorks from '../components/fragments/bannerHowItWorks';
 import BannerJoinComm from '../components/fragments/bannerJoinComm';
 import Page from '../components/page';
+import {getUser} from '../utils/user'
 
 export default class extends Page {
 	static async getInitialProps({ req }) {
@@ -29,6 +30,7 @@ export default class extends Page {
 				props.trips = tripsData;
 				props.testimonials = testimonialsData;
 				props.gallery = galleryData;
+				
 			} catch (e) {
 				props.error = 'Unable to fetch AsyncData on server';
 			}
@@ -37,6 +39,7 @@ export default class extends Page {
 	}
 	constructor(props) {
 		super(props);
+		getUser();
 
 		this.state = {};
 	}

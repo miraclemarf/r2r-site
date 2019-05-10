@@ -49,8 +49,15 @@ export const register = async ({ data }) => {
 	console.log(data);
 };
 
+export const getUser = () =>{
+	const token = cookie.get('token');
+	console.log(token);
+	
+}
+
 export const logout = () => {
 	console.log('logout');
+	// cookie.remove('token');
 };
 
 export const withAuthSync = (WrappedComponent) =>

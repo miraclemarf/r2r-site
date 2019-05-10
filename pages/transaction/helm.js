@@ -57,6 +57,8 @@ export default class extends React.Component {
     selectedSize(e){
         const size = e.currentTarget.getAttribute('data-size');
         this.setState({selectedHelmetSize:size})
+        console.log(this.state);
+        
     }
     handleViewHelm(toogle) {
         this.setState({ isViewHelm: toogle })

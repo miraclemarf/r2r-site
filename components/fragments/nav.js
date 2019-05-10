@@ -15,11 +15,6 @@ export default class extends React.Component {
 
 	constructor(props) {
 		super(props);
-
-
-
-
-
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false,

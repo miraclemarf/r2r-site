@@ -1,5 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
+import { throws } from 'assert';
+import Moment from 'react-moment'
+import { checkout } from '../../utils/trips'
 
 export default class extends React.Component {
     static async getInitialProps({ req, query: { idTrip } }) {
@@ -16,11 +19,49 @@ export default class extends React.Component {
         super(props);
 
         this.state = { ...props };
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
-    render() {
-        console.log(this.state.transaction);
+
+    async handleSubmit(e){
+		e.preventDefault();
+		
+		const postData = {
+            'tripId':this.state.transaction.idTrip,
+            'notes':this.state.transaction.notes,
+            'price':this.state.transaction.price.reduce((total, amount) => total + amount),
+            'startDate': this.state.transaction.startDate,
+            'motor': this.state.transaction.motor.id,
+            'accessories': this.state.transaction.accesories,
+
+        }
+        // login(postData)
+    
+        checkout(postData);
         
-        const { idTrip } = this.state
+		
+    
+    }
+
+    renderPrice(data,index){
+        return(
+             <div className="d-flex justify-content-between align-items-center pt-3">
+                <div style={{ lineHeight: "14px" }}>
+                    <h5 className="title-section m-0">ADDITIONAL COST</h5>
+                    <span style={{ fontSize: "80%" }} className="text-sm">{data.title}</span>
+                </div>
+                <div>
+                    <h3 className="title-section m-0">$ 20</h3>
+                </div>
+            </div>
+        )
+    }
+
+    render() {
+
+        
+        const { idTrip,transaction } = this.state
+        console.log(transaction);
+        
         return (
             <div>
                 <div className="py-2"></div>
@@ -34,7 +75,8 @@ export default class extends React.Component {
                     <div className="mb-4">
                         <h4 className="title-section">DATE</h4>
                         <div className="bg-grayF2 p-3" style={{ borderRadius: "8px" }}>
-                            <h4 className="title-section text-center m-0">12 OCT 18 - 15 OCT 18</h4>
+                            <h4 className="title-section text-center m-0">
+                            <Moment unix format="DD MMM YY">{this.state.transaction.startDate / 1000}</Moment> - <Moment unix format="DD MMM YY">{this.state.transaction.endDate / 1000}</Moment> </h4>
                         </div>
                     </div>
 
@@ -51,9 +93,9 @@ export default class extends React.Component {
                     <div className="mb-4">
                         <h4 className="title-section">Gear</h4>
                         <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px", minHeight: "150px" }}>
-                            <h4 style={{ lineHeight: "normal" }} className="title-section w-75">2018 - Harley Davidson STEET 750</h4>
+                            <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{transaction.motor.brand} {transaction.motor.title}</h4>
                             <div className="position-absolute" style={{ right: "0", zIndex: "1", bottom: "-30px" }}>
-                                <img src={process.env.HOST_URL + '/img/assets/harley.png'} height="120" />
+                                <img src={process.env.HOST_URL + transaction.motor.picture} height="120" />
                             </div>
                         </div>
                     </div>
@@ -70,15 +112,22 @@ export default class extends React.Component {
                                         <h3 className="title-section m-0">$ 120</h3>
                                     </div>
                                 </div>
-                                <div className="d-flex justify-content-between align-items-center pt-3">
+                                <div className="d-flex justify-content-between align-items-center pt-3 pb-3 border-softgray" style={{ borderBottom: "1px solid" }}>
                                     <div style={{ lineHeight: "14px" }}>
-                                        <h5 className="title-section m-0">ADDITIONAL COST</h5>
-                                        <span style={{ fontSize: "80%" }} className="text-sm">Simpson M50 Helmet</span>
+                                        <h5 className="title-section m-0">BIKE</h5>
+                                        <span style={{ fontSize: "80%" }} className="text-sm">{transaction.motor.brand} {transaction.motor.title}</span>
                                     </div>
                                     <div>
-                                        <h3 className="title-section m-0">$ 20</h3>
+                                        <h3 className="title-section m-0">$ {transaction.motor.price}</h3>
                                     </div>
                                 </div>
+                                {
+                                    transaction.accesories.map((item,index) =>(
+                                        this.renderPrice(item,index)
+                                    ))
+                                }
+                                
+                               
                             </div>
                         </div>
                     </div>
@@ -117,7 +166,7 @@ export default class extends React.Component {
                             </p>
                         </div>
                         <div className="pt-2">
-                            <button disabled="disabled" className="btn btn-grayF2 w-100 text-softgray">Confirm</button>
+                            <button className="btn btn-grayF2 w-100 text-softgray" onClick={this.handleSubmit}>Confirm</button>
                         </div>
                     </div>
                 </div>

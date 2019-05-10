@@ -33,14 +33,20 @@ class MyApp extends App {
 		};
 		/* this.changePrice = this.changePrice.bind(this) */
 		this.transactionState = this.transactionState.bind(this)
+		this.tripState = this.tripState.bind(this)
 	}
 
 	/* changePrice(val) {
 		this.setState({ selectedPrice: val })
 	} */
 	transactionState(data) {
+		
 		this.setState({ transaction: {...data} })
 
+	}
+
+	tripState(data){
+		this.setState({trip: {...data}})
 	}
 
 

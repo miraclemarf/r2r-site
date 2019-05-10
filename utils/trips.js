@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-unfetch';
+import moment from 'moment';
 
 export const getLatestTrips= async () =>{
     const tripsRes = await fetch('http://localhost:3000/api/trips?_start=0&_limit=4');
@@ -22,3 +23,40 @@ export const getPriceTrip = async (id) =>{
     
     return data;
 }
+
+export const confirmOrder  = async (data) => {
+    console.log(data);
+    
+}
+
+export const checkout = async (data) => {
+    var dataForm = new FormData();
+
+    console.log(moment(data.startDate).format('MM/DD/YYYY, LTS'));
+    
+    dataForm.append('trip.id',data.tripId)
+	dataForm.append('notes', data.notes);
+    dataForm.append('price', data.price);
+    dataForm.append('startTimestamp',data.startDate);
+    dataForm.append('motor', data.motor);
+    data.accessories.map((item,key) => {
+        dataForm.append('accessories['+key+'].id', item.id);
+        dataForm.append('accessories['+key+'].size', item.size);
+    })
+    
+	try {
+		const response = await fetch(process.env.API_URL +'/transaction/create', {
+            method: 'POST',
+            headers:{
+                'Authorization' : 'Bearer c4e33e5e-9295-4a4f-bbc7-642261294937',
+            },
+			body: dataForm
+        }).then(response => response.json())
+        .then(jsondata => console.log(jsondata));
+        console.log(response);
+        
+	} catch (error) {
+		console.error('You have an error in your code or there are Network issues.', error);
+		throw new Error(error);
+	}
+};

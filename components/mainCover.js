@@ -2,7 +2,7 @@ export default ({...props}) => (
     <div style={{'backgroundImage':'url('+props.imgCover+')'}} className="mainCover overlay--img__black d-flex align-items-end">
         {props.withIcon?
             <div className="position-absolute align-self-center w-100 text-center">
-                <img src="/static/slicing/img/icon_play_video.svg" />
+                <img src="./static/slicing/img/icon_play_video.svg" />
             </div>
             :''}
         <div className="text-white text-center m-3" style={{zIndex:'5'}}>

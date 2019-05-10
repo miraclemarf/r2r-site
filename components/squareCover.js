@@ -9,7 +9,7 @@ export default ({ ...props }) => (
                         <h1 style={{lineHeight:".8em", fontSize:"3em"}} className="mt-3 title-section text-white">Hidden<br />Dieng</h1>
                     </div>
                     :
-                    <img src="/static/slicing/img/icon_play_video.svg" />
+                    <img src="./static/slicing/img/icon_play_video.svg" />
                 }
             </div>
             : ''}

@@ -5,7 +5,7 @@ export default ({ ...props }) => (
         <div className={"card-img-overlay d-flex "+ props.iconTextPostion}>
             {!props.isLandscape ? 
             <div className="position-absolute align-self-start">
-                <img src="/static/slicing/img/icon_play_video.svg" />
+                <img src="./static/slicing/img/icon_play_video.svg" />
             </div> : ''}
             <div className="mx-auto text-center">
             {props.r2rIcon ? <span className="d-block icon-logogram_r2r h3 mt-3"></span> : ""}

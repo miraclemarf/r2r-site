@@ -5,7 +5,7 @@ export default ({ ...props }) => (
                 {props.iconTrip
                     ?
                     <div style={{paddingTop:"4em"}}>
-                        <img height="50" src="/static/slicing/img/destination/symbol_dieng.svg" />
+                        <img height="50" src="./static/slicing/img/destination/symbol_dieng.svg" />
                         <h1 style={{lineHeight:".8em", fontSize:"3em"}} className="mt-3 title-section text-white">Hidden<br />Dieng</h1>
                     </div>
                     :

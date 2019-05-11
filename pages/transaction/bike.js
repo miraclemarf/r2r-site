@@ -105,7 +105,7 @@ export default class extends React.Component {
                 </div>
 
                 <div className="fixed-bottom">
-                    <Link href={process.env.HOST_DOMAIN+'/transaction/helm?page=helm&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/helm'} >
+                    <Link href={'/transaction/helm?page=helm&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/helm'} >
                         <button className="btn btn-primary w-100">
                             NEXT : ACCESORIES
                         </button>

@@ -243,7 +243,7 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div className="fixed-bottom">
-                    <Link href={process.env.HOST_DOMAIN + '/transaction/price?page=price&idTrip=' + id} as={process.env.HOST_DOMAIN + '/trip/' + id + '/price'} >
+                    <Link href={'/transaction/price?page=price&idTrip=' + id} as={process.env.HOST_DOMAIN + '/trip/' + id + '/price'} >
                         <button className="btn btn-primary w-100">
                             <div className="d-flex justify-content-between">
                                 <div className="invisible" style={{ fontFamily: '"Open Sans", sans-serif', lineHeight: "18px" }}>

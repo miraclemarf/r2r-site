@@ -17,7 +17,7 @@ export default class extends Page {
 			try {
 				const tripsData = await getLatestTrips();
 				const galleryData = await getLatestGallery();
-				props.trips = tripsData;
+				props.trips = tripsData.object;
 				props.gallery = galleryData;
 				props.footer = 'transparent';
 			} catch (e) {}
@@ -38,7 +38,7 @@ export default class extends Page {
 				const tripsData = await getLatestTrips();
 				const galleryData = await getLatestGallery();
 				this.setState({
-					trips: tripsData,
+					trips: tripsData.object,
 					gallery: galleryData
 				});
 			} catch (e) {

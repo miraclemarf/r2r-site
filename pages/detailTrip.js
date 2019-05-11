@@ -186,7 +186,7 @@ export default class extends React.Component {
                 <div className="container mb-4 pb-4">
                     <div className=" d-flex justify-content-between mb-3">
                         <h2 className="title-section">MOTORCYCLE CHOICES</h2>
-                        <a href="/gallery" style={{ "top": "7px" }} className="text-sm position-relative text-primary d-block font-weight-bold">
+                        <a href={process.env.HOST_DOMAIN+"/gallery"} style={{ "top": "7px" }} className="text-sm position-relative text-primary d-block font-weight-bold">
                             View All</a>
                     </div>
                     <div className="sliderMobile d-flex align-items-stretch" style={{ marginRight: "-15px" }}>
@@ -242,7 +242,7 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div className="fixed-bottom">
-                    <Link href={'/transaction/price?page=price&idTrip=' + id} as={'/trip/' + id + '/price'} >
+                    <Link href={process.env.HOST_DOMAIN+'/transaction/price?page=price&idTrip=' + id} as={process.env.HOST_DOMAIN+'/trip/' + id + '/price'} >
                         <button className="btn btn-primary w-100">
                             <div className="d-flex justify-content-between">
                                 <div className="invisible" style={{ fontFamily: '"Open Sans", sans-serif', lineHeight: "18px" }}>

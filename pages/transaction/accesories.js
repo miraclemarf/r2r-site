@@ -27,7 +27,7 @@ export default class extends React.Component {
                 <div className="py-2"></div>
                 <div className="container">
                     <div className="mb-4 position-relative">
-                        <a className="d-block pt-2 text-dark h4 title-section" href={"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>                        
+                        <a className="d-block pt-2 text-dark h4 title-section" href={process.env.HOST_DOMAIN+"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>                        
                         <StepTransaction step="3" />
                     </div>
                 </div>
@@ -44,7 +44,7 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div className="fixed-bottom">
-                    <Link href={'/transaction/checkout?page=checkout&idTrip=' + idTrip} as={'/trip/' + idTrip + '/checkout'} >
+                    <Link href={process.env.HOST_DOMAIN+'/transaction/checkout?page=checkout&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/checkout'} >
                         <button className="btn btn-primary w-100">
                             NEXT : CHECK OUT
                         </button>

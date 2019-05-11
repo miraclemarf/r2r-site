@@ -67,7 +67,7 @@ export default class extends React.Component {
                 <div className="py-2"></div>
                 <div className="container">
                     <div className="mb-3">
-                        <a className="text-dark h4 title-section" href={"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
+                        <a className="text-dark h4 title-section" href={process.env.HOST_DOMAIN+"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                     </div>
                     <div>
                         <h2 className="title-section text-center mb-4">Check Out</h2>
@@ -155,8 +155,8 @@ export default class extends React.Component {
                             <span className="text-sm">To continue this process you must log in first!</span>
                         </div>
                         <div>
-                            <a href="/login" className="d-block w-100 mb-2  btn btn-info ">LOG IN</a>
-                            <a href="/register" className="d-block w-100  btn btn-secondary">REGISTER</a>
+                            <a href={process.env.HOST_DOMAIN+"/login"} className="d-block w-100 mb-2  btn btn-info ">LOG IN</a>
+                            <a href={process.env.HOST_DOMAIN+"/register"} className="d-block w-100  btn btn-secondary">REGISTER</a>
                         </div>
                     </div>
                     <div>

@@ -43,7 +43,7 @@ export default class extends React.Component {
 		return (
 			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
 				<Navbar className={(this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary') + " position-relative"} dark expand="md">
-					<NavbarBrand href="/">
+					<NavbarBrand href={process.env.HOST_DOMAIN+"/"}>
 						{
 							this.props.navTrans ? <span className="h2 icon-logogram_r2r" /> : <span className="h2 icon-logo_ring2ring_full" />
 						}
@@ -99,8 +99,8 @@ export default class extends React.Component {
 											</div>
 											:
 											<div className="d-flex justify-content-center my-4">
-												<a href="/login" className="d-block w-100 mr-2 btn btn-info ">LOG IN</a>
-												<a href="/register" className="d-block w-100 ml-2 btn btn-secondary">REGISTER</a>
+												<a href={process.env.HOST_DOMAIN+"/login"} className="d-block w-100 mr-2 btn btn-info ">LOG IN</a>
+												<a href={process.env.HOST_DOMAIN+"/register"} className="d-block w-100 ml-2 btn btn-secondary">REGISTER</a>
 											</div>
 									}
 
@@ -110,7 +110,7 @@ export default class extends React.Component {
 								)}
 							<Nav className="text-white" navbar>
 								<NavItem>
-									<NavLink className="h2 m-0" href="/">
+									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN+"/"}>
 										Home
 									</NavLink>
 								</NavItem>
@@ -120,22 +120,22 @@ export default class extends React.Component {
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href="/trips">
+									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN+"/trips"}>
 										Trips Package
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href="/gallery">
+									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN+"/gallery"}>
 										Gallery
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href="/community">
+									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN+"/community"}>
 										Community
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0  " href="/faq">
+									<NavLink className="h2 m-0  " href={process.env.HOST_DOMAIN+"/faq"}>
 										FAQ
 									</NavLink>
 								</NavItem>

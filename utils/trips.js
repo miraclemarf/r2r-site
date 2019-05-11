@@ -2,7 +2,7 @@ import fetch from 'isomorphic-unfetch';
 import moment from 'moment';
 
 export const getLatestTrips= async () =>{
-    const tripsRes = await fetch('http://localhost:3000/api/trips?_start=0&_limit=4');
+    const tripsRes = await fetch(process.env.API_URL+'/trips/0/10');
     const tripsData = await tripsRes.json();
 
     return tripsData;

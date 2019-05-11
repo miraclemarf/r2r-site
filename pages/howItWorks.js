@@ -70,7 +70,7 @@ export default class extends Page {
 					<div className=" d-flex justify-content-between mb-3">
 						<h1 className="h2 title-section text-white m-0">Gallery</h1>
 							<a
-								href="/gallery"
+								href={process.env.HOST_DOMAIN+"/gallery"}
 								style={{ top: '5px' }}
 								className="text-sm position-relative text-white d-block font-weight-bold"
 							>

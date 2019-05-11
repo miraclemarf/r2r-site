@@ -98,7 +98,7 @@ export default class extends React.Component {
 
                 <div className="container">
                     <div className="mb-3">
-                        <a className="text-dark h4 title-section" href={"/trip/" + idTrip} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
+                        <a className="text-dark h4 title-section" href={process.env.HOST_DOMAIN+"/trip/" + idTrip} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                     </div>
                     <div className="bg-grayF2 p-4 d-flex justify-content-between" style={{ borderRadius: "12px" }}>
                         <div>
@@ -124,7 +124,7 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div className="fixed-bottom">
-                    <Link href={'/transaction/bike?page=bike&idTrip=' + idTrip} as={'/trip/' + idTrip + '/bike'} >
+                    <Link href={process.env.HOST_DOMAIN+'/transaction/bike?page=bike&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/bike'} >
                         <button className="btn btn-primary w-100">
                             Next : choose Bike
                         </button>

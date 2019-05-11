@@ -124,7 +124,7 @@ export default class extends React.Component {
                         {
                             isViewHelm ?
                                 <span className="pt-2 d-block text-dark h4 title-section" onClick={() => this.handleViewHelm(false)} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</span> :
-                                <a className="pt-2 d-block text-dark h4 title-section" href={"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
+                                <a className="pt-2 d-block text-dark h4 title-section" href={process.env.HOST_DOMAIN+"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                         }
                         
                         <StepTransaction step="2" />
@@ -150,7 +150,7 @@ export default class extends React.Component {
                 <div className="fixed-bottom">
                     {
                         isViewHelm ?
-                            <Link href={'/transaction/accesories?page=accesories&idTrip=' + idTrip} as={'/trip/' + idTrip + '/accesories'} >
+                            <Link href={process.env.HOST_DOMAIN+'/transaction/accesories?page=accesories&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/accesories'} >
                                 <button className="btn btn-primary w-100">NEXT : ACCESORIES</button>
                             </Link>
                             :

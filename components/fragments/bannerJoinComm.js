@@ -5,7 +5,7 @@ export default () => (
 			<div className="mx-auto">
 				<h2 className="card-title title-section text-center">WANT TO JOIN OUR COMMUNITY??</h2>
 				<div className="mx-auto"  style={{ maxWidth: '180px' }}>
-					<a href="/community" className="d-block btn btn-secondary btn-sm">
+					<a href={process.env.HOST_DOMAIN+"/community"} className="d-block btn btn-secondary btn-sm">
 						LEARN MORE
 					</a>
 				</div>

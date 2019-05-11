@@ -82,7 +82,7 @@ export default class extends React.Component {
                 <div className="py-2"></div>
                 <div className="container">
                     <div className="mb-4 position-relative">
-                        <a className="pt-2 d-block text-dark h4 title-section" href={"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
+                        <a className="pt-2 d-block text-dark h4 title-section" href={process.env.HOST_DOMAIN+"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                         <StepTransaction step="1" />
                     </div>
                     <div>
@@ -105,7 +105,7 @@ export default class extends React.Component {
                 </div>
 
                 <div className="fixed-bottom">
-                    <Link href={'/transaction/helm?page=helm&idTrip=' + idTrip} as={'/trip/' + idTrip + '/helm'} >
+                    <Link href={process.env.HOST_DOMAIN+'/transaction/helm?page=helm&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/helm'} >
                         <button className="btn btn-primary w-100">
                             NEXT : ACCESORIES
                         </button>

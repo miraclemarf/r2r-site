@@ -7,6 +7,8 @@ module.exports = withSass(
       
       assetPrefix: process.env.HOST_DOMAIN,
       webpack: (config, { dev }) => {
+
+        
         config.plugins = config.plugins || []
       
         config.plugins = [

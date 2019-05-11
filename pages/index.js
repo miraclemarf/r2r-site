@@ -18,7 +18,7 @@ export default class extends Page {
 
 		if (typeof window === 'undefined') {
 			try {
-				const tripsRes = await fetch('http://localhost:3000/api/trips?_start=0&_limit=4');
+				const tripsRes = await fetch(process.env.API_URL+'/trips/0/4');
 				const tripsData = await tripsRes.json();
 
 				const testiMonialsRes = await fetch('http://localhost:3000/api/testimonials?_start=10&_limit=5');
@@ -27,7 +27,7 @@ export default class extends Page {
 				const galleryRes = await fetch('http://localhost:3000/api/gallerys?_start=10&_limit=5');
 				const galleryData = await galleryRes.json();
 
-				props.trips = tripsData;
+				props.trips = tripsData.object;
 				props.testimonials = testimonialsData;
 				props.gallery = galleryData;
 				
@@ -46,12 +46,12 @@ export default class extends Page {
 	render() {
 		return (
 			<div>
-				<MainCover imgCover="https://loremflickr.com/720/1000/potrait,street" withIcon={true} />
+				<MainCover imgCover="https://loremflickr.com/720/1000/mountain" withIcon={true} />
 				<div>
 					<div className="my-4 mx-3">
 						<h1 className="h2 title-section mb-3">Next Trips</h1>
 						{this.props.trips.map((item, key) => <TripCard key={key} {...item} />)}
-							<a href="/trips" className="btn btn-primary d-block">
+							<a href={process.env.HOST_DOMAIN+"/trips"} className="btn btn-primary d-block">
 								SEE ALL TRIP
 							</a>
 					</div>
@@ -74,7 +74,7 @@ export default class extends Page {
 					<div className="p-3 bg-dark">
 						<div className=" d-flex justify-content-between mb-3">
 							<h1 className="h2 title-section text-white m-0">Gallery</h1>
-								<a href="/gallery" style={{"top":"5px"}} className="text-sm position-relative text-white d-block font-weight-bold">
+								<a href={process.env.HOST_DOMAIN+"/gallery"} style={{"top":"5px"}} className="text-sm position-relative text-white d-block font-weight-bold">
 									View All
 								</a>
 						</div>

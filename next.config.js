@@ -1,21 +1,11 @@
 require('dotenv').config()
 const path = require('path')
-
-const withPlugins = require('next-compose-plugins')
 const Dotenv = require('dotenv-webpack')
 const withSass = require('@zeit/next-sass')
-const withCss = require('@zeit/next-css')
-module.exports = withPlugins([
-withCss({
-  cssModules: true
-}),
-withSass(
+module.exports = withSass(
     {
       
       assetPrefix: process.env.HOST_DOMAIN,
-      publicRuntimeConfig: { 
-        staticFolder: `${process.env.HOST_DOMAIN}/static`
-      },
       webpack: (config, { dev }) => {
 
         
@@ -33,4 +23,3 @@ withSass(
         return config
     }}
 )
-  ])

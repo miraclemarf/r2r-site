@@ -44,7 +44,7 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div className="fixed-bottom">
-                    <Link href={process.env.HOST_DOMAIN+'/transaction/checkout?page=checkout&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/checkout'} >
+                    <Link href={'/transaction/checkout?page=checkout&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/checkout'} >
                         <button className="btn btn-primary w-100">
                             NEXT : CHECK OUT
                         </button>

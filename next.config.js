@@ -2,7 +2,10 @@ require('dotenv').config()
 const path = require('path')
 const Dotenv = require('dotenv-webpack')
 const withSass = require('@zeit/next-sass')
-module.exports = withSass(
+const withCss = require('@zeit/next-css')
+module.exports = 
+withCss,
+withSass(
     {
       
       assetPrefix: process.env.HOST_DOMAIN,

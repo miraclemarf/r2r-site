@@ -11,14 +11,14 @@ export default class extends React.Component {
         props.idTrip = idTrip;
         props.footer = 'collapse';
         props.transaction = {
-            idTrip:idTrip,
-            meetingPoint:"",
-            startDate:"",
-            endDate:"",
-            motor:{},
-            accesories:[],
-            price:[],
-            notes:""
+            idTrip: idTrip,
+            meetingPoint: "",
+            startDate: "",
+            endDate: "",
+            motor: {},
+            accesories: [],
+            price: [],
+            notes: ""
         };
 
         if (typeof window === 'undefined') {
@@ -29,14 +29,14 @@ export default class extends React.Component {
                 props.motor = motorData;
 
                 props.transaction = {
-                    idTrip:idTrip,
-                    meetingPoint:tripData.object.meetingPoint,
-                    startDate:"",
-                    endDate:"",
-                    motor:{},
-                    accesories:[],
-                    price:[],
-                    notes:""
+                    idTrip: idTrip,
+                    meetingPoint: tripData.object.meetingPoint,
+                    startDate: "",
+                    endDate: "",
+                    motor: {},
+                    accesories: [],
+                    price: [],
+                    notes: ""
                 };
             } catch (e) {
 
@@ -50,23 +50,23 @@ export default class extends React.Component {
         super(props);
 
         this.state = { ...props };
-        
+
         this.state = {
             trip: props.trip || null,
             motor: props.motor || null,
             id: props.idTrip || ''
         };
-        
 
-        
+
+
     }
 
     async componentDidMount() {
         const { idTrip } = this.state
         console.log(this.props);
         console.log(this.state);
-        
-        
+
+
         if (this.state.trip === null) {
             try {
                 const tripData = await getDetailTrip(idTrip);
@@ -82,7 +82,7 @@ export default class extends React.Component {
                 });
             }
         }
-        if(this.props.transaction.meetingPoint){
+        if (this.props.transaction.meetingPoint) {
             this.props.transactionState(this.props.transaction)
         }
     }
@@ -125,9 +125,9 @@ export default class extends React.Component {
     render() {
         const motor = this.state.motor.object;
         console.log(this.state);
-        
 
-        const { id, coverLandscape, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded,roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries } = this.state.trip.object
+
+        const { id, coverLandscape, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries } = this.state.trip.object
         return (
             <div style={{ "paddingBottom": "4em" }}>
                 <SquareCover imgCover={process.env.HOST_URL + coverLandscape} withIcon={true} iconTrip={process.env.HOST_URL + iconCover} />
@@ -186,7 +186,7 @@ export default class extends React.Component {
                 <div className="container mb-4 pb-4">
                     <div className=" d-flex justify-content-between mb-3">
                         <h2 className="title-section">MOTORCYCLE CHOICES</h2>
-                        <a href={process.env.HOST_DOMAIN+"/gallery"} style={{ "top": "7px" }} className="text-sm position-relative text-primary d-block font-weight-bold">
+                        <a href={process.env.HOST_DOMAIN + "/gallery"} style={{ "top": "7px" }} className="text-sm position-relative text-primary d-block font-weight-bold">
                             View All</a>
                     </div>
                     <div className="sliderMobile d-flex align-items-stretch" style={{ marginRight: "-15px" }}>
@@ -207,7 +207,8 @@ export default class extends React.Component {
                     </div>
                     <h2 className="title-section">NOT INCLUDED</h2>
                     <div className="pb-4">
-                        {facilityNotIncluded}
+                        <div dangerouslySetInnerHTML={{ __html: facilityNotIncluded }}>
+                        </div>
                     </div>
                 </div>
                 <div className="container">
@@ -234,7 +235,7 @@ export default class extends React.Component {
                             src={process.env.HOST_URL + imageRoadCaptain}
                         />
                         <div className="pt-3">
-                        <h3 className="title-section">{roadCaptainName} </h3>
+                            <h3 className="title-section">{roadCaptainName} </h3>
                         </div>
                     </div>
                     <div>
@@ -242,7 +243,7 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div className="fixed-bottom">
-                    <Link href={process.env.HOST_DOMAIN+'/transaction/price?page=price&idTrip=' + id} as={process.env.HOST_DOMAIN+'/trip/' + id + '/price'} >
+                    <Link href={process.env.HOST_DOMAIN + '/transaction/price?page=price&idTrip=' + id} as={process.env.HOST_DOMAIN + '/trip/' + id + '/price'} >
                         <button className="btn btn-primary w-100">
                             <div className="d-flex justify-content-between">
                                 <div className="invisible" style={{ fontFamily: '"Open Sans", sans-serif', lineHeight: "18px" }}>

@@ -6,6 +6,9 @@ module.exports = withSass(
     {
       
       assetPrefix: process.env.HOST_DOMAIN,
+      publicRuntimeConfig: { 
+        staticFolder: `${process.env.HOST_DOMAIN}/static`
+      },
       webpack: (config, { dev }) => {
 
         

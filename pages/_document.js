@@ -7,6 +7,8 @@ class MyDocument extends Document {
 				<Head>
 					<meta charSet="UTF-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1" />
+					<link href={process.env.HOST_DOMAIN+"/static/icomoon/style.css"} rel="stylesheet" />
+					<link href={process.env.HOST_DOMAIN+"/static/font/font.css"} rel="stylesheet" />
 					<script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
 				</Head>
 				<body className="r2r-custom">

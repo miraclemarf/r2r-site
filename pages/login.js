@@ -1,11 +1,11 @@
 import React from 'react';
 import TabMenu from '../components/tabMenu';
 import Page from '../components/page';
-import {login} from '../utils/user'
+import { login } from '../utils/user'
 
 export default class extends Page {
 	static async getInitialProps({ req }) {
-		
+
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = await super.getInitialProps({
 			req
@@ -14,7 +14,7 @@ export default class extends Page {
 		if (typeof window === 'undefined') {
 			try {
 				props.nav = 'blue';
-			} catch (e) {}
+			} catch (e) { }
 		}
 		return props;
 	}
@@ -22,27 +22,27 @@ export default class extends Page {
 		super(props);
 
 		this.state = {
-			email:'',
-			password:'',
+			email: '',
+			password: '',
 			isSubmitted: false
 		};
 		this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 	handleChange(e) {
-        const target = e.target, value = target.value, name = target.name;
-        this.setState({ [name]: value });
-    }
-	async handleSubmit(e){
+		const target = e.target, value = target.value, name = target.name;
+		this.setState({ [name]: value });
+	}
+	async handleSubmit(e) {
 		e.preventDefault();
-		
-		const postData = {'email':this.state.email, 'password':this.state.password}
+
+		const postData = { 'email': this.state.email, 'password': this.state.password }
 		login(postData)
-		
+
 	}
 	render() {
 		const tabMenuData = {
-			menu: [ { name: 'Log in' , url:'/login', active:true }, {divider:true}, { name: 'Register',  url:'/register', active:false } ]
+			menu: [{ name: 'Log in', url: process.env.HOST_DOMAIN + '/login', active: true }, { divider: true }, { name: 'Register', url: process.env.HOST_DOMAIN + '/register', active: false }]
 		};
 		return (
 			<div className="container">

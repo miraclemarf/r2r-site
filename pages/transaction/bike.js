@@ -60,7 +60,7 @@ export default class extends React.Component {
         return (
             <div onClick={this.selectedItem} key={index} data-id={data.id} className={(this.state.selectedMotorId == data.id ? "bg-white border-secondary" : "bg-grayF2 border-grayF2") + " p-3 position-relative"} style={{ borderRadius: "8px", minHeight: "150px", marginBottom: "3em", border: "2px solid" }}>
                 <div className="position-relative">
-                    <h4 style={{ lineHeight: "normal" }} className="title-section w-75">2018 - Harley Davidson STEET 750</h4>
+                    <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{data.title}</h4>
                     <div className="position-absolute p-1 text-sm bg-gray text-white" style={{ fontSize: "75%", right: "0", top: "0", borderRadius: "4px" }}>
                         <span className="text-info">+ </span><strong>{'$' + data.price}</strong>
                     </div>

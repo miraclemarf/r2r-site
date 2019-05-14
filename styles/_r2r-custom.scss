@@ -52,11 +52,12 @@ $font-family-base: 'Open Sans', sans-serif;
 }
 
 //R2R NAV
+$iconmenu: $env+"/static/slicing/icon/icon_hamburger.svg";
 $navbar-dark-color: $white;
 $navbar-dark-hover-color: $white;
 $navbar-dark-active-color: $white;
 $navbar-dark-disabled-color: $white;
-$navbar-dark-toggler-icon-bg: str-replace(url("	/preview/static/slicing/icon/icon_hamburger.svg"), "#", "%23");
+$navbar-dark-toggler-icon-bg: str-replace(url($iconmenu), "#", "%23");
 $navbar-dark-toggler-border-color: rgba($white, 0);
 
 .r2r-custom .navbar-toggler-icon {

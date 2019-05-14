@@ -1,6 +1,7 @@
 import React from 'react';
 import TabMenu from '../components/tabMenu';
 import Page from '../components/page';
+import { register } from '../utils/user'
 
 export default class extends Page {
 	static async getInitialProps({ req }) {
@@ -19,12 +20,32 @@ export default class extends Page {
 	constructor(props) {
 		super(props);
 
-		this.state = {};
+		this.state = {
+			email: '',
+			password: '',
+			birthday:'',
+			isSubmitted: false
+		};
+		this.handleChange = this.handleChange.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
+	}
+	handleChange(e) {
+		const target = e.target, value = target.value, name = target.name;
+		this.setState({ [name]: value });
+	}
+	async handleSubmit(e) {
+		e.preventDefault();
+
+		const postData = { 'email': this.state.email, 'password': this.state.password }
+		//console.log(postData);
+		
+		register(postData)
+
 	}
 	dropdownChanged(e) {}
 	render() {
 		const tabMenuData = {
-			menu: [ { name: 'Log in' , url:'/login', active:false }, {divider:true}, { name: 'Register',  url:'/register', active:true } ]
+			menu: [ { name: 'Log in' , url:process.env.HOST_DOMAIN + '/login', active:false }, {divider:true}, { name: 'Register',  url:process.env.HOST_DOMAIN + '/register', active:true } ]
 		};
 		return (
 			<div className="container">
@@ -56,11 +77,11 @@ export default class extends Page {
 					<form>
 						<div className="form-group">
 							<label className="text-black text-sm">Email</label>
-							<input type="email" className="form-control" placeholder="Your Email" />
+							<input type="email" name="email" className="form-control" placeholder="Your Email" onChange={this.handleChange} />
 						</div>
 						<div className="form-group">
 							<label className="text-black text-sm">Create Password</label>
-							<input type="password" className="form-control" placeholder="Create your password" />
+							<input type="password" name="password" className="form-control" placeholder="Create your password" onChange={this.handleChange} />
 						</div>
 						<div className="form-row">
 							<div className="form-group col">
@@ -100,7 +121,7 @@ export default class extends Page {
 							</p>
 						</div>
 						<div>
-							<button className="btn btn-secondary w-100">REGISTER</button>
+							<button className="btn btn-secondary w-100" onClick={this.handleSubmit}>REGISTER</button>
 						</div>
 					</form>
 				</div>

@@ -8,10 +8,10 @@ export default class extends React.Component {
     static async getInitialProps({ req, query: { idTrip } }) {
         let props = {};
         props.nav = 'blue';
-        props.navTrans = {step:3}
+        props.navTrans = { step: 3 }
         props.footer = 'transparent';
         props.idTrip = idTrip;
-        props.transaction={};
+        props.transaction = {};
 
         return props;
     }
@@ -22,29 +22,25 @@ export default class extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    async handleSubmit(e){
-		e.preventDefault();
-		
-		const postData = {
-            'tripId':this.state.transaction.idTrip,
-            'notes':this.state.transaction.notes,
-            'price':this.state.transaction.price.reduce((total, amount) => total + amount),
+    async handleSubmit(e) {
+        e.preventDefault();
+
+        const postData = {
+            'tripId': this.state.transaction.idTrip,
+            'notes': this.state.transaction.notes,
+            'price': this.state.transaction.price.reduce((total, amount) => total + amount),
             'startDate': this.state.transaction.startDate,
             'motor': this.state.transaction.motor.id,
             'accessories': this.state.transaction.accesories,
-
+            'accessToken': this.state.token ? this.state.token.access_token : ""
         }
         // login(postData)
-    
         checkout(postData);
-        
-		
-    
     }
 
-    renderPrice(data,index){
-        return(
-             <div className="d-flex justify-content-between align-items-center pt-3">
+    renderPrice(data, index) {
+        return (
+            <div className="d-flex justify-content-between align-items-center pt-3">
                 <div style={{ lineHeight: "14px" }}>
                     <h5 className="title-section m-0">ADDITIONAL COST</h5>
                     <span style={{ fontSize: "80%" }} className="text-sm">{data.title}</span>
@@ -58,16 +54,16 @@ export default class extends React.Component {
 
     render() {
 
-        
-        const { idTrip,transaction ,trip} = this.state
+
+        const { idTrip, transaction, trip, token } = this.state
         console.log(this.state);
-        
+
         return (
             <div>
                 <div className="py-2"></div>
                 <div className="container">
                     <div className="mb-3">
-                        <a className="text-dark h4 title-section" href={process.env.HOST_DOMAIN+"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
+                        <a className="text-dark h4 title-section" href={process.env.HOST_DOMAIN + "/trip/" + idTrip} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                     </div>
                     <div>
                         <h2 className="title-section text-center mb-4">Check Out</h2>
@@ -76,14 +72,14 @@ export default class extends React.Component {
                         <h4 className="title-section">DATE</h4>
                         <div className="bg-grayF2 p-3" style={{ borderRadius: "8px" }}>
                             <h4 className="title-section text-center m-0">
-                            <Moment unix format="DD MMM YY">{this.state.transaction.startDate / 1000}</Moment> - <Moment unix format="DD MMM YY">{this.state.transaction.endDate / 1000}</Moment> </h4>
+                                <Moment unix format="DD MMM YY">{this.state.transaction.startDate / 1000}</Moment> - <Moment unix format="DD MMM YY">{this.state.transaction.endDate / 1000}</Moment> </h4>
                         </div>
                     </div>
 
                     <div className="mb-4">
                         <h4 className="title-section">MEETING POINT</h4>
                         <div className="bg-grayF2 p-3" style={{ borderRadius: "8px" }} dangerouslySetInnerHTML={{ __html: transaction.meetingPoint }}>
-                          
+
                         </div>
                     </div>
 
@@ -119,12 +115,12 @@ export default class extends React.Component {
                                     </div>
                                 </div>
                                 {
-                                    transaction.accesories.map((item,index) =>(
-                                        this.renderPrice(item,index)
+                                    transaction.accesories.map((item, index) => (
+                                        this.renderPrice(item, index)
                                     ))
                                 }
-                                
-                               
+
+
                             </div>
                         </div>
                     </div>
@@ -146,16 +142,20 @@ export default class extends React.Component {
                     </form>
                 </div>
                 <div className="container">
-                    <div className="py-2"></div>
-                    <div className="pb-4 border-softgray" style={{ borderBottom: "1px solid" }}>
-                        <div className="mb-3">
-                            <span className="text-sm">To continue this process you must log in first!</span>
-                        </div>
-                        <div>
-                            <a href={process.env.HOST_DOMAIN+"/login"} className="d-block w-100 mb-2  btn btn-info ">LOG IN</a>
-                            <a href={process.env.HOST_DOMAIN+"/register"} className="d-block w-100  btn btn-secondary">REGISTER</a>
-                        </div>
-                    </div>
+                    {
+                        !token ?
+                            <div className="pb-4 border-softgray" style={{ borderBottom: "1px solid" }}>
+                                <div className="py-2"></div>
+                                <div className="mb-3">
+                                    <span className="text-sm">To continue this process you must log in first!</span>
+                                </div>
+                                <div>
+                                    <a href={process.env.HOST_DOMAIN + "/login"} className="d-block w-100 mb-2  btn btn-info ">LOG IN</a>
+                                    <a href={process.env.HOST_DOMAIN + "/register"} className="d-block w-100  btn btn-secondary">REGISTER</a>
+                                </div>
+                            </div>
+                            : ""}
+
                     <div>
                         <div className="pt-4">
                             <p className="text-center text-sm mx-3">
@@ -163,7 +163,12 @@ export default class extends React.Component {
                             </p>
                         </div>
                         <div className="pt-2">
-                            <button className="btn btn-grayF2 w-100 text-softgray" onClick={this.handleSubmit}>Confirm</button>
+                        {
+                        !token ?
+                            <button className="btn btn-grayF2 w-100 text-softgray" disabled="disabled">Confirm</button>
+                            :                            
+                            <button className="btn btn-info w-100" onClick={this.handleSubmit}>Confirm</button>
+                        }
                         </div>
                     </div>
                 </div>

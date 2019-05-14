@@ -48,7 +48,7 @@ export const checkout = async (data) => {
 		const response = await fetch(process.env.API_URL +'/transaction/create', {
             method: 'POST',
             headers:{
-                'Authorization' : 'Bearer c4e33e5e-9295-4a4f-bbc7-642261294937',
+                'Authorization' : 'Bearer '+ data.accessToken,
             },
 			body: dataForm
         }).then(response => response.json())

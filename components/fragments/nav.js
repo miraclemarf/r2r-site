@@ -1,6 +1,6 @@
 import React from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import { getUser } from '../../utils/user'
+import { logout } from '../../utils/user'
 
 
 export default class extends React.Component {
@@ -95,7 +95,7 @@ export default class extends React.Component {
 												<div>
 													<b className="h3 ml-4">{user.fullName ? user.fullName : user.email.substring(0, user.email.indexOf("@"))}</b>
 												</div>
-												<div className="ml-auto text-gray pull-right">logout</div>
+												<div className="ml-auto text-gray pull-right"  onClick={() => logout()}>logout</div>
 											</div>
 											:
 											<div className="d-flex justify-content-center my-4">

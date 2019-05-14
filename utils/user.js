@@ -17,7 +17,7 @@ export const login = async (data) => {
 			const token = await response.json();
 			if (token.object) {
 				cookie.set('token', token.object, { expires: token.object.expires_in });
-				window.location.href = '/';
+				window.location.href = process.env.HOST_DOMAIN+'/';
 			}
 		} else {
 			console.log('Login failed.');
@@ -45,8 +45,30 @@ export const myProfile = async (access_token) => {
 	return data.object
 }
 
-export const register = async ({ data }) => {
-	console.log(data);
+export const register = async (data) => {
+	var dataForm = new FormData();
+	dataForm.append('email', data.email);
+	dataForm.append('password', data.password);
+
+	try {
+		const response = await fetch(process.env.API_URL + '/user/registration', {
+			method: 'POST',
+			body: dataForm
+		});
+		if (response.ok) {
+			console.log(response);
+			
+		} else {
+			console.log('register failed.');
+			// https://github.com/developit/unfetch#caveats
+			let error = new Error(response.statusText);
+			error.response = response;
+			return Promise.reject(error);
+		}
+	} catch (error) {
+		console.error('You have an error in your code or there are Network issues.', error);
+		throw new Error(error);
+	}
 };
 
 export const getUser = () =>{
@@ -56,8 +78,9 @@ export const getUser = () =>{
 }
 
 export const logout = () => {
-	console.log('logout');
-	// cookie.remove('token');
+	cookie.remove('token');	
+	window.localStorage.setItem('logout', Date.now());
+	Router.push(process.env.HOST_DOMAIN+'/login');
 };
 
 export const withAuthSync = (WrappedComponent) =>
@@ -105,13 +128,13 @@ export const auth = (ctx) => {
 	
 
 	if (ctx.req && !token) {
-		ctx.res.writeHead(302, { Location: '/login' });
+		ctx.res.writeHead(302, { Location: process.env.HOST_DOMAIN+'/login' });
 		ctx.res.end();
 		return;
 	}
 
 	if (!token) {
-		Router.push('/login');
+		Router.push(process.env.HOST_DOMAIN+'/login');
 	}
 
 	return token;

@@ -84,6 +84,7 @@ export default class extends React.Component {
         }
         if (this.props.transaction.meetingPoint) {
             this.props.transactionState(this.props.transaction)
+            this.props.tripState(this.props.trip)
         }
     }
 

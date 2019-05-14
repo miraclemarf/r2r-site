@@ -50,7 +50,7 @@ export default class extends React.Component {
                     <span style={{ fontSize: "80%" }} className="text-sm">{data.title}</span>
                 </div>
                 <div>
-                    <h3 className="title-section m-0">$ 20</h3>
+                    <h3 className="title-section m-0">$ {data.price}</h3>
                 </div>
             </div>
         )
@@ -59,8 +59,8 @@ export default class extends React.Component {
     render() {
 
         
-        const { idTrip,transaction } = this.state
-        console.log(transaction);
+        const { idTrip,transaction ,trip} = this.state
+        console.log(this.state);
         
         return (
             <div>
@@ -82,11 +82,8 @@ export default class extends React.Component {
 
                     <div className="mb-4">
                         <h4 className="title-section">MEETING POINT</h4>
-                        <div className="bg-grayF2 p-3" style={{ borderRadius: "8px" }}>
-                            <h5 className="title-section m-0">Stasiun YOGYAKARTA</h5>
-                            <p className="text-sm text-gray80 m-0 w-75">
-                                Jl. Pringgokusuman, Pringgokusuman, Gedong Tengen
-                            </p>
+                        <div className="bg-grayF2 p-3" style={{ borderRadius: "8px" }} dangerouslySetInnerHTML={{ __html: transaction.meetingPoint }}>
+                          
                         </div>
                     </div>
 
@@ -105,11 +102,11 @@ export default class extends React.Component {
                             <div>
                                 <div className="d-flex justify-content-between align-items-center pb-3 border-softgray" style={{ borderBottom: "1px solid" }}>
                                     <div style={{ lineHeight: "14px" }}>
-                                        <h5 className="title-section m-0">EXPLORING BROMO</h5>
-                                        <span style={{ fontSize: "80%" }} className="text-sm">Basic Package</span>
+                                        <h5 className="title-section m-0">EXPLORING </h5>
+                                        <span style={{ fontSize: "80%" }} className="text-sm">{trip.object.title}</span>
                                     </div>
                                     <div>
-                                        <h3 className="title-section m-0">$ 120</h3>
+                                        <h3 className="title-section m-0">$ {transaction.price[0]}</h3>
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-between align-items-center pt-3 pb-3 border-softgray" style={{ borderBottom: "1px solid" }}>
@@ -134,7 +131,7 @@ export default class extends React.Component {
                     <div className="mb-4">
                         <div className="d-flex justify-content-between align-items-center">
                             <div><h4 className="title-section">Total</h4></div>
-                            <div><h1 className="title-section text-primary">$ 140</h1></div>
+                            <div><h1 className="title-section text-primary">$ {this.state.transaction.price.reduce((total, amount) => total + amount)}</h1></div>
                         </div>
                     </div>
                 </div>

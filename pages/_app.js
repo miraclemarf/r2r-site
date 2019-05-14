@@ -8,6 +8,7 @@ import Head from 'next/head';
 import Navigate from '../components/fragments/nav';
 import Footer from '../components/fragments/footer';
 import '../styles/style.scss';
+import { throws } from 'assert';
 
 
 class MyApp extends App {
@@ -46,12 +47,12 @@ class MyApp extends App {
 	}
 
 	tripState(data){
+		
 		this.setState({trip: {...data}})
 	}
 
 
 	render() {
-
 		const { Component, pageProps } = this.props;
 		
 		return (
@@ -60,7 +61,7 @@ class MyApp extends App {
 					<title>Road 2 Ring</title>
 				</Head>
 				<Navigate {...pageProps} selectedPrice={this.props.pageProps.navTrans ? this.state.transaction.price ? this.state.transaction.price : "" : ""} />
-				<Component {...pageProps}  transactionState={this.transactionState} transaction={this.state.transaction} />
+				<Component {...pageProps}  transactionState={this.transactionState} tripState={this.tripState} trip={this.state.trip} transaction={this.state.transaction} />
 				<Footer {...pageProps} />
 			</Container>
 		);

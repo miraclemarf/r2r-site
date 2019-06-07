@@ -96,7 +96,7 @@ export default class extends React.Component {
 													className="rounded-circle border border-white"
 													width="40"
 													height="40"
-													src="https://loremflickr.com/100/100/potrait,street"
+													src="https://www.ica.gov.sg/Cwp/assets/ica/images/font-awesome/fa-user-white.png"
 												/>
 												<div>
 													<b className="h3 ml-4">{user.fullName ? user.fullName : user.email.substring(0, user.email.indexOf("@"))}</b>

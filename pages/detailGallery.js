@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Page from '../components/page';
 import SquareCover from '../components/squareCover';
-import TextImgCard from '../components/textImgCard';
+import TextImgCardTrip from '../components/textImgCardTrip';
 import { getLatestTrips } from '../utils/trips';
 import { getLatestGallery } from '../utils/gallery';
 
@@ -144,7 +144,7 @@ export default class extends Page {
 						<div className="sliderMobile d-flex align-items-stretch">
 							{this.state.trips.map((item, key) => (
 								<div key={key} className="mr-3">
-									<TextImgCard {...item} isLandscape={false} iconTextPostion="align-items-end" />
+									<TextImgCardTrip {...item} isLandscape={false} iconTextPostion="align-items-end" />
 								</div>
 							))}
 						</div>

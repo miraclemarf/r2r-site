@@ -35,6 +35,7 @@ class MyApp extends App {
 		/* this.changePrice = this.changePrice.bind(this) */
 		this.transactionState = this.transactionState.bind(this)
 		this.tripState = this.tripState.bind(this)
+		this.checkoutStatusState = this.checkoutStatusState.bind(this)
 	}
 
 	/* changePrice(val) {
@@ -44,6 +45,10 @@ class MyApp extends App {
 		
 		this.setState({ transaction: {...data} })
 
+	}
+
+	checkoutStatusState(data){
+		this.setState({ checkoutStatus: data })
 	}
 
 	tripState(data){
@@ -60,8 +65,8 @@ class MyApp extends App {
 				<Head>
 					<title>Road 2 Ring</title>
 				</Head>
-				<Navigate {...pageProps} selectedPrice={this.props.pageProps.navTrans ? this.state.transaction.price ? this.state.transaction.price : "" : ""} />
-				<Component {...pageProps}  transactionState={this.transactionState} tripState={this.tripState} trip={this.state.trip} transaction={this.state.transaction} />
+				<Navigate {...pageProps} checkoutStatus={this.state.checkoutStatus} selectedPrice={this.props.pageProps.navTrans ? this.state.transaction.price ? this.state.transaction.price : "" : ""} />
+				<Component {...pageProps}  transactionState={this.transactionState} tripState={this.tripState}  checkoutStatusState={this.checkoutStatusState} trip={this.state.trip} transaction={this.state.transaction} />
 				<Footer {...pageProps} />
 			</Container>
 		);

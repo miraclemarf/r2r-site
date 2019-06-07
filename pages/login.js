@@ -3,44 +3,47 @@ import TabMenu from '../components/tabMenu';
 import Page from '../components/page';
 import { login } from '../utils/user'
 
-export default class extends Page {
+export default class extends React.Component {
 	static async getInitialProps({ req }) {
 
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = await super.getInitialProps({
-			req
-		});
-
-		if (typeof window === 'undefined') {
-			try {
-				props.nav = 'blue';
-			} catch (e) { }
-		}
+		let props = {};
+		props.nav = 'blue';
+		props.transaction = {};
 		return props;
 	}
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			...props,
 			email: '',
 			password: '',
 			isSubmitted: false
 		};
+		this.form = React.createRef();
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.validate = this.validate.bind(this)
 	}
+	
+	validate() {
+		this.form.current.reportValidity();
+	  }
 	handleChange(e) {
 		const target = e.target, value = target.value, name = target.name;
 		this.setState({ [name]: value });
 	}
 	async handleSubmit(e) {
 		e.preventDefault();
-
-		const postData = { 'email': this.state.email, 'password': this.state.password }
+		let isHasTransaction = Object.keys(this.state.transaction).length === 0 ? false : true
+		let idTrip = isHasTransaction ? this.state.transaction.idTrip : ""
+		const postData = { 'email': this.state.email, 'password': this.state.password, 'isHasTransaction': isHasTransaction, 'idTrip': idTrip }
 		login(postData)
 
 	}
 	render() {
+
 		const tabMenuData = {
 			menu: [{ name: 'Log in', url: process.env.HOST_DOMAIN + '/login', active: true }, { divider: true }, { name: 'Register', url: process.env.HOST_DOMAIN + '/register', active: false }]
 		};
@@ -78,14 +81,14 @@ export default class extends Page {
 				</div>
 				<div>
 					<h2 className="title-section text-center">LOG IN WITH EMAIL</h2>
-					<form>
+					<form ref={this.form} onSubmit={this.handleSubmit}>
 						<div className="form-group">
 							<label className="text-black text-sm">Email</label>
-							<input type="email" name="email" className="form-control" placeholder="Your Email" onChange={this.handleChange} />
+							<input type="email" name="email" className="form-control" placeholder="Your Email" onChange={this.handleChange} required />
 						</div>
 						<div className="form-group">
 							<label className="text-black text-sm">Password</label>
-							<input type="password" name="password" className="form-control" placeholder="Your Password" onChange={this.handleChange} />
+							<input type="password" name="password" className="form-control" placeholder="Your Password" minLength={6} onChange={this.handleChange} required />
 						</div>
 						<div className="py-3 mx-3 text-center">
 							<p>
@@ -95,7 +98,7 @@ export default class extends Page {
 							</p>
 						</div>
 						<div>
-							<button className="btn btn-secondary w-100" onClick={this.handleSubmit}>LOG IN</button>
+							<button className="btn btn-secondary w-100" onClick={this.validate}>LOG IN</button>
 						</div>
 					</form>
 				</div>

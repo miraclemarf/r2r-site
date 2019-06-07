@@ -4,13 +4,28 @@ import StepTransaction from '../../components/stepTransaction'
 import { getHelmList } from '../../utils/accessories'
 
 export default class extends React.Component {
-    static async getInitialProps({ req, query: { idTrip } }) {
+    static async getInitialProps({ req, query: { idTrip }, res }) {
+        if (res) {
+            res.writeHead(302, {
+                Location: process.env.HOST_DOMAIN + '/trip/' + idTrip
+            })
+            res.end()
+        }
         let props = {};
         props.nav = 'blue';
         props.navTrans = {step:2};
         props.footer = 'transparent';
         props.idTrip = idTrip;
-        props.transaction={};
+        props.transaction = {
+            idTrip:idTrip,
+            meetingPoint:"",
+            startDate:"",
+            endDate:"",
+            motor:{},
+            accesories:[],
+            price:"",
+            notes:""
+        };
         props.selectedHelmet= { id: null };
         props.selectedHelmetSize="";
         props.isViewHelm=false
@@ -57,11 +72,13 @@ export default class extends React.Component {
     selectedSize(e){
         const size = e.currentTarget.getAttribute('data-size');
         this.setState({selectedHelmetSize:size})
-        console.log(this.state);
         
     }
-    handleViewHelm(toogle) {
+    handleViewHelm(toogle, e) {
+        if(this.state.selectedHelmet.id == null) {alert('Please Choose an Option'); e.preventDefault();}
+        else{
         this.setState({ isViewHelm: toogle })
+        }
     }
     renderCardHelm(data, index) {
         
@@ -114,8 +131,7 @@ export default class extends React.Component {
         )
     }
     render() {
-        console.log(this.state.transaction);
-        const { idTrip, helm, selectedHelmet, isViewHelm } = this.state
+        const { idTrip, helm, selectedHelmet, isViewHelm, selectedHelmetSize } = this.state
         return (
             <div>
                 <div className="py-2"></div>
@@ -151,10 +167,10 @@ export default class extends React.Component {
                     {
                         isViewHelm ?
                             <Link href={'/transaction/accesories?page=accesories&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/accesories'} >
-                                <button className="btn btn-primary w-100">NEXT : ACCESORIES</button>
+                                <button onClick={(e) =>  {if(selectedHelmetSize == '') {alert('Please Choose an Option'); e.preventDefault();}}} className="btn btn-primary w-100">NEXT : ACCESORIES</button>
                             </Link>
                             :
-                            <button onClick={() => this.handleViewHelm(true)} className="btn btn-primary w-100">NEXT : CHOOSE SIZE</button>
+                            <button onClick={(e) => this.handleViewHelm(true, e)} className="btn btn-primary w-100">NEXT : CHOOSE SIZE</button>
 
 
                     }

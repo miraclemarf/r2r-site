@@ -4,7 +4,14 @@ import StepTransaction from '../../components/stepTransaction'
 import TextImgCard from '../../components/textImgCard'
 
 export default class extends React.Component {
-    static async getInitialProps({ req, query: { idTrip } }) {
+    static async getInitialProps({ req, query: { idTrip }, res }) {
+        if (res) {
+            res.writeHead(302, {
+                Location: process.env.HOST_DOMAIN + '/trip/' + idTrip
+            })
+            res.end()
+        }
+        
         let props = {};
         props.nav = 'blue';
         props.navTrans = {step:2}

@@ -3,49 +3,60 @@ import TabMenu from '../components/tabMenu';
 import Page from '../components/page';
 import { register } from '../utils/user'
 
-export default class extends Page {
+export default class extends React.Component {
 	static async getInitialProps({ req }) {
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = await super.getInitialProps({
-			req
-		});
-
-		if (typeof window === 'undefined') {
-			try {
-				props.nav = 'blue';
-			} catch (e) {}
-		}
+		let props = {};
+		props.nav = 'blue';
+		props.transaction = {};
 		return props;
 	}
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			...props,
 			email: '',
 			password: '',
-			birthday:'',
+			birthday: '',
+			error: '',
 			isSubmitted: false
 		};
+		this.form = React.createRef();
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.validate = this.validate.bind(this)
+	}
+	validate() {
+		this.form.current.reportValidity();
 	}
 	handleChange(e) {
 		const target = e.target, value = target.value, name = target.name;
 		this.setState({ [name]: value });
+		if (name == 'email') {
+			this.setState({ 'error': '' })
+		}
 	}
 	async handleSubmit(e) {
 		e.preventDefault();
+		let isHasTransaction = Object.keys(this.state.transaction).length === 0 ? false : true
+		let idTrip = isHasTransaction ? this.state.transaction.idTrip : ""
 
-		const postData = { 'email': this.state.email, 'password': this.state.password }
+		const postData = { 'email': this.state.email, 'password': this.state.password, 'isHasTransaction': isHasTransaction, 'idTrip': idTrip }
 		//console.log(postData);
-		
-		register(postData)
+
+		const res = await register(postData)
+		if (res) {
+			this.setState({ 'error': res.message })
+		}
+
 
 	}
-	dropdownChanged(e) {}
+	dropdownChanged(e) { }
 	render() {
+		console.log(this.state);
 		const tabMenuData = {
-			menu: [ { name: 'Log in' , url:process.env.HOST_DOMAIN + '/login', active:false }, {divider:true}, { name: 'Register',  url:process.env.HOST_DOMAIN + '/register', active:true } ]
+			menu: [{ name: 'Log in', url: process.env.HOST_DOMAIN + '/login', active: false }, { divider: true }, { name: 'Register', url: process.env.HOST_DOMAIN + '/register', active: true }]
 		};
 		return (
 			<div className="container">
@@ -61,7 +72,7 @@ export default class extends Page {
 					</a>
 					<a href="#" className="title-section btn btn-sm btn-white d-block text-dark border-dark">
 						<div className="d-flex justify-content-center py-2">
-							<span style={{"background":"url(/preview/static/slicing/icon/Google__G__Logo.svg) no-repeat", "width":"25px", "height":"25px"}} /> <h4 className="mb-0 ml-3">CONTINUE WITH Google</h4>
+							<span style={{ "background": "url(/preview/static/slicing/icon/Google__G__Logo.svg) no-repeat", "width": "25px", "height": "25px" }} /> <h4 className="mb-0 ml-3">CONTINUE WITH Google</h4>
 						</div>
 					</a>
 				</div>
@@ -74,14 +85,22 @@ export default class extends Page {
 				</div>
 				<div>
 					<h2 className="title-section text-center">REGISTER WITH EMAIL</h2>
-					<form>
+					{
+						this.state.error != '' ?
+							<div className="alert alert-danger" role="alert">
+								{this.state.error}
+							</div>
+							:
+							''
+					}
+					<form ref={this.form} onSubmit={this.handleSubmit}>
 						<div className="form-group">
 							<label className="text-black text-sm">Email</label>
-							<input type="email" name="email" className="form-control" placeholder="Your Email" onChange={this.handleChange} />
+							<input type="email" name="email" className="form-control" placeholder="Your Email" onChange={this.handleChange} required />
 						</div>
 						<div className="form-group">
 							<label className="text-black text-sm">Create Password</label>
-							<input type="password" name="password" className="form-control" placeholder="Create your password" onChange={this.handleChange} />
+							<input type="password" name="password" className="form-control" placeholder="Create your password" minLength={6} onChange={this.handleChange} required />
 						</div>
 						<div className="form-row">
 							<div className="form-group col">
@@ -121,7 +140,7 @@ export default class extends Page {
 							</p>
 						</div>
 						<div>
-							<button className="btn btn-secondary w-100" onClick={this.handleSubmit}>REGISTER</button>
+							<button className="btn btn-secondary w-100" onClick={this.validate}>REGISTER</button>
 						</div>
 					</form>
 				</div>

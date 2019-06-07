@@ -17,7 +17,13 @@ export const login = async (data) => {
 			const token = await response.json();
 			if (token.object) {
 				cookie.set('token', token.object, { expires: token.object.expires_in });
-				window.location.href = process.env.HOST_DOMAIN+'/';
+				if(data.isHasTransaction){
+					Router.push('/transaction/checkout?page=checkout&idTrip='+data.idTrip , process.env.HOST_DOMAIN+'/trip/'+data.idTrip+'/checkout');
+				}
+				else{
+					window.location.href = process.env.HOST_DOMAIN+'/';
+					//Router.push('/',  process.env.HOST_DOMAIN+'/')
+				}
 			}
 		} else {
 			console.log('Login failed.');
@@ -56,14 +62,16 @@ export const register = async (data) => {
 			body: dataForm
 		});
 		if (response.ok) {
-			console.log(response);
+			login(data)
 			
 		} else {
 			console.log('register failed.');
+			const res = await response.json();
+			
 			// https://github.com/developit/unfetch#caveats
-			let error = new Error(response.statusText);
-			error.response = response;
-			return Promise.reject(error);
+			//let error = new Error(res.message);
+			//error.response = response;
+			return res;
 		}
 	} catch (error) {
 		console.error('You have an error in your code or there are Network issues.', error);

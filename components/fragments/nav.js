@@ -40,6 +40,12 @@ export default class extends React.Component {
 	}
 	render() {
 		let {token, user} = this.props;
+		let isCheckoutSuccess = false;
+		if(this.props.checkoutStatus){
+			isCheckoutSuccess = Object.keys(this.props.checkoutStatus).length === 0 ? false : true
+		}
+		
+		
 		return (
 			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
 				<Navbar className={(this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary') + " position-relative"} dark expand="md">
@@ -50,7 +56,7 @@ export default class extends React.Component {
 					</NavbarBrand>
 					{
 						this.props.navTrans ?
-							<div style={{ right: "0", left: "0" }} className="m-auto position-absolute">
+							<div style={{ right: "0", left: "0" }} className={"m-auto position-absolute "+(isCheckoutSuccess ? "collapse":"")}>
 								<div className="d-flex justify-content-center">
 									<div style={{ width: "25px", height: "25px" }} className={(this.props.navTrans.step == 1 ? "border-primary text-primary bg-white" : "border-white text-white") + " border text-sm text-center"}>1</div>
 									<div style={{ width: "25px", height: "25px" }} className={(this.props.navTrans.step == 2 ? "border-primary text-primary bg-white" : "border-white text-white") + " border text-sm text-center mx-2"}>2</div>
@@ -63,8 +69,8 @@ export default class extends React.Component {
 							</button>
 					}
 					{
-						this.props.navTrans ?
-							this.props.selectedPrice.length ? <div style={{ lineHeight: "18px", marginTop: "-1px" }} className="text-white">
+						this.props.navTrans  ?
+							this.props.selectedPrice.length ? <div style={{ lineHeight: "18px", marginTop: "-1px" }} className={"text-white "+(isCheckoutSuccess ? "collapse":"")}>
 								<div style={{ fontSize: "70%" }} className="text-sm font-weight-light text-right">TOTAL</div>
 								<div className="h5 font-weight-bold">${this.props.selectedPrice.reduce((total, amount) => total + amount)}</div>
 							</div> : ""

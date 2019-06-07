@@ -1,10 +1,18 @@
 import React from 'react'
 import Link from 'next/link'
+import Router from 'next/router'
 import Moment from 'react-moment'
 import { getPriceTrip } from '../../utils/trips'
 
 export default class extends React.Component {
-    static async getInitialProps({ req, query: { idTrip } }) {
+    static async getInitialProps({ req, query: { idTrip }, res }) {
+        if (res) {
+            res.writeHead(302, {
+                Location: process.env.HOST_DOMAIN + '/trip/' + idTrip
+            })
+            res.end()
+        }
+
         let props = {};
         props.nav = 'blue';
         props.navTrans = { step: 1 }
@@ -12,15 +20,15 @@ export default class extends React.Component {
         props.idTrip = idTrip;
         props.selectedPriceId = '';
         props.transaction = {
-				idTrip:idTrip,
-				meetingPoint:"",
-				startDate:"",
-				endDate:"",
-				motor:{},
-				accesories:[],
-				price:[],
-				notes:""
-			};
+            idTrip: idTrip,
+            meetingPoint: "",
+            startDate: "",
+            endDate: "",
+            motor: {},
+            accesories: [],
+            price: [],
+            notes: ""
+        };
         try {
             const data = await getPriceTrip(idTrip);
             props.price = data.object;
@@ -41,23 +49,24 @@ export default class extends React.Component {
         }
     }
     selectedItem(e) {
-        
-        const {transaction} = this.state
+
+        const { transaction } = this.state
         const priceId = e.currentTarget.getAttribute('data-id');
         const priceObj = this.state.price.find((obj) => obj.id === parseInt(priceId))
-        let price =  [...transaction.price]
+        let price = [...transaction.price]
         price = [priceObj.price]
-        
+
         this.setState(
             {
                 selectedPriceId: priceId,
-                transaction:{
-                ...transaction, 
-                startDate:priceObj.startTrip, 
-                endDate:priceObj.finishTrip, 
-                price: price
-                
-            }})
+                transaction: {
+                    ...transaction,
+                    startDate: priceObj.startTrip,
+                    endDate: priceObj.finishTrip,
+                    price: price
+
+                }
+            })
     }
     renderCardDate(data, index) {
         return (
@@ -89,8 +98,8 @@ export default class extends React.Component {
         )
     }
     render() {
-        const { idTrip, price,transaction } = this.state
-        console.log(this.state);
+        const { idTrip, price, transaction, selectedPriceId } = this.state
+        console.log(selectedPriceId);
         
         return (
             <div>
@@ -98,7 +107,7 @@ export default class extends React.Component {
 
                 <div className="container">
                     <div className="mb-3">
-                        <a className="text-dark h4 title-section" href={process.env.HOST_DOMAIN+"/trip/" + idTrip} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
+                        <a className="text-dark h4 title-section" href={process.env.HOST_DOMAIN + "/trip/" + idTrip} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                     </div>
                     <div className="bg-grayF2 p-4 d-flex justify-content-between" style={{ borderRadius: "12px" }}>
                         <div>
@@ -124,8 +133,8 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div className="fixed-bottom">
-                    <Link href={'/transaction/bike?page=bike&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/bike'} >
-                        <button className="btn btn-primary w-100">
+                    <Link href={'/transaction/bike?page=bike&idTrip=' + idTrip} as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/bike'} >
+                        <button onClick={(e) =>  {if(selectedPriceId == '') {alert('Please Choose an Option'); e.preventDefault();}}} className="btn btn-primary w-100">
                             Next : choose Bike
                         </button>
                     </Link>

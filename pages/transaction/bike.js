@@ -4,7 +4,13 @@ import StepTransaction from '../../components/stepTransaction'
 import { getLatestMotor } from '../../utils/motor'
 
 export default class extends React.Component {
-    static async getInitialProps({ req, query: { idTrip } }) {
+    static async getInitialProps({ req, query: { idTrip }, res }) {
+        if (res) {
+            res.writeHead(302, {
+                Location: process.env.HOST_DOMAIN + '/trip/' + idTrip
+            })
+            res.end()
+        }
         let props = {};
         props.nav = 'blue';
         props.navTrans = {step:2};
@@ -74,8 +80,7 @@ export default class extends React.Component {
     }
     render() {
         
-        const { idTrip, motor } = this.state
-        console.log(this.state);
+        const { idTrip, motor, selectedMotorId } = this.state
         
         return (
             <div>
@@ -106,7 +111,7 @@ export default class extends React.Component {
 
                 <div className="fixed-bottom">
                     <Link href={'/transaction/helm?page=helm&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/helm'} >
-                        <button className="btn btn-primary w-100">
+                    <button onClick={(e) =>  {if(selectedMotorId == '') {alert('Please Choose an Option'); e.preventDefault();}}} className="btn btn-primary w-100">
                             NEXT : ACCESORIES
                         </button>
                     </Link>

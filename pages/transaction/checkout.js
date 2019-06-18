@@ -19,6 +19,7 @@ export default class extends React.Component {
         props.idTrip = idTrip;
         props.transaction = {};
         props.checkoutStatus = null;
+        props.notes = ''
 
         return props;
     }
@@ -27,14 +28,18 @@ export default class extends React.Component {
 
         this.state = { ...props };
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
-
+    handleChange(e) {
+		const target = e.target, value = target.value, name = target.name;
+		this.setState({notes:value});
+	}
     async handleSubmit(e) {
         e.preventDefault();
 
         const postData = {
             'tripId': this.state.transaction.idTrip,
-            'notes': this.state.transaction.notes,
+            'notes': this.state.notes,
             'price': this.state.transaction.price.reduce((total, amount) => total + amount),
             'startDate': this.state.transaction.startDate,
             'motor': this.state.transaction.motor.id,
@@ -117,7 +122,7 @@ export default class extends React.Component {
 
                 <div className="mb-4 pb-2">
                     <a href={process.env.HOST_DOMAIN + "/user/profile"} className="d-block w-100 mb-3  btn btn-primary ">COMPLETE PROFILE</a>
-                    <a href={process.env.HOST_DOMAIN + "/user/transaction"} className="d-block w-100  btn btn-info">SEE PAYMENT STATUS</a>
+                    <a href={process.env.HOST_DOMAIN + "/user/trips"} className="d-block w-100  btn btn-info">SEE PAYMENT STATUS</a>
                 </div>
                 <div className="text-center">
                     <a href={process.env.HOST_DOMAIN + "/"} className="text-primary"><b>Back to Home</b></a>
@@ -210,7 +215,7 @@ export default class extends React.Component {
                         <h4 className="title-section">Notes</h4>
                         <form>
                             <div className="form-group m-0">
-                                <textarea placeholder="Add any notes if you have some request, we will try to make your trip better!" className="form-control" rows="4" style={{ fontSize: "95%", color: "#808080", fontStyle: "italic" }}></textarea>
+                                <textarea onChange={this.handleChange} name="notes" placeholder="Add any notes if you have some request, we will try to make your trip better!" className="form-control" rows="4" style={{ fontSize: "95%", color: "#808080", fontStyle: "italic" }}></textarea>
                             </div>
                         </form>
                     </div>

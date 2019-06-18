@@ -5,9 +5,10 @@ import SquareCover from '../components/squareCover';
 import TextImgCard from '../components/textImgCard';
 import { getLatestTrips } from '../utils/trips';
 import { getLatestGallery } from '../utils/gallery';
+import { getDetailTestimonial } from "../utils/testimonial";
 
 export default class extends Page {
-	static async getInitialProps({ req }) {
+	static async getInitialProps({ req, query: { id } }) {
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = await super.getInitialProps({
 			req
@@ -17,10 +18,12 @@ export default class extends Page {
 			try {
 				const tripsData = await getLatestTrips();
 				const galleryData = await getLatestGallery();
+				const testimonialData = await getDetailTestimonial(id);
 				props.trips = tripsData.object;
-				props.gallery = galleryData;
+				props.gallery = galleryData.object;
+				props.testimonial = testimonialData.object;
 				props.footer = 'transparent';
-			} catch (e) {}
+			} catch (e) { }
 		}
 		return props;
 	}
@@ -29,7 +32,8 @@ export default class extends Page {
 
 		this.state = {
 			trips: props.trips || null,
-			gallery: props.gallery || null
+			gallery: props.gallery || null,
+			testimonial: props.testimonial || null
 		};
 	}
 	async componentDidMount() {
@@ -37,9 +41,11 @@ export default class extends Page {
 			try {
 				const tripsData = await getLatestTrips();
 				const galleryData = await getLatestGallery();
+				const testimonialData = await getDetailTestimonial(id);
 				this.setState({
 					trips: tripsData.object,
-					gallery: galleryData
+					gallery: galleryData.object,
+					testimonial: testimonialData.object
 				});
 			} catch (e) {
 				console.log(e);
@@ -79,29 +85,33 @@ export default class extends Page {
 			<div style={{ margin: '0 -4px' }} className="row no-gutters">
 				{this.state.gallery.map((item, key) => (
 					<div key={key} className={key == 2 ? 'col-12' : 'col-6'}>
-						<img src={item.coverLandscape} className="img-fluid" />
+						<img src={process.env.HOST_URL+item.coverLandscape} className="img-fluid" />
 					</div>
 				))}
 			</div>
 		);
 	}
 	render() {
+		//console.log(this.state);
+
+		const { testimonial } = this.state;
+
 		return (
 			<div>
-				<SquareCover imgCover="https://loremflickr.com/720/1000/potrait,street" withIcon={true} />
+				<SquareCover imgCover={testimonial.coverPotrait} withIcon={true} />
 				<div className="text-center position-relative mb-4" style={{ marginTop: '-40px' }}>
 					<img
 						className="rounded-circle border border-white"
 						width="80"
 						height="80"
-						src="https://loremflickr.com/100/100/potrait,street"
+						src={process.env.HOST_URL + testimonial.captainPicture}
 					/>
 					<div className="pt-2">
-						<b>Arif Widi </b>
+						<b>{testimonial.captainName} </b>
 						<span>on</span>
 					</div>
 					<div className="pt-3">
-						<img height="120" src={process.env.HOST_DOMAIN+"/static/slicing/img/destination/Untitled.svg"} />
+						<img height="120" src={process.env.HOST_URL + testimonial.iconCover} />
 					</div>
 					<div className="pt-3 d-flex justify-content-center">
 						<div className="text-center mr-3">
@@ -109,28 +119,31 @@ export default class extends Page {
 							<br />
 							<span className="text-sm">Distance</span>
 							<br />
-							<b>42 Km</b>
+							<b>{testimonial.distance} Km</b>
 						</div>
 						<div className="text-center ml-3">
 							<span className="h1 icon-icon_duration text-gray80" />
 							<br />
 							<span className="text-sm">Duration</span>
 							<br />
-							<b>3 Days</b>
+							<b>{testimonial.duration} Days</b>
 						</div>
 					</div>
 				</div>
 				<div>
-					<p className="container mb-0">
-						The Bromo Tengger Semeru National Park offers some of the most amazing landscapes in the whole
-						of Indonesia. It is especially beautiful at sunrise as the mist rolls over the valley and the
-						sun rises behind Bromo Volcano.
+					<p className="container mb-0" dangerouslySetInnerHTML={{ __html: testimonial.description }}>
+
 					</p>
 				</div>
 				<div>
-					{this.renderTimeline()}
-					{this.renderTimeline()}
+					<div className="article-img__fluid" dangerouslySetInnerHTML={{__html: testimonial.article}}>
+
+					</div>
 				</div>
+				{/* <div>
+					{this.renderTimeline()}
+					{this.renderTimeline()}
+				</div> */}
 				<div className="container my-4 d-flex align-items-center justify-content-between">
 					<div>
 						<h4 className="title-section text-dark m-0">Share to</h4>
@@ -144,8 +157,8 @@ export default class extends Page {
 					<div className="py-2" />
 					<h2 className="title-section text-center title-section__with-border pb-2">Gallery</h2>
 					{this.renderGalleryCol()}
-						<a href={process.env.HOST_DOMAIN+"/gallery"} className="mt-2 btn btn-primary d-block">
-							SEE ALL
+					<a href={process.env.HOST_DOMAIN + "/gallery"} className="mt-2 btn btn-primary d-block">
+						SEE ALL
 						</a>
 				</div>
 				<div className="container py-4">
@@ -159,8 +172,8 @@ export default class extends Page {
 							))}
 						</div>
 					) : (
-						''
-					)}
+							''
+						)}
 				</div>
 			</div>
 		);

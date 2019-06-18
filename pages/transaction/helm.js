@@ -70,8 +70,12 @@ export default class extends React.Component {
             }})
     }
     selectedSize(e){
+        
+        const {helm, transaction} = this.state
         const size = e.currentTarget.getAttribute('data-size');
-        this.setState({selectedHelmetSize:size})
+        let accesories = [...transaction.accesories]       
+        accesories[0].size =size
+        this.setState({selectedHelmetSize:size, accesories:accesories,})
         
     }
     handleViewHelm(toogle, e) {

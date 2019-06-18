@@ -87,3 +87,46 @@
 		overflow-x: auto;
 	}
 }
+.article-img__fluid .img__wrap {
+	margin: 0 -15px;
+}
+.article-img__fluid blockquote {
+	width: 75%;
+	text-align: center;
+	font-size: 1.4em;
+	margin: auto;
+	padding: 50px 0;
+	position: relative;
+}
+.article-img__fluid blockquote::before,
+.article-img__fluid blockquote::after {
+	content: '';
+	background: url($env+"/static/slicing/icon/icon_quote.svg") no-repeat;
+	background-size: contain;
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	margin: auto;
+	left: 0;
+	right: 0;
+}
+.article-img__fluid blockquote::before {
+	top: 0;
+}
+.article-img__fluid blockquote::after {
+	bottom: 0;
+}
+.article-img__fluid blockquote p {
+	margin: 0;
+}
+.article-img__fluid blockquote p:first-child {
+	padding-bottom: .8em;
+	line-height: normal;
+	font-style: italic;
+	font-weight: 700;
+	font-size: 1.3em;
+}
+.article-img__fluid blockquote p:last-child {
+	font-size: .8em;
+	font-weight: 700;
+}

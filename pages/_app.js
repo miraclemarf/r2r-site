@@ -15,6 +15,7 @@ class MyApp extends App {
 	static async getInitialProps({ Component, ctx }) {
 		let pageProps = {}
 		let user = null
+		
 		let {token} = cookies(ctx)
 		if (Component.getInitialProps) {
 		  pageProps = await Component.getInitialProps(ctx)

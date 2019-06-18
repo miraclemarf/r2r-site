@@ -57,11 +57,13 @@ app.prepare().then(() => {
 
   server.get('/testimonial/:id', (req, res) => {
     const actualPage = '/detailTestimonial'
-    return app.render(req, res, actualPage)
+    const queryParams = { id: req.params.id }
+    return app.render(req, res, actualPage, queryParams)
   })
   server.get('/gallery/:id', (req, res) => {
     const actualPage = '/detailGallery'
-    return app.render(req, res, actualPage)
+    const queryParams = { id: req.params.id }
+    return app.render(req, res, actualPage, queryParams)
   })
 
   server.get('/trip/:id', (req, res) => {
@@ -81,6 +83,13 @@ app.prepare().then(() => {
   server.get('/how-it-works', (req, res) => {
     const actualPage = '/howItWorks'
     return app.render(req, res, actualPage)
+  })
+
+  server.get('/user/trip/:id', (req, res) => {
+    const actualPage = '/user/detailTrip'
+
+    const queryParams = { id: req.params.id }
+    return app.render(req, res, actualPage, queryParams)
   })
 
   server.all('*', (req, res) => {

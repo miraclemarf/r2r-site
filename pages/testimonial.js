@@ -1,7 +1,7 @@
 import React from 'react';
 import TextImgCard from '../components/textImgCard';
 import Pagination from '../components/pagination';
-import { getLatestGallery } from '../utils/gallery';
+import { getLatestTestimonial } from '../utils/testimonial';
 import Page from '../components/page';
 
 export default class extends Page {
@@ -13,8 +13,8 @@ export default class extends Page {
 
 		if (typeof window === 'undefined') {
 			try {
-				const galleryData = await getLatestGallery();
-                props.gallery = galleryData.object;
+				const testimonialData = await getLatestTestimonial();
+                props.testimonial = testimonialData.object;
                 props.nav = 'blue';
                 props.footer = 'transparent';
 			} catch (e) {
@@ -28,15 +28,15 @@ export default class extends Page {
 
 		this.state = {
 			trips: props.trips || null,
-			gallery: props.gallery || null
+			testimonial: props.testimonial || null
 		};
 	}
 	async componentDidMount() {
 		if (process.browser) {
 			try {
-				const galleryData = await getLatestGallery();
+				const testimonialData = await getLatestTestimonial();
 				this.setState({
-					gallery: galleryData.object
+					testimonial: testimonialData.object
 				});
 			} catch (e) {
 				console.log(e);
@@ -48,12 +48,12 @@ export default class extends Page {
 		return (
 			<div>
 				<div className="py-2" />
-				<h1 className="h2 title-section mx-3 mb-3">TRIPS GALLERY</h1>
-				{this.state.gallery ? (
+				<h1 className="h2 title-section mx-3 mb-3">TRIPS Testimonial</h1>
+				{this.state.testimonial ? (
 					<div>
-						{this.state.gallery.map((item, key) => (
+						{this.state.testimonial.map((item, key) => (
 							<div key={key} className="mb-1">
-								<TextImgCard {...item} isLandscape={true} iconTextPostion="align-items-center" section="gallery" />
+								<TextImgCard {...item} isLandscape={true} iconTextPostion="align-items-center" section="testimonial" />
 							</div>
                         ))}
                         <div className="mt-4 mb-4">

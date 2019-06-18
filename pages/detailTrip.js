@@ -128,10 +128,10 @@ export default class extends React.Component {
         console.log(this.state);
 
 
-        const { id, coverLandscape, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries } = this.state.trip.object
+        const { id, coverLandscape, title, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries } = this.state.trip.object
         return (
             <div style={{ "paddingBottom": "4em" }}>
-                <SquareCover imgCover={process.env.HOST_URL + coverLandscape} withIcon={true} iconTrip={process.env.HOST_URL + iconCover} />
+                <SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
                 <div className="container">
                     <div className="py-3">
                         <span className="text-primary text-sm"><b>{location}</b></span>

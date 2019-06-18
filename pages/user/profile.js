@@ -2,7 +2,7 @@ import React from 'react';
 
 import Router from 'next/router';
 import { Input } from 'reactstrap';
-import { auth  } from "../../utils/user"
+import { auth } from "../../utils/user"
 
 class Profile extends React.Component {
 	static async getInitialProps(req) {
@@ -14,34 +14,34 @@ class Profile extends React.Component {
 			try {
 				props.nav = 'blue';
 				props.footer = 'transparent';
-			} catch (e) {}
+			} catch (e) { }
 		}
-		
+
 		return props;
 	}
 	constructor(props) {
 		super(props);
 
 		this.state = {
-            profilePicture: '',
-            identityPersonFile: '',
-            identityDriverFile: ''
+			profilePicture: '',
+			identityPersonFile: '',
+			identityDriverFile: ''
 		};
 
-		
+
 
 		this.handleFileSelect = this.handleFileSelect.bind(this);
 		this.clickUpload = this.clickUpload.bind(this);
 	}
 	clickUpload(e) {
-        //console.log(this.logo.current)
-        console.log(e.target)
+		//console.log(this.logo.current)
+		console.log(e.target)
 		let id = e.target.id
 		//this.id.click();
-		if(id == "profilePicture"){
+		if (id == "profilePicture") {
 			this.profilePicture.click();
 		}
-		else if( id == "identityPersonFile"){
+		else if (id == "identityPersonFile") {
 			this.identityPersonFile.click()
 		}
 		else {
@@ -49,11 +49,11 @@ class Profile extends React.Component {
 		}
 	}
 	handleFileSelect(event) {
-	console.log(event.target.files[0]);
-	let name = event.target.name;
-	let value = URL.createObjectURL(event.target.files[0])
+		console.log(event.target.files[0]);
+		let name = event.target.name;
+		let value = URL.createObjectURL(event.target.files[0])
 		this.setState({
-			[name] : value
+			[name]: value
 		})
 
 		/* this.setState({
@@ -69,7 +69,7 @@ class Profile extends React.Component {
 				<form>
 					<div className="form-group text-center">
 						<div id="profilePicture"
-							style={{ width: '100px', height: '100px',  background: "url("+this.state.profilePicture+") center/cover no-repeat" }}
+							style={{ width: '100px', height: '100px', background: "url(" + this.state.profilePicture + ") center/cover no-repeat" }}
 							className="bg-softgray mx-auto rounded-circle"
 							onClick={this.clickUpload}
 						/>
@@ -130,11 +130,11 @@ class Profile extends React.Component {
 							<option>...</option>
 						</select>
 						<input type="number" className="form-control mb-2" placeholder="Your ID Number" />
-						<div style={{ borderRadius: '16px', minHeight: '200px',  background: "#E6E6E6 url("+this.state.identityPersonFile+") center/cover no-repeat" } }
+						<div style={{ borderRadius: '16px', minHeight: '200px', background: "#E6E6E6 url(" + this.state.identityPersonFile + ") center/cover no-repeat" }}
 							className="border border-softgray text-center d-flex"
 						>
 							<div className="align-self-center mx-auto" >
-								<span  id="identityPersonFile"
+								<span id="identityPersonFile"
 									onClick={this.clickUpload}
 									style={{ fontSize: '5em' }}
 									className="icon-icon_id_card d-block text-gray80 mb-3"
@@ -153,13 +153,13 @@ class Profile extends React.Component {
 					<div className="form-group">
 						<label className="text-black text-sm">Your Driving License</label>
 						<input type="number" className="form-control mb-2" placeholder="Your ID Number" />
-						<div 
-							style={{ borderRadius: '16px',  background: "#E6E6E6 url("+this.state.identityDriverFile+") center/cover no-repeat", minHeight: '200px' }}
+						<div
+							style={{ borderRadius: '16px', background: "#E6E6E6 url(" + this.state.identityDriverFile + ") center/cover no-repeat", minHeight: '200px' }}
 							className="border border-softgray text-center d-flex"
 						>
 							<div className="align-self-center mx-auto">
 								<span id="identityDriverFile"
-							onClick={this.clickUpload}
+									onClick={this.clickUpload}
 									style={{ fontSize: '5em' }}
 									className="icon-icon_id_card d-block text-gray80 mb-3"
 								/>

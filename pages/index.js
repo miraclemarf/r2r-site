@@ -21,15 +21,21 @@ export default class extends Page {
 				const tripsRes = await fetch(process.env.API_URL+'/trips/0/4');
 				const tripsData = await tripsRes.json();
 
-				const testiMonialsRes = await fetch('http://localhost:3000/api/testimonials?_start=10&_limit=5');
+				const headlineRes = await fetch(process.env.API_URL+'/headline')
+				const headlineData = await headlineRes.json()
+
+				
+				const testiMonialsRes =await fetch(process.env.API_URL+'/testimonial/all-testimonials/0/5')
 				const testimonialsData = await testiMonialsRes.json();
 
-				const galleryRes = await fetch('http://localhost:3000/api/gallerys?_start=10&_limit=5');
+				
+				const galleryRes = await fetch(process.env.API_URL+'/gallery/all-galleries/0/5')
 				const galleryData = await galleryRes.json();
 
+				props.headline = headlineData.object
 				props.trips = tripsData.object;
-				props.testimonials = testimonialsData;
-				props.gallery = galleryData;
+				props.testimonials = testimonialsData.object;
+				props.gallery = galleryData.object;
 				
 			} catch (e) {
 				props.error = 'Unable to fetch AsyncData on server';
@@ -46,7 +52,7 @@ export default class extends Page {
 	render() {
 		return (
 			<div>
-				<MainCover imgCover="https://loremflickr.com/720/1000/mountain" withIcon={true} />
+				<MainCover {...this.props.headline} />
 				<div>
 					<div className="my-4 mx-3">
 						<h1 className="h2 title-section mb-3">Next Trips</h1>

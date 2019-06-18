@@ -4,23 +4,25 @@ import Page from '../components/page';
 import SquareCover from '../components/squareCover';
 import TextImgCardTrip from '../components/textImgCardTrip';
 import { getLatestTrips } from '../utils/trips';
-import { getLatestGallery } from '../utils/gallery';
+import { getLatestGallery, getDetailGallery } from '../utils/gallery';
 
 export default class extends Page {
-	static async getInitialProps({ req }) {
+	static async getInitialProps({ req , query: { id } }) {
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = await super.getInitialProps({
 			req
-		});
-
+		});	
+		
 		if (typeof window === 'undefined') {
 			try {
 				const tripsData = await getLatestTrips();
 				const galleryData = await getLatestGallery();
+				const detailGallery = await getDetailGallery(id);
 				props.trips = tripsData.object;
-				props.gallery = galleryData;
+				props.gallery = galleryData.object;
+				props.detailGallery = detailGallery.object
 				props.footer = 'transparent';
-			} catch (e) {}
+			} catch (e) { }
 		}
 		return props;
 	}
@@ -29,7 +31,8 @@ export default class extends Page {
 
 		this.state = {
 			trips: props.trips || null,
-			gallery: props.gallery || null
+			gallery: props.gallery || null,
+			detailGallery:props.detailGallery||null
 		};
 	}
 	async componentDidMount() {
@@ -37,9 +40,11 @@ export default class extends Page {
 			try {
 				const tripsData = await getLatestTrips();
 				const galleryData = await getLatestGallery();
+				const detailGallery = await getDetailGallery(id);
 				this.setState({
 					trips: tripsData.object,
-					gallery: galleryData
+					gallery: galleryData.object,
+					detailGallery: detailGallery.object
 				});
 			} catch (e) {
 				console.log(e);
@@ -79,19 +84,20 @@ export default class extends Page {
 			<div style={{ margin: '0 -4px' }} className="row no-gutters">
 				{this.state.gallery.map((item, key) => (
 					<div key={key} className={key == 2 ? 'col-12' : 'col-6'}>
-						<img src={item.coverLandscape} className="img-fluid" />
+						<img src={process.env.HOST_URL+item.coverLandscape} className="img-fluid" />
 					</div>
 				))}
 			</div>
 		);
 	}
 	render() {
+		const { detailGallery } = this.state		
 		return (
 			<div>
-				<SquareCover imgCover="https://loremflickr.com/720/1000/potrait,street" withIcon={true} />
+				<SquareCover imgCover={detailGallery.coverLandscape} withIcon={true} />
 				<div className="text-center position-relative mb-4">
 					<div className="pt-4">
-						<img height="120" src={process.env.HOST_DOMAIN+"/static/slicing/img/destination/Untitled.svg"} />
+						<img height="120" src={process.env.HOST_URL + detailGallery.iconCover} />
 					</div>
 					<div className="pt-3 d-flex justify-content-center">
 						<div className="text-center mr-3">
@@ -99,27 +105,26 @@ export default class extends Page {
 							<br />
 							<span className="text-sm">Distance</span>
 							<br />
-							<b>42 Km</b>
+							<b>{detailGallery.distance} Km</b>
 						</div>
 						<div className="text-center ml-3">
 							<span className="h1 icon-icon_duration text-gray80" />
 							<br />
 							<span className="text-sm">Duration</span>
 							<br />
-							<b>3 Days</b>
+							<b>{detailGallery.duration} Days</b>
 						</div>
 					</div>
 				</div>
 				<div>
-					<p className="container mb-0">
-						The Bromo Tengger Semeru National Park offers some of the most amazing landscapes in the whole
-						of Indonesia. It is especially beautiful at sunrise as the mist rolls over the valley and the
-						sun rises behind Bromo Volcano.
+					<p className="container mb-0" dangerouslySetInnerHTML={{ __html: detailGallery.description }}>
+
 					</p>
 				</div>
 				<div>
-					{this.renderTimeline()}
-					{this.renderTimeline()}
+					<div className="article-img__fluid" dangerouslySetInnerHTML={{ __html: detailGallery.article }}>
+
+					</div>
 				</div>
 				<div className="container my-4 d-flex align-items-center justify-content-between">
 					<div>
@@ -134,8 +139,8 @@ export default class extends Page {
 					<div className="py-2" />
 					<h2 className="title-section text-center title-section__with-border pb-2">Gallery</h2>
 					{this.renderGalleryCol()}
-						<a href={process.env.HOST_DOMAIN+"/gallery"} className="mt-2 btn btn-primary d-block">
-							SEE ALL
+					<a href={process.env.HOST_DOMAIN + "/gallery"} className="mt-2 btn btn-primary d-block">
+						SEE ALL
 						</a>
 				</div>
 				<div className="container py-4">
@@ -149,8 +154,8 @@ export default class extends Page {
 							))}
 						</div>
 					) : (
-						''
-					)}
+							''
+						)}
 				</div>
 			</div>
 		);

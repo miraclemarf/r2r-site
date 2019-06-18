@@ -32,8 +32,6 @@ export const confirmOrder = async (data) => {
 export const checkout = async (data) => {
     var dataForm = new FormData();
 
-    console.log(moment(data.startDate).format('MM/DD/YYYY, LTS'));
-
     dataForm.append('trip.id', data.tripId)
     dataForm.append('notes', data.notes);
     dataForm.append('price', data.price);

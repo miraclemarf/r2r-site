@@ -1,6 +1,6 @@
 export default () => (
 	<div className="card text-white  border-0 overlay--img__blue">
-		<img className="card-img rounded-0" src="https://loremflickr.com/375/260/bike?random=522" />
+		<img className="card-img rounded-0" src={process.env.HOST_URL+"/img/assets/1560517584670qi11z75y.jpeg"} />
 		<div className="card-img-overlay d-flex align-items-center">
 			<div>
 				<h2 className="card-title title-section text-center">How It Works?</h2>

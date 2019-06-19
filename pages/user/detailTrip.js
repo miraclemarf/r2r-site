@@ -1,4 +1,5 @@
 import React from 'react'
+import cookies from 'next-cookies'
 import { withAuthSync } from "../../utils/user"
 import Moment from 'react-moment'
 import { getDetailUserTransaction } from "../../utils/userTransaction"
@@ -7,12 +8,13 @@ class UserDetailTrip extends React.Component {
     static async getInitialProps({ req, query: { id } }) {
         // Inherit standard props from the Page (i.e. with session data)
         let props = {};
-
+        let { token } = cookies({ req })
+		let objToken = JSON.parse(token)
         if (typeof window === 'undefined') {
             try {
                 props.nav = 'blue';
                 props.footer = 'transparent';
-                const userTransaction = await getDetailUserTransaction('', id);
+                const userTransaction = await getDetailUserTransaction(objToken.access_token, id);
 
                 props.userTransaction = userTransaction.object
             } catch (e) {

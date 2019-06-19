@@ -56,16 +56,22 @@ export default class extends React.Component {
             motor: props.motor || null,
             id: props.idTrip || ''
         };
-
+       
 
 
     }
 
     async componentDidMount() {
         const { idTrip } = this.state
-        console.log(this.props);
-        console.log(this.state);
-
+        window.onload = () => {
+            console.log('window load');
+            var itinerariesListEl = document.querySelectorAll('#itinerary .list-element');
+            var itinerariesEl = document.querySelector('#itinerary');
+            
+            var collapseHight = itinerariesListEl[0].clientHeight + 225
+            itinerariesEl.setAttribute('style', itinerariesEl.getAttribute('style')+'; max-height:'+collapseHight+'px')
+            
+        };
 
         if (this.state.trip === null) {
             try {
@@ -87,10 +93,19 @@ export default class extends React.Component {
             this.props.tripState(this.props.trip)
         }
     }
+    toggleItinerary(e){
+        var itinerariesEl = document.querySelector('#itinerary');
+        var collapseEl = document.querySelector('#collapseTransparent')
+        if(itinerariesEl.style.overflowY == 'hidden'){
+            itinerariesEl.setAttribute('style', '')
+            collapseEl.style.display='none'
+        }
+         
+    }
 
     renderItineraries(data, key) {
         return (
-            <div key={key} className="mb-2 position-relative">
+            <div key={key} className="mb-2 position-relative list-element">
                 <h2 className="title-section text-white mb-3">{data.groupTitle}</h2>
                 <div className="verticalLine bg-gray80"></div>
                 {data.details.map((item, index) => (
@@ -125,10 +140,9 @@ export default class extends React.Component {
 
     render() {
         const motor = this.state.motor.object;
-        console.log(this.state);
 
 
-        const { id, coverLandscape, title, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries } = this.state.trip.object
+        const { id, coverLandscape, title, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries, tripPrice } = this.state.trip.object
         return (
             <div style={{ "paddingBottom": "4em" }}>
                 <SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
@@ -172,12 +186,18 @@ export default class extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="container bg-dark py-4">
+                <div id="itinerary" style={{overflowY:"hidden"}} className="container bg-dark py-4 position-relative">
                     <h2 className="title-section text-white pb-3">itinerary</h2>
                     <div>
                         {itineraries.map((data, key) => (
                             this.renderItineraries(data, key)
                         ))}
+                        {itineraries.length > 1 ?
+                        <div id="collapseTransparent" className="position-absolute w-100 pb-2" style={{bottom:"0", margin:"0 -15px", paddingTop:"6em", zIndex:"100"}}>
+                            <h3 onClick={(e) => this.toggleItinerary(e)} className="title-section text-center text-secondary position-relative py-1 mx-auto" style={{zIndex:"100", border:"1px solid", width:"160px", top:"-10px"}}>Show All</h3>
+                            <div></div>
+                        </div>
+                            :''}
                     </div>
                 </div>
                 <div className="container my-4">
@@ -187,8 +207,8 @@ export default class extends React.Component {
                 <div className="container mb-4 pb-4">
                     <div className=" d-flex justify-content-between mb-3">
                         <h2 className="title-section">MOTORCYCLE CHOICES</h2>
-                        <a href={process.env.HOST_DOMAIN + "/gallery"} style={{ "top": "7px" }} className="text-sm position-relative text-primary d-block font-weight-bold">
-                            View All</a>
+                        {/* <a href={process.env.HOST_DOMAIN + "/gallery"} style={{ "top": "7px" }} className="text-sm position-relative text-primary d-block font-weight-bold">
+                            View All</a> */}
                     </div>
                     <div className="sliderMobile d-flex align-items-stretch" style={{ marginRight: "-15px" }}>
                         {motor.map((item, key) => (
@@ -254,7 +274,7 @@ export default class extends React.Component {
                                 <div>Check Date</div>
                                 <div style={{ fontFamily: '"Open Sans", sans-serif', lineHeight: "18px", marginTop: "-1px" }}>
                                     <div style={{ fontSize: "40%" }} className="font-weight-light">Start From</div>
-                                    <div style={{ fontSize: "70%" }} className="font-weight-bold">$120</div>
+                                    <div style={{ fontSize: "70%" }} className="font-weight-bold">${tripPrice}</div>
                                 </div>
                             </div>
                         </button>

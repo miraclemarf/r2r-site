@@ -11,13 +11,13 @@ export default class extends React.Component {
             })
             res.end()
         }
-        
+
         let props = {};
         props.nav = 'blue';
-        props.navTrans = {step:2}
+        props.navTrans = { step: 2 }
         props.footer = 'transparent';
         props.idTrip = idTrip;
-        props.transaction={};
+        props.transaction = {};
 
         return props;
     }
@@ -34,24 +34,25 @@ export default class extends React.Component {
                 <div className="py-2"></div>
                 <div className="container">
                     <div className="mb-4 position-relative">
-                        <a className="d-block pt-2 text-dark h4 title-section" href={process.env.HOST_DOMAIN+"/trip/" + idTrip} ><span style={{top:"-1px"}} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>                        
+                        <a className="d-block pt-2 text-dark h4 title-section" href={process.env.HOST_DOMAIN + "/trip/" + idTrip} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                         <StepTransaction step="3" />
                     </div>
                 </div>
                 <div>
                     <h2 className="title-section text-center mb-4">ADDITIONAL GEAR</h2>
-                    <div>
-                        <TextImgCard coverLandscape="https://loremflickr.com/480/153/street" title="Jacket" isLandscape={true} iconTextPostion="align-items-center" r2rIcon={false} />
-                    </div>
-                    <div>
-                        <TextImgCard coverLandscape="https://loremflickr.com/480/153/motor" title="T-Shirt" isLandscape={true} iconTextPostion="align-items-center" r2rIcon={false} />
-                    </div>
-                    <div>
-                        <TextImgCard coverLandscape="https://loremflickr.com/480/153/gear" title="Others" isLandscape={true} iconTextPostion="align-items-center" r2rIcon={false} />
+                    <div className="pt-4" style={{minHeight:"50vh"}}>
+                        <div className="mx-auto text-center" style={{ maxWidth: "75%" }}>
+                            <div style={{ width: "80px", height: "80px" }} className={"bg-info text-white rounded-circle text-sm text-center mx-auto"}>
+                                <span className="icon-icon_accesories h1 py-3 d-block"></span>
+                            </div>
+                            <div className="mt-4">
+                                Sorry, no available accessories. Please go to next step, check out.
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="fixed-bottom">
-                    <Link href={'/transaction/checkout?page=checkout&idTrip=' + idTrip} as={process.env.HOST_DOMAIN+'/trip/' + idTrip + '/checkout'} >
+                    <Link href={'/transaction/checkout?page=checkout&idTrip=' + idTrip} as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/checkout'} >
                         <button className="btn btn-primary w-100">
                             NEXT : CHECK OUT
                         </button>

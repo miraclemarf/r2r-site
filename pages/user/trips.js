@@ -9,7 +9,7 @@ class UserTrip extends React.Component {
 	static async getInitialProps({ req }) {
 		// Inherit standard props from the Page (i.e. with session data)
 
-		let props = {};
+		let props = {}
 		let { token } = cookies({ req })
 		let objToken = JSON.parse(token)
 
@@ -31,6 +31,7 @@ class UserTrip extends React.Component {
 		super(props);
 
 		this.state = {
+			...props,
 			pictureConfirm: '', isViewConfirm: false, selectedTransactionCode: '',
 
 			file: {},
@@ -72,7 +73,7 @@ class UserTrip extends React.Component {
 		e.preventDefault();
 
 		const postData = { 'codeTransaction': this.state.selectedTransactionCode, 'bank': this.state.bank, 'accountNumber': this.state.accountNumber, 'accountName': this.state.accountName, 'file': this.state.file }
-		await postConfirmTransaction(postData)
+		await postConfirmTransaction(postData, this.state.token.access_token)
 
 	}
 	renderDetailConfirm() {
@@ -144,7 +145,6 @@ class UserTrip extends React.Component {
 	}
 	render() {
 		let { token, user } = this.props;
-
 
 		const tabMenuData = {
 			menu: [{ name: 'Gallery', url: process.env.HOST_DOMAIN + '/user/gallery', active: false }, { divider: true }, { name: 'Next Trips', url: process.env.HOST_DOMAIN + '/user/trips', active: true }]

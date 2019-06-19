@@ -19,7 +19,7 @@ export default class extends Page {
 				const tripsData = await getLatestTrips();
 				const galleryData = await getLatestGallery();
 				props.trips = tripsData.object;
-				props.gallery = galleryData;
+				props.gallery = galleryData.object;
 			} catch (e) {
 				props.error = 'Unable to fetch AsyncData on server';
 			}
@@ -41,7 +41,7 @@ export default class extends Page {
 				const galleryData = await getLatestGallery();
 				this.setState({
 					trips: tripsData.object,
-					gallery: galleryData
+					gallery: galleryData.object
 				});
 			} catch (e) {
 				console.log(e);

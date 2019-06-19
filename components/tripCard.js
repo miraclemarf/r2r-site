@@ -8,7 +8,7 @@ export default ({ ...props }) => (
 			<div className="mb-2 position-relative">
 				<img className="img-fluid" src={process.env.HOST_URL + props.coverLandscape} />
 				<div className="position-absolute" style={{ top: "0", bottom: "0", left: "0", right: "0", margin: "auto", width: "60%", height: "55%", textAlign: "center" }} >
-					<img height="50" src={process.env.HOST_DOMAIN + "/static/slicing/img/destination/symbol_dieng.svg"} />
+					<img height="50" src={process.env.HOST_URL + props.iconCover} />
 					<h1 style={{ lineHeight: ".8em", fontSize: "3em" }} className="mt-2	 title-section text-white mx-auto">{props.title}</h1>
 				</div>
 			</div>

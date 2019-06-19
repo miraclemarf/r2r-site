@@ -5,7 +5,7 @@ export const getDetailUserTransaction= async (accessToken, id) =>{
     
     const response = await fetch(process.env.API_URL+'/transaction/detail/'+id, {
         headers: {
-            Authorization: 'Bearer 197131ca-4ad5-408f-9c5f-60f1d421fd9a'
+            Authorization: 'Bearer '+accessToken
         }
     })
     const data = await response.json();
@@ -25,7 +25,7 @@ export const getUserTransaction= async (accessToken) =>{
     return data;
 }
 
-export const postConfirmTransaction = async (param)=>{
+export const postConfirmTransaction = async (param, accessToken)=>{
     var dataForm = new FormData();
     dataForm.append('codeTransaction', param.codeTransaction)
     dataForm.append('bank', param.bank);
@@ -36,7 +36,7 @@ export const postConfirmTransaction = async (param)=>{
     const response = await fetch(process.env.API_URL + '/confirmation', {
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer 197131ca-4ad5-408f-9c5f-60f1d421fd9a',
+            'Authorization': 'Bearer '+accessToken,
         },
         body: dataForm
     })

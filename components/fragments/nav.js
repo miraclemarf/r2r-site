@@ -39,24 +39,24 @@ export default class extends React.Component {
 		});
 	}
 	render() {
-		let {token, user} = this.props;
+		let { token, user } = this.props;
 		let isCheckoutSuccess = false;
-		if(this.props.checkoutStatus){
+		if (this.props.checkoutStatus) {
 			isCheckoutSuccess = Object.keys(this.props.checkoutStatus).length === 0 ? false : true
 		}
-		
-		
+
+
 		return (
 			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
 				<Navbar className={(this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary') + " position-relative"} dark expand="md">
-					<NavbarBrand href={process.env.HOST_DOMAIN+"/"}>
+					<NavbarBrand href={process.env.HOST_DOMAIN + "/"}>
 						{
 							this.props.navTrans ? <span className="h2 icon-logogram_r2r" /> : <span className="h2 icon-logo_ring2ring_full" />
 						}
 					</NavbarBrand>
 					{
 						this.props.navTrans ?
-							<div style={{ right: "0", left: "0" }} className={"m-auto position-absolute "+(isCheckoutSuccess ? "collapse":"")}>
+							<div style={{ right: "0", left: "0" }} className={"m-auto position-absolute " + (isCheckoutSuccess ? "collapse" : "")}>
 								<div className="d-flex justify-content-center">
 									<div style={{ width: "25px", height: "25px" }} className={(this.props.navTrans.step == 1 ? "border-primary text-primary bg-white" : "border-white text-white") + " border text-sm text-center"}>1</div>
 									<div style={{ width: "25px", height: "25px" }} className={(this.props.navTrans.step == 2 ? "border-primary text-primary bg-white" : "border-white text-white") + " border text-sm text-center mx-2"}>2</div>
@@ -64,13 +64,14 @@ export default class extends React.Component {
 								</div>
 							</div>
 							:
-							<button className="searchToggle">
+							/* {/* <button className="searchToggle">
 								<span className="icon-icon_search text-white h4" />
-							</button>
+							</button> } */
+							''
 					}
 					{
-						this.props.navTrans  ?
-							this.props.selectedPrice.length ? <div style={{ lineHeight: "18px", marginTop: "-1px" }} className={"text-white "+(isCheckoutSuccess ? "collapse":"")}>
+						this.props.navTrans ?
+							this.props.selectedPrice.length ? <div style={{ lineHeight: "18px", marginTop: "-1px" }} className={"text-white " + (isCheckoutSuccess ? "collapse" : "")}>
 								<div style={{ fontSize: "70%" }} className="text-sm font-weight-light text-right">TOTAL</div>
 								<div className="h5 font-weight-bold">${this.props.selectedPrice.reduce((total, amount) => total + amount)}</div>
 							</div> : ""
@@ -87,26 +88,30 @@ export default class extends React.Component {
 							{this.state.isMobile ? (
 								<div>
 									<div className="text-right pt-3">
-										<img onClick={this.toggle} src={process.env.HOST_DOMAIN+"/static/slicing/img/icon_close.svg"} />
+										<img onClick={this.toggle} src={process.env.HOST_DOMAIN + "/static/slicing/img/icon_close.svg"} />
 									</div>
 									{
 										token ?
 											<div className="d-flex flex-row align-items-center text-white profile mb-3 mt-3">
-												<img
-													className="rounded-circle border border-white"
-													width="40"
-													height="40"
-													src="https://www.ica.gov.sg/Cwp/assets/ica/images/font-awesome/fa-user-white.png"
-												/>
+												<a href={process.env.HOST_DOMAIN + '/user/profile'}>
+													<img
+														className="rounded-circle border border-white"
+														width="40"
+														height="40"
+														src="https://www.ica.gov.sg/Cwp/assets/ica/images/font-awesome/fa-user-white.png"
+													/>
+												</a>
 												<div>
-													<b className="h3 ml-4">{user.fullName ? user.fullName : user.email.substring(0, user.email.indexOf("@"))}</b>
+													<a className="text-white" href={process.env.HOST_DOMAIN + '/user/profile'} >
+														<b className="h3 ml-4">{user.fullName ? user.fullName : user.email.substring(0, user.email.indexOf("@"))}</b>
+													</a>
 												</div>
-												<div className="ml-auto text-gray pull-right"  onClick={() => logout()}>logout</div>
+												<div className="ml-auto text-gray pull-right" onClick={() => logout()}>logout</div>
 											</div>
 											:
 											<div className="d-flex justify-content-center my-4">
-												<a href={process.env.HOST_DOMAIN+"/login"} className="d-block w-100 mr-2 btn btn-info ">LOG IN</a>
-												<a href={process.env.HOST_DOMAIN+"/register"} className="d-block w-100 ml-2 btn btn-secondary">REGISTER</a>
+												<a href={process.env.HOST_DOMAIN + "/login"} className="d-block w-100 mr-2 btn btn-info ">LOG IN</a>
+												<a href={process.env.HOST_DOMAIN + "/register"} className="d-block w-100 ml-2 btn btn-secondary">REGISTER</a>
 											</div>
 									}
 
@@ -116,32 +121,32 @@ export default class extends React.Component {
 								)}
 							<Nav className="text-white" navbar>
 								<NavItem>
-									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN+"/"}>
+									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN + "/"}>
 										Home
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href="#">
+									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN + "/user/trips"}>
 										My Trips
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN+"/trips"}>
+									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN + "/trips"}>
 										Trips Package
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN+"/gallery"}>
+									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN + "/gallery"}>
 										Gallery
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN+"/community"}>
+									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN + "/community"}>
 										Community
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className="h2 m-0  " href={process.env.HOST_DOMAIN+"/faq"}>
+									<NavLink className="h2 m-0  " href={process.env.HOST_DOMAIN + "/faq"}>
 										FAQ
 									</NavLink>
 								</NavItem>

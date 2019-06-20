@@ -44,7 +44,7 @@ export default class extends Page {
 		return (
 			<div>
 				<div>
-                    <img src="https://loremflickr.com/720/450/street" className="img-fluid" />
+                    <img src={process.env.HOST_DOMAIN+"/img/assets/156102176486670dat4aw.jpeg"} className="img-fluid" />
                 </div>
 				<div className="mb-4 pt-4 container">
 						<h1 className="title-section">TOURING WITH US?</h1>

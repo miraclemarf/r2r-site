@@ -16,7 +16,7 @@ export default class extends Page {
 			try {
 				const galleryData = await getLatestGallery();
                 props.nav = 'blue';
-				props.gallery = galleryData;
+				props.gallery = galleryData.object;
 			} catch (e) {}
 		}
 		return props;
@@ -33,7 +33,7 @@ export default class extends Page {
 			try {
 				const galleryData = await getLatestGallery();
 				this.setState({
-					gallery: galleryData
+					gallery: galleryData.object
 				});
 			} catch (e) {
 				console.log(e);

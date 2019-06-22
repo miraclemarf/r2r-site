@@ -90,13 +90,14 @@ export default class extends React.Component {
 							<label className="text-black text-sm">Password</label>
 							<input type="password" name="password" className="form-control" placeholder="Your Password" minLength={6} onChange={this.handleChange} required />
 						</div>
-						<div className="py-3 mx-3 text-center">
+						<div className="py-2"></div>
+						{/* <div className="py-3 mx-3 text-center">
 							<p>
 								<a href="#" className="text-primary">
 									<b>Forgot Password ?</b>
 								</a>
 							</p>
-						</div>
+						</div> */}
 						<div>
 							<button className="btn btn-secondary w-100" onClick={this.validate}>LOG IN</button>
 						</div>

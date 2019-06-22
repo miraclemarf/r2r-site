@@ -2,14 +2,14 @@ import React from 'react'
 import cookies from 'next-cookies'
 import { withAuthSync } from "../../utils/user"
 import Moment from 'react-moment'
-import { getDetailUserTransaction } from "../../utils/userTransaction"
+import { getDetailUserTransaction, postConfirmTransaction } from "../../utils/userTransaction"
 
 class UserDetailTrip extends React.Component {
     static async getInitialProps({ req, query: { id } }) {
         // Inherit standard props from the Page (i.e. with session data)
         let props = {};
         let { token } = cookies({ req })
-		let objToken = JSON.parse(token)
+        let objToken = JSON.parse(token)
         if (typeof window === 'undefined') {
             try {
                 props.nav = 'blue';
@@ -26,9 +26,14 @@ class UserDetailTrip extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { ...props, isViewConfirm: false };
+        this.state = { ...props, isViewConfirm: false, selectedTransactionCode: '',
+
+        file: {}, };
         this.handleFileSelect = this.handleFileSelect.bind(this);
-        this.clickUpload = this.clickUpload.bind(this);
+		this.clickUpload = this.clickUpload.bind(this);
+		this.form = React.createRef();
+		this.handleChange = this.handleChange.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
     }
     clickUpload(e) {
         let id = e.target.id
@@ -38,18 +43,30 @@ class UserDetailTrip extends React.Component {
         }
     }
     handleFileSelect(event) {
-        console.log(event.target.files[0]);
-        let name = event.target.name;
-        let value = URL.createObjectURL(event.target.files[0])
-        this.setState({
-            [name]: value
-        })
+		let name = event.target.name;
+		let value = URL.createObjectURL(event.target.files[0])
+		this.setState({
+			[name]: value,
+			file: event.target.files[0]
+		})
 
 		/* this.setState({
             logo: event.target.files[0],
             files: URL.createObjectURL(event.target.files[0])
-        }) */
+		}) */
+
     }
+    handleChange(e) {
+		const target = e.target, value = target.value, name = target.name;
+		this.setState({ [name]: value });
+    }
+    async handleSubmit(e) {
+		e.preventDefault();
+
+		const postData = { 'codeTransaction': this.state.selectedTransactionCode, 'bank': this.state.bank, 'accountNumber': this.state.accountNumber, 'accountName': this.state.accountName, 'file': this.state.file }
+		await postConfirmTransaction(postData, this.state.token.access_token)
+
+	}
     renderPrice(data, index) {
         return (
             <div className="d-flex justify-content-between align-items-center pt-3">
@@ -65,7 +82,7 @@ class UserDetailTrip extends React.Component {
     }
     renderTrip() {
         const { userTransaction } = this.state
-        console.log(userTransaction);
+        console.log(this.state);
 
         return (
             <div className="mb-4">
@@ -118,28 +135,28 @@ class UserDetailTrip extends React.Component {
                     <span className="pt-2 d-block text-dark h4 title-section" onClick={() => this.handleViewConfirm(false)} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</span>
                 </div>
                 <h2 className="text-center title-section">Confirm</h2>
-                <form className="mt-4">
+				<form className="mt-4" ref={this.form} onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label className="text-black text-sm">Transaction Number*</label>
-                        <input type="text" style={{ textTransform: "uppercase" }} className="form-control" placeholder="Your Email" value={this.state.userTransaction.code} readOnly />
+                        <input type="text" style={{ textTransform: "uppercase" }} className="form-control" placeholder="Kode Transaksi" name="codeTransaction" value={this.state.selectedTransactionCode} readOnly />
                     </div>
                     <div className="form-group">
                         <label className="text-black text-sm">Bank Account*</label>
-                        <select className="form-control">
-                            <option>Choose Bank Account</option>
-                            <option>BCA</option>
-                            <option>Bank Mandiri</option>
-                            <option>BNI</option>
-                            <option>CIMB Niaga</option>
-                        </select>
+                        <select name="bank" className="form-control" onChange={this.handleChange}>
+							<option value="">Choose Bank Account</option>
+							<option value="BCA">BCA</option>
+							<option value="Bank Mandiri">Bank Mandiri</option>
+							<option value="BNI">BNI</option>
+							<option value="CIMB Niaga">CIMB Niaga</option>
+						</select>
                     </div>
                     <div className="form-group">
                         <label className="text-black text-sm">Bank Account No.*</label>
-                        <input type="number" className="form-control" placeholder="Bank Account Number" />
+						<input type="number" name="accountNumber" className="form-control" placeholder="Bank Account Number" onChange={this.handleChange} />
                     </div>
                     <div className="form-group">
                         <label className="text-black text-sm">Bank Account Name*</label>
-                        <input type="number" className="form-control" placeholder="Bank Account Name" />
+						<input type="text" name="accountName" className="form-control" placeholder="Bank Account Name" onChange={this.handleChange} />
                     </div>
                     <div className="form-group">
                         <label className="text-black text-sm">Upload Picture</label>
@@ -164,7 +181,7 @@ class UserDetailTrip extends React.Component {
                         </div>
                     </div>
                     <div className="text-center mb-3">
-                        <button type="button" className="btn btn-primary mb-4 d-block w-100">
+                        <button type="submit" className="btn btn-primary mb-4 d-block w-100">
                             Confirm Payment
 						</button>
                     </div>
@@ -173,7 +190,10 @@ class UserDetailTrip extends React.Component {
         )
     }
     handleViewConfirm(toogle, transCode, e) {
-        this.setState({ isViewConfirm: toogle })
+        this.setState({ isViewConfirm: toogle, selectedTransactionCode: transCode })
+        if (toogle) {
+			this.setState({ pictureConfirm: '', file: {} })
+		}
     }
     render() {
         const { userTransaction } = this.state
@@ -199,17 +219,21 @@ class UserDetailTrip extends React.Component {
 
                             </div>
                         </div>
-
-                        <div className="mb-4">
-                            <h4 className="title-section">Gear</h4>
-                            <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px", minHeight: "150px" }}>
-                                <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{userTransaction.motor.brand} {userTransaction.motor.title}</h4>
-                                <div className="position-absolute" style={{ right: "0", zIndex: "1", bottom: "-30px" }}>
-                                    <img src={process.env.HOST_URL + userTransaction.motor.picture} height="120" />
+                        {
+                            userTransaction.motor.title != "Bring Own Motor" ?
+                                <div className="mb-4">
+                                    <h4 className="title-section">Gear</h4>
+                                    <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px", minHeight: "150px" }}>
+                                        <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{userTransaction.motor.brand} {userTransaction.motor.title}</h4>
+                                        <div className="position-absolute" style={{ right: "0", zIndex: "1", bottom: "-30px" }}>
+                                            <img src={process.env.HOST_URL + userTransaction.motor.picture} height="120" />
+                                        </div>
+                                    </div>
+                                    <div className="py-3"></div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="py-3"></div>
+
+                                : ''
+                        }
                         <div className="mb-4">
                             <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px" }}>
                                 <div>
@@ -225,16 +249,28 @@ class UserDetailTrip extends React.Component {
                                     <div className="d-flex justify-content-between align-items-center pt-3 pb-3 border-softgray" style={{ borderBottom: "1px solid" }}>
                                         <div style={{ lineHeight: "14px" }}>
                                             <h5 className="title-section m-0">BIKE</h5>
-                                            <span style={{ fontSize: "80%" }} className="text-sm">{userTransaction.motor.brand} {userTransaction.motor.title}</span>
+                                            <span style={{ fontSize: "80%" }} className="text-sm">{userTransaction.motor.title != "Bring Own Motor" ? userTransaction.motor.brand + userTransaction.motor.title : '-'}</span>
                                         </div>
                                         <div>
-                                            <h3 className="title-section m-0">$ {userTransaction.motor.price}</h3>
+                                            <h3 className="title-section m-0">$ {userTransaction.motor.title != "Bring Own Motor" ? userTransaction.motor.price : '0'}</h3>
                                         </div>
                                     </div>
                                     {
-                                        userTransaction.accessories.map((item, index) => (
-                                            this.renderPrice(item, index)
-                                        ))
+                                        userTransaction.accessories[0].title != "Bring Own Helm" ?
+                                            userTransaction.accessories.map((item, index) => (
+                                                this.renderPrice(item, index)
+                                            ))
+
+                                            :
+                                            <div className="d-flex justify-content-between align-items-center pt-3">
+                                                <div style={{ lineHeight: "14px" }}>
+                                                    <h5 className="title-section m-0">ADDITIONAL COST</h5>
+                                                    <span style={{ fontSize: "80%" }} className="text-sm">-</span>
+                                                </div>
+                                                <div>
+                                                    <h3 className="title-section m-0">$ 0</h3>
+                                                </div>
+                                            </div>
                                     }
 
 

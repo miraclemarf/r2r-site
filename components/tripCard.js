@@ -32,6 +32,16 @@ export default ({ ...props }) => (
 							<span className="badge badge-info" style={{ fontWeight: "400", fontStyle: "italic" }}>✓  Paid</span>
 						</div> : ''}
 
+						{props.paymentStatus == 'FAILED' ?
+						<div>
+							<span className="badge badge-warning" style={{ fontWeight: "400", fontStyle: "italic" }}>Failed</span>
+						</div> : ''}
+
+						{props.paymentStatus == 'CANCEL' ?
+						<div>
+							<span className="badge badge-warning" style={{ fontWeight: "400", fontStyle: "italic" }}>Cancelled</span>
+						</div> : ''}
+
 				</div>
 				: ''}
 			<div className="d-flex justify-content-between align-items-center text-sm">

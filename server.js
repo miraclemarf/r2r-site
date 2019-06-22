@@ -84,6 +84,10 @@ app.prepare().then(() => {
     const actualPage = '/howItWorks'
     return app.render(req, res, actualPage)
   })
+  server.get('/term-condition', (req, res) => {
+    const actualPage = '/tnc'
+    return app.render(req, res, actualPage)
+  })
 
   server.get('/user/trip/:id', (req, res) => {
     const actualPage = '/user/detailTrip'

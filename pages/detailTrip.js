@@ -18,6 +18,8 @@ export default class extends React.Component {
             motor: {},
             accesories: [],
             price: [],
+            bringOwnMotor:false,
+            bringOwnHelm:false,
             notes: ""
         };
 
@@ -56,7 +58,7 @@ export default class extends React.Component {
             motor: props.motor || null,
             id: props.idTrip || ''
         };
-       
+
 
 
     }
@@ -67,10 +69,10 @@ export default class extends React.Component {
             console.log('window load');
             var itinerariesListEl = document.querySelectorAll('#itinerary .list-element');
             var itinerariesEl = document.querySelector('#itinerary');
-            
+
             var collapseHight = itinerariesListEl[0].clientHeight + 225
-            itinerariesEl.setAttribute('style', itinerariesEl.getAttribute('style')+'; max-height:'+collapseHight+'px')
-            
+            itinerariesEl.setAttribute('style', itinerariesEl.getAttribute('style') + '; max-height:' + collapseHight + 'px')
+
         };
 
         if (this.state.trip === null) {
@@ -93,14 +95,14 @@ export default class extends React.Component {
             this.props.tripState(this.props.trip)
         }
     }
-    toggleItinerary(e){
+    toggleItinerary(e) {
         var itinerariesEl = document.querySelector('#itinerary');
         var collapseEl = document.querySelector('#collapseTransparent')
-        if(itinerariesEl.style.overflowY == 'hidden'){
+        if (itinerariesEl.style.overflowY == 'hidden') {
             itinerariesEl.setAttribute('style', '')
-            collapseEl.style.display='none'
+            collapseEl.style.display = 'none'
         }
-         
+
     }
 
     renderItineraries(data, key) {
@@ -186,18 +188,18 @@ export default class extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div id="itinerary" style={{overflowY:"hidden"}} className="container bg-dark py-4 position-relative">
+                <div id="itinerary" style={{ overflowY: "hidden" }} className="container bg-dark py-4 position-relative">
                     <h2 className="title-section text-white pb-3">itinerary</h2>
                     <div>
                         {itineraries.map((data, key) => (
                             this.renderItineraries(data, key)
                         ))}
                         {itineraries.length > 1 ?
-                        <div id="collapseTransparent" className="position-absolute w-100 pb-2" style={{bottom:"0", margin:"0 -15px", paddingTop:"6em", zIndex:"100"}}>
-                            <h3 onClick={(e) => this.toggleItinerary(e)} className="title-section text-center text-secondary position-relative py-1 mx-auto" style={{zIndex:"100", border:"1px solid", width:"160px", top:"-10px"}}>Show All</h3>
-                            <div></div>
-                        </div>
-                            :''}
+                            <div id="collapseTransparent" className="position-absolute w-100 pb-2" style={{ bottom: "0", margin: "0 -15px", paddingTop: "6em", zIndex: "100" }}>
+                                <h3 onClick={(e) => this.toggleItinerary(e)} className="title-section text-center text-secondary position-relative py-1 mx-auto" style={{ zIndex: "100", border: "1px solid", width: "160px", top: "-10px" }}>Show All</h3>
+                                <div></div>
+                            </div>
+                            : ''}
                     </div>
                 </div>
                 <div className="container my-4">
@@ -233,18 +235,22 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div className="container">
-                    <div className="border-bottom border-top mb-3 pb-2 pt-3 d-flex justify-content-between align-items-center">
-                        <h2 className="title-section m-0">TERM AND CONDITION</h2>
-                        <span className="icon-right-arrow text-primary"></span>
-                    </div>
+                    <a className="d-block text-black" href={process.env.HOST_DOMAIN + '/term-condition'}>
+                        <div className="border-bottom border-top mb-3 pb-2 pt-3 d-flex justify-content-between align-items-center">
+                            <h2 className="title-section m-0">TERM AND CONDITION</h2>
+                            <span className="icon-right-arrow text-primary"></span>
+                        </div>
+                    </a>
                     <div className="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
                         <h2 className="title-section m-0">WHAT TO BE PREPARED?</h2>
                         <span className="icon-right-arrow text-primary"></span>
                     </div>
-                    <div className="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
-                        <h2 className="title-section m-0">FAQ</h2>
-                        <span className="icon-right-arrow text-primary"></span>
-                    </div>
+                    <a className="d-block text-black" href={process.env.HOST_DOMAIN + '/faq'}>
+                        <div className="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                            <h2 className="title-section m-0">FAQ</h2>
+                            <span className="icon-right-arrow text-primary"></span>
+                        </div>
+                    </a>
                 </div>
                 <div className="container">
                     <h2 className="title-section  mb-3 pt-3">MEET THE RC</h2>

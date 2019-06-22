@@ -31,9 +31,9 @@ export default class extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
     handleChange(e) {
-		const target = e.target, value = target.value, name = target.name;
-		this.setState({notes:value});
-	}
+        const target = e.target, value = target.value, name = target.name;
+        this.setState({ notes: value });
+    }
     async handleSubmit(e) {
         e.preventDefault();
 
@@ -42,8 +42,10 @@ export default class extends React.Component {
             'notes': this.state.notes,
             'price': this.state.transaction.price.reduce((total, amount) => total + amount),
             'startDate': this.state.transaction.startDate,
-            'motor': this.state.transaction.motor.id,
-            'accessories': this.state.transaction.accesories,
+            'motor': !this.state.transaction.bringOwnMotor ? this.state.transaction.motor.id : "",
+            'accessories': !this.state.transaction.bringOwnMotor ? this.state.transaction.accesories : [],
+            'bringOwnMotor': this.state.transaction.bringOwnMotor,
+            'bringOwnHelm': this.state.transaction.bringOwnHelm,
             'accessToken': this.state.token ? this.state.token.access_token : ""
         }
         // login(postData)
@@ -163,16 +165,21 @@ export default class extends React.Component {
                             </div>
                         </div>
 
-                        <div className="mb-4">
-                            <h4 className="title-section">Gear</h4>
-                            <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px", minHeight: "150px" }}>
-                                <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{transaction.motor.brand} {transaction.motor.title}</h4>
-                                <div className="position-absolute" style={{ right: "0", zIndex: "1", bottom: "-30px" }}>
-                                    <img src={process.env.HOST_URL + transaction.motor.picture} height="120" />
+                        {
+                            !transaction.bringOwnMotor ?
+                                <div className="mb-4">
+                                    <h4 className="title-section">Gear</h4>
+                                    <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px", minHeight: "150px" }}>
+                                        <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{transaction.motor.brand} {transaction.motor.title}</h4>
+                                        <div className="position-absolute" style={{ right: "0", zIndex: "1", bottom: "-30px" }}>
+                                            <img src={process.env.HOST_URL + transaction.motor.picture} height="120" />
+                                        </div>
+                                    </div>
+                                    <div className="py-3"></div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="py-3"></div>
+                                : ''
+                        }
+
                         <div className="mb-4">
                             <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px" }}>
                                 <div>
@@ -188,16 +195,28 @@ export default class extends React.Component {
                                     <div className="d-flex justify-content-between align-items-center pt-3 pb-3 border-softgray" style={{ borderBottom: "1px solid" }}>
                                         <div style={{ lineHeight: "14px" }}>
                                             <h5 className="title-section m-0">BIKE</h5>
-                                            <span style={{ fontSize: "80%" }} className="text-sm">{transaction.motor.brand} {transaction.motor.title}</span>
+                                            <span style={{ fontSize: "80%" }} className="text-sm">{!transaction.bringOwnMotor ? transaction.motor.brand + transaction.motor.title : '-'}</span>
                                         </div>
                                         <div>
-                                            <h3 className="title-section m-0">$ {transaction.motor.price}</h3>
+                                            <h3 className="title-section m-0">$ {!transaction.bringOwnMotor ? transaction.motor.price : '0'}</h3>
                                         </div>
                                     </div>
                                     {
-                                        transaction.accesories.map((item, index) => (
-                                            this.renderPrice(item, index)
-                                        ))
+                                        !transaction.bringOwnHelm ?
+                                            transaction.accesories.map((item, index) => (
+                                                this.renderPrice(item, index)
+                                            ))
+                                            :
+                                            <div className="d-flex justify-content-between align-items-center pt-3">
+                                                <div style={{ lineHeight: "14px" }}>
+                                                    <h5 className="title-section m-0">ADDITIONAL COST</h5>
+                                                    <span style={{ fontSize: "80%" }} className="text-sm">-</span>
+                                                </div>
+                                                <div>
+                                                    <h3 className="title-section m-0">$ 0</h3>
+                                                </div>
+                                            </div>
+
                                     }
 
 

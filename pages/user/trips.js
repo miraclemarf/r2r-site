@@ -145,7 +145,8 @@ class UserTrip extends React.Component {
 	}
 	render() {
 		let { token, user } = this.props;
-
+		console.log(token);
+		
 		const tabMenuData = {
 			menu: [{ name: 'Gallery', url: process.env.HOST_DOMAIN + '/user/gallery', active: false }, { divider: true }, { name: 'Next Trips', url: process.env.HOST_DOMAIN + '/user/trips', active: true }]
 		};

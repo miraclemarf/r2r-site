@@ -27,6 +27,8 @@ export default class extends React.Component {
             motor: {},
             accesories: [],
             price: [],
+            bringOwnMotor:false,
+            bringOwnHelm:false,
             notes: ""
         };
         try {

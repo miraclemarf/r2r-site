@@ -36,11 +36,23 @@ export const checkout = async (data) => {
     dataForm.append('notes', data.notes);
     dataForm.append('price', data.price);
     dataForm.append('startTimestamp', data.startDate);
-    dataForm.append('motor', data.motor);
-    data.accessories.map((item, key) => {
-        dataForm.append('accessories[' + key + '].id', item.id);
-        dataForm.append('accessories[' + key + '].size', item.size);
-    })
+    if (!data.bringOwnMotor) {
+        dataForm.append('motor', data.motor);
+    }
+    else {
+        dataForm.append('bringOwnMotor', data.bringOwnMotor);
+    }
+
+    if (!data.bringOwnHelm) {
+        data.accessories.map((item, key) => {
+            dataForm.append('accessories[' + key + '].id', item.id);
+            dataForm.append('accessories[' + key + '].size', item.size);
+        })
+    }
+    else {
+        dataForm.append('bringOwnHelm', data.bringOwnHelm);
+    }
+
 
     const response = await fetch(process.env.API_URL + '/transaction/create', {
         method: 'POST',

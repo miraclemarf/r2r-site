@@ -80,7 +80,7 @@ export default class extends React.Component {
 				<div className="mb-4">
 					<TabMenu {...tabMenuData} />
 				</div>
-				<div className="mb-3">
+				{/* <div className="mb-3">
 					<a href="#" className="title-section btn btn-sm btn-primary d-block text-white mb-2">
 						<div className="d-flex justify-content-center py-2">
 							<span className="icon-facebook" /> <h4 className="mb-0 ml-3">CONTINUE WITH FACEBOOK</h4>
@@ -98,9 +98,9 @@ export default class extends React.Component {
 							OR
 						</span>
 					</div>
-				</div>
+				</div> */}
 				<div>
-					<h2 className="title-section text-center">REGISTER WITH EMAIL</h2>
+					{/* <h2 className="title-section text-center">REGISTER WITH EMAIL</h2> */}
 					{
 						this.state.error != '' ?
 							<div className="alert alert-danger" role="alert">
@@ -161,7 +161,7 @@ export default class extends React.Component {
 						<div className="py-3 mx-3 text-center">
 							<p className="text-sm">
 								You are accepting Road2ring’s{' '}
-								<a href="#" className="text-primary">
+								<a href={process.env.HOST_DOMAIN+'/term-condition'} className="text-primary">
 									<b>Term and Condition</b>
 								</a>{' '}
 								by clicking register button.

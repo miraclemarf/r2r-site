@@ -53,7 +53,7 @@ export default class extends React.Component {
 				<div className="mb-4">
 					<TabMenu {...tabMenuData} />
 				</div>
-				<div className="mb-3">
+				{/* <div className="mb-3">
 					<a href="#" className="title-section btn btn-sm btn-primary d-block text-white mb-2">
 						<div className="d-flex justify-content-center py-2">
 							<span className="icon-facebook" /> <h4 className="mb-0 ml-3">LOG IN WITH FACEBOOK</h4>
@@ -78,9 +78,9 @@ export default class extends React.Component {
 							OR
 						</span>
 					</div>
-				</div>
+				</div> */}
 				<div>
-					<h2 className="title-section text-center">LOG IN WITH EMAIL</h2>
+					{/* <h2 className="title-section text-center">LOG IN WITH EMAIL</h2> */}
 					<form ref={this.form} onSubmit={this.handleSubmit}>
 						<div className="form-group">
 							<label className="text-black text-sm">Email</label>

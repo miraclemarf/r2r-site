@@ -51,7 +51,7 @@ class UserGallery extends React.Component {
 									<span className="text-sm">{user.email}</span>
                             </div>
                         </div>
-                        <div><a href={process.env.HOST_DOMAIN + '/user/profile'} className="text-primary text-sm"><b>EDIT</b></a></div>
+                        <div>{/* <a href={process.env.HOST_DOMAIN + '/user/profile'} className="text-primary text-sm"><b>EDIT</b></a> */}</div>
                     </div>
                     <div className="mb-4">
                         <TabMenu {...tabMenuData} />

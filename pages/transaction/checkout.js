@@ -123,7 +123,7 @@ export default class extends React.Component {
                 </div>
 
                 <div className="mb-4 pb-2">
-                    <a href={process.env.HOST_DOMAIN + "/user/profile"} className="d-block w-100 mb-3  btn btn-primary ">COMPLETE PROFILE</a>
+                    {/* <a href={process.env.HOST_DOMAIN + "/user/profile"} className="d-block w-100 mb-3  btn btn-primary ">COMPLETE PROFILE</a> */}
                     <a href={process.env.HOST_DOMAIN + "/user/trips"} className="d-block w-100  btn btn-info">SEE PAYMENT STATUS</a>
                 </div>
                 <div className="text-center">

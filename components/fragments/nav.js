@@ -93,7 +93,8 @@ export default class extends React.Component {
 									{
 										token ?
 											<div className="d-flex flex-row align-items-center text-white profile mb-3 mt-3">
-												<a href={process.env.HOST_DOMAIN + '/user/profile'}>
+												{/* <a href={process.env.HOST_DOMAIN + '/user/profile'}> */}
+												<a>
 													<img
 														className="rounded-circle border border-white"
 														width="40"
@@ -102,7 +103,8 @@ export default class extends React.Component {
 													/>
 												</a>
 												<div>
-													<a className="text-white" href={process.env.HOST_DOMAIN + '/user/profile'} >
+													{/* <a className="text-white" href={process.env.HOST_DOMAIN + '/user/profile'} > */}
+													<a className="text-white">
 														<b className="h3 ml-4">{user.fullName ? user.fullName : user.email.substring(0, user.email.indexOf("@"))}</b>
 													</a>
 												</div>

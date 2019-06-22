@@ -156,7 +156,7 @@ export default class extends React.Component {
         )
     }
     render() {
-        console.log(this.state.transaction);
+        console.log(this.state);
 
         const { idTrip, helm, selectedHelmet, isViewHelm, selectedHelmetSize } = this.state
         return (

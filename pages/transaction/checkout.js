@@ -43,7 +43,7 @@ export default class extends React.Component {
             'price': this.state.transaction.price.reduce((total, amount) => total + amount),
             'startDate': this.state.transaction.startDate,
             'motor': !this.state.transaction.bringOwnMotor ? this.state.transaction.motor.id : "",
-            'accessories': !this.state.transaction.bringOwnMotor ? this.state.transaction.accesories : [],
+            'accessories': !this.state.transaction.bringOwnHelm ? this.state.transaction.accesories : [],
             'bringOwnMotor': this.state.transaction.bringOwnMotor,
             'bringOwnHelm': this.state.transaction.bringOwnHelm,
             'accessToken': this.state.token ? this.state.token.access_token : ""
@@ -260,7 +260,7 @@ export default class extends React.Component {
                         <div>
                             <div className="pt-4">
                                 <p className="text-center text-sm mx-3">
-                                    You are accepting Road2ring’s <b className="text-primary">Term and Condition</b> by clicking make payment button.
+                                    You are accepting Road2ring’s <a href={process.env.HOST_DOMAIN+'/term-condition'} className="text-primary"><b>Term and Condition</b></a> by clicking make payment button.
                             </p>
                             </div>
                             <div className="pt-2">

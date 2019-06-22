@@ -109,7 +109,7 @@ export default class extends React.Component {
                 <div className="py-2"></div>
                 <div className="container">
                     <div className="mb-4 position-relative">
-                        <a className="pt-2 d-block text-dark h4 title-section" href={process.env.HOST_DOMAIN + "/trip/" + idTrip} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
+                        <a className="pt-2 d-block text-dark h4 title-section position-relative" href={process.env.HOST_DOMAIN + "/trip/" + idTrip} style={{zIndex:"10"}}><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                         <StepTransaction step="1" />
                     </div>
                     <div>

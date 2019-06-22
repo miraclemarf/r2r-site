@@ -55,6 +55,7 @@ export const register = async (data) => {
 	var dataForm = new FormData();
 	dataForm.append('email', data.email);
 	dataForm.append('password', data.password);
+	dataForm.append('userBirthday', data.userBirthday);
 
 	try {
 		const response = await fetch(process.env.API_URL + '/user/registration', {

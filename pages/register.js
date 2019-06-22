@@ -1,6 +1,7 @@
 import React from 'react';
 import TabMenu from '../components/tabMenu';
 import Page from '../components/page';
+import Moment from 'react-moment'
 import { register } from '../utils/user'
 
 export default class extends React.Component {
@@ -19,6 +20,9 @@ export default class extends React.Component {
 			email: '',
 			password: '',
 			birthday: '',
+			hari: '',
+			bulan: '',
+			tahun: '',
 			error: '',
 			isSubmitted: false
 		};
@@ -41,9 +45,15 @@ export default class extends React.Component {
 		e.preventDefault();
 		let isHasTransaction = Object.keys(this.state.transaction).length === 0 ? false : true
 		let idTrip = isHasTransaction ? this.state.transaction.idTrip : ""
+		let userBirthday = 0
+		if (this.state.hari && this.state.bulan && this.state.tahun) {
+			let dateuser = this.state.tahun + '-' + this.state.bulan + '-' + this.state.hari
+			userBirthday = Math.round(new Date(dateuser + " 00:00:00.000").getTime())
+		}
 
-		const postData = { 'email': this.state.email, 'password': this.state.password, 'isHasTransaction': isHasTransaction, 'idTrip': idTrip }
+		const postData = { 'email': this.state.email, 'password': this.state.password, 'userBirthday': userBirthday, 'isHasTransaction': isHasTransaction, 'idTrip': idTrip }
 		//console.log(postData);
+
 
 		const res = await register(postData)
 		if (res) {
@@ -52,12 +62,18 @@ export default class extends React.Component {
 
 
 	}
-	dropdownChanged(e) { }
 	render() {
 		console.log(this.state);
 		const tabMenuData = {
 			menu: [{ name: 'Log in', url: process.env.HOST_DOMAIN + '/login', active: false }, { divider: true }, { name: 'Register', url: process.env.HOST_DOMAIN + '/register', active: true }]
 		};
+		const range = (start, end, length = end - start) =>
+			Array.from({ length }, (_, i) => start + i)
+
+		const hari = range(1, 32)
+		const bulan = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+		const tahun = range(1930, 2002)
+
 		return (
 			<div className="container">
 				<div className="py-3" />
@@ -105,23 +121,35 @@ export default class extends React.Component {
 						<div className="form-row">
 							<div className="form-group col">
 								<label>Birthday</label>
-								<select className="form-control" value={'Day'} onChange={this.dropdownChanged}>
-									<option value="Day">Day</option>
-									<option value="....">...</option>
+								<select className="form-control" name="hari" onChange={this.handleChange}>
+									<option value="">Day</option>
+									{
+										hari.map((item, key) => (
+											<option key={key} value={item}>{item}</option>
+										))
+									}
 								</select>
 							</div>
 							<div className="form-group col">
 								<label className="invisible">Month</label>
-								<select className="form-control">
-									<option>Month</option>
-									<option>...</option>
+								<select className="form-control" name="bulan" onChange={this.handleChange}>
+									<option value="">Month</option>
+									{
+										bulan.map((item, key) => (
+											<option key={key} value={key + 1}>{item}</option>
+										))
+									}
 								</select>
 							</div>
 							<div className="form-group col">
 								<label className="invisible">Year</label>
-								<select className="form-control">
+								<select className="form-control" name="tahun" onChange={this.handleChange}>
 									<option>Year</option>
-									<option>...</option>
+									{
+										tahun.map((item, key) => (
+											<option key={key} value={item}>{item}</option>
+										))
+									}
 								</select>
 							</div>
 							<div style={{ marginTop: '-10px' }} className="form-group col-12">

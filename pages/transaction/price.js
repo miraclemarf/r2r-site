@@ -127,9 +127,9 @@ export default class extends React.Component {
                                 ))
                             }
                         </div>
-                        <button className="btn btn-outline-softgray text-dark mt-2 w-100" style={{ borderRadius: "8px", boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.3)" }}>
+                        <a href={process.env.HOST_DOMAIN+'/user/trip/'+idTrip+'/request'} className="btn btn-outline-softgray text-dark mt-2 w-100" style={{ borderRadius: "8px", boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.3)" }}>
                             I NEED PRIVATE TOUR
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div className="fixed-bottom">

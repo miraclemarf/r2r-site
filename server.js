@@ -92,6 +92,13 @@ app.prepare().then(() => {
     return app.render(req, res, actualPage, queryParams)
   })
 
+  server.get('/user/trip/:id/request', (req, res) => {
+    const actualPage = '/user/request'
+
+    const queryParams = { id: req.params.id }
+    return app.render(req, res, actualPage, queryParams)
+  })
+
   server.all('*', (req, res) => {
     let nextRequestHandler = app.getRequestHandler()
     return nextRequestHandler(req, res)

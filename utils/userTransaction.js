@@ -47,3 +47,21 @@ export const postConfirmTransaction = async (param, accessToken)=>{
     return result
     
 }
+
+export const requestTrip = async (param, accessToken)=>{
+    var dataForm = new FormData();
+    dataForm.append('trip.id', param.tripId)
+    dataForm.append('maxRider', param.maxRider);
+    dataForm.append('startTimestamp', parseInt(param.startTimestamp));
+
+    const response = await fetch(process.env.API_URL + '/request-trip/create', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer '+accessToken,
+        },
+        body: dataForm
+    })
+    const result = await response.json()
+    return result
+    
+}

@@ -9,7 +9,7 @@ export default ({ ...props }) => (
             <div className="text-white text-center m-3" style={{ zIndex: '5' }}>
                 <h1 className="title-section">{props.title}</h1>
                 
-                <p dangerouslySetInnerHTML={{ __html: props.subtitle }}></p>
+                <div dangerouslySetInnerHTML={{ __html: props.subtitle }}></div>
             </div>
         </div>
     </a>

@@ -168,7 +168,7 @@ export default class extends React.Component {
 							</p>
 						</div>
 						<div>
-							<button className="btn btn-secondary w-100" onClick={this.validate}>REGISTER</button>
+							<button className="btn btn-info w-100" onClick={this.validate}>REGISTER</button>
 						</div>
 					</form>
 				</div>

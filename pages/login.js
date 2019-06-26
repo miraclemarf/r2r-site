@@ -48,7 +48,7 @@ export default class extends React.Component {
 			menu: [{ name: 'Log in', url: process.env.HOST_DOMAIN + '/login', active: true }, { divider: true }, { name: 'Register', url: process.env.HOST_DOMAIN + '/register', active: false }]
 		};
 		return (
-			<div className="container">
+			<div className="container" style={{minHeight:"80vh"}}>
 				<div className="py-3" />
 				<div className="mb-4">
 					<TabMenu {...tabMenuData} />
@@ -99,7 +99,7 @@ export default class extends React.Component {
 							</p>
 						</div> */}
 						<div>
-							<button className="btn btn-secondary w-100" onClick={this.validate}>LOG IN</button>
+							<button className="btn btn-info w-100" onClick={this.validate}>LOG IN</button>
 						</div>
 					</form>
 				</div>

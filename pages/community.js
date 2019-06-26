@@ -26,7 +26,7 @@ export default class extends Page {
 		return (
 			<div>
 				<div>
-					<TextImgCard coverLandscape="http://road2ring.com/img/assets/156122833786834l4ez8a.jpeg" title="The Community" isLandscape={true} iconTextPostion="align-items-center" r2rIcon={true} />
+					<TextImgCard coverLandscape={"/img/assets/15615436185264qcatc0c.jpeg"} title="The Community" isLandscape={true} iconTextPostion="align-items-center" r2rIcon={true} />
 				</div>
 				<div className="mb-4 pt-4 container">
 					<h1 className="title-section">Community</h1>

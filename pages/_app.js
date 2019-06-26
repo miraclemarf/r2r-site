@@ -1,5 +1,6 @@
 import React from 'react';
 import App, { Container } from 'next/app';
+import Router from 'next/router';
 
 import { myProfile  } from "../utils/user"
 import cookies from 'next-cookies'
@@ -9,7 +10,22 @@ import Navigate from '../components/fragments/nav';
 import Footer from '../components/fragments/footer';
 import '../styles/style.scss';
 import { throws } from 'assert';
+import NProgress from 'nprogress';
 
+
+Router.onRouteChangeStart = () => {
+  NProgress.start();
+};
+
+Router.onRouteChangeComplete = () => {
+  // console.log('onRouteChnageComplete triggered');
+  NProgress.done();
+};
+
+Router.onRouteChangeError = () => {
+  // console.log('onRouteChnageError triggered');
+  NProgress.done();
+};
 
 class MyApp extends App {
 	static async getInitialProps({ Component, ctx }) {
@@ -59,6 +75,7 @@ class MyApp extends App {
 
 
 	render() {
+		
 		const { Component, pageProps } = this.props;
 		
 		return (

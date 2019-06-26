@@ -141,3 +141,15 @@
 	right: 0;
 	top: 0;
 }
+#nprogress .bar {
+	height: 3px;
+	background: $info;
+}
+#nprogress .peg {
+	box-shadow: 0 0 10px $info, 0 0 5px $info;
+}
+
+#nprogress .spinner-icon {
+	border-top-color: $info;
+	border-left-color: $info;
+}

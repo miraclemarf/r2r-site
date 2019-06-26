@@ -4,7 +4,7 @@ export default ({ ...props }) => (
             <div className="position-absolute align-self-center w-100 text-center">
                 {props.iconTrip
                     ?
-                    <div style={{paddingTop:"4em"}}>
+                    <div className="mx-3" style={{paddingTop:"3em"}}>
                         <img height="50" src={process.env.HOST_URL+props.iconTrip} />
                         <h1 style={{lineHeight:".8em", fontSize:"3em"}} className="mt-3 title-section text-white">{props.text}</h1>
                     </div>

@@ -5,9 +5,9 @@ export default ({ ...props }) => (
 		{props.index != 0 && props.isTransaction ? <hr className="my-4" /> : ''}
 		
 		<a href={!props.isTransaction ? process.env.HOST_DOMAIN + "/trip/" + props.id : process.env.HOST_DOMAIN + "/user/trip/" + props.id}>
-			<div className="mb-2 position-relative">
+			<div className="mb-2 d-flex align-items-center position-relative">
 				<img className="img-fluid" src={process.env.HOST_URL + props.coverLandscape} />
-				<div className="position-absolute" style={{ top: "0", bottom: "0", left: "0", right: "0", margin: "auto", width: "60%", height: "55%", textAlign: "center" }} >
+				<div className="text-center my-2 mx-3 position-absolute" >
 					<img height="50" src={process.env.HOST_URL + props.iconCover} />
 					<h1 style={{ lineHeight: ".8em", fontSize: "3em" }} className="mt-2	 title-section text-white mx-auto">{props.title}</h1>
 				</div>

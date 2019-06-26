@@ -1,6 +1,6 @@
 export default () => (
 	<div className="card text-white  border-0 overlay--img__black">
-		<img className="card-img rounded-0" src={process.env.HOST_URL+"/img/assets/15605177350579i9t7818.jpeg"} />
+		<img className="card-img rounded-0" src={process.env.HOST_URL+"/img/assets/15615436185264qcatc0c.jpeg"} />
 		<div className="card-img-overlay d-flex align-items-center">
 			<div className="mx-auto">
 				<h2 className="card-title title-section text-center">WANT TO JOIN OUR COMMUNITY??</h2>

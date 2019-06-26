@@ -1,5 +1,6 @@
 import React from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import MenuItem from "./menuItem";
+import { Collapse, Navbar, NavbarToggler, NavbarBrand } from 'reactstrap';
 import { logout } from '../../utils/user'
 
 
@@ -121,38 +122,7 @@ export default class extends React.Component {
 							) : (
 									''
 								)}
-							<Nav className="text-white" navbar>
-								<NavItem>
-									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN + "/"}>
-										Home
-									</NavLink>
-								</NavItem>
-								<NavItem>
-									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN + "/user/trips"}>
-										My Trips
-									</NavLink>
-								</NavItem>
-								<NavItem>
-									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN + "/trips"}>
-										Trips Package
-									</NavLink>
-								</NavItem>
-								<NavItem>
-									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN + "/gallery"}>
-										Gallery
-									</NavLink>
-								</NavItem>
-								<NavItem>
-									<NavLink className="h2 m-0" href={process.env.HOST_DOMAIN + "/community"}>
-										Community
-									</NavLink>
-								</NavItem>
-								<NavItem>
-									<NavLink className="h2 m-0  " href={process.env.HOST_DOMAIN + "/faq"}>
-										FAQ
-									</NavLink>
-								</NavItem>
-							</Nav>
+							<MenuItem />
 							{this.state.isMobile ? (
 								<div>
 									<div className="d-flex justify-content-between my-4">

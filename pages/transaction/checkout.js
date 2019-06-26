@@ -82,6 +82,8 @@ export default class extends React.Component {
             <div className="container">
                 <div className="py-3"></div>
                 <div className="text-center">
+                    <div><span className="icon-check1 h2 text-white p-3 bg-info rounded-circle"></span></div>
+                    <div className="py-3" />
                     <h2 className="title-section">CHECK OUT SUCCESS!</h2>
                 </div>
                 <div>

@@ -141,6 +141,8 @@ export default class extends React.Component {
 
 
     render() {
+        console.log(this.props.user);
+        
         const motor = this.state.motor.object;
 
 

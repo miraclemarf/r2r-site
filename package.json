@@ -13,10 +13,7 @@
 		"type": "git",
 		"url": "git+https://github.com/miraclemarf/r2r-site.git"
 	},
-	"keywords": [
-		"next",
-		"js"
-	],
+	"keywords": [ "next", "js" ],
 	"author": "Marfy",
 	"license": "ISC",
 	"bugs": {

@@ -10,7 +10,8 @@ import cookies from 'next-cookies';
 import Head from 'next/head';
 import Navigate from '../components/fragments/nav';
 import Footer from '../components/fragments/footer';
-import '../styles/style.scss';3
+import FloatNotif from '../components/fragments/floatNotif';
+import '../styles/style.scss';
 import { throws } from 'assert';
 import NProgress from 'nprogress';
 
@@ -84,6 +85,7 @@ class MyApp extends App {
 					<Head>
 						<title>Road 2 Ring</title>
 					</Head>
+					<FloatNotif  message="Thank you for your registration, Please check your email to verify account" />
 					<Navigate {...pageProps} checkoutStatus={this.state.checkoutStatus} selectedPrice={this.props.pageProps.navTrans ? this.state.transaction.price ? this.state.transaction.price : "" : ""} />
 					<Component {...pageProps}  transactionState={this.transactionState} tripState={this.tripState}  checkoutStatusState={this.checkoutStatusState} trip={this.state.trip} transaction={this.state.transaction} />
 					<Footer {...pageProps} />

@@ -1,14 +1,16 @@
 import React from 'react';
 import App, { Container } from 'next/app';
 import Router from 'next/router';
+import withReduxStore from '../libs/withReduxStore';
+import { Provider } from 'react-redux';
 
-import { myProfile  } from "../utils/user"
-import cookies from 'next-cookies'
+import { myProfile } from "../utils/user";
+import cookies from 'next-cookies';
 
 import Head from 'next/head';
 import Navigate from '../components/fragments/nav';
 import Footer from '../components/fragments/footer';
-import '../styles/style.scss';
+import '../styles/style.scss';3
 import { throws } from 'assert';
 import NProgress from 'nprogress';
 
@@ -75,20 +77,20 @@ class MyApp extends App {
 
 
 	render() {
-		
-		const { Component, pageProps } = this.props;
-		
+		const { Component, pageProps, reduxStore } = this.props;
 		return (
 			<Container>
-				<Head>
-					<title>Road 2 Ring</title>
-				</Head>
-				<Navigate {...pageProps} checkoutStatus={this.state.checkoutStatus} selectedPrice={this.props.pageProps.navTrans ? this.state.transaction.price ? this.state.transaction.price : "" : ""} />
-				<Component {...pageProps}  transactionState={this.transactionState} tripState={this.tripState}  checkoutStatusState={this.checkoutStatusState} trip={this.state.trip} transaction={this.state.transaction} />
-				<Footer {...pageProps} />
+				<Provider store={reduxStore}>
+					<Head>
+						<title>Road 2 Ring</title>
+					</Head>
+					<Navigate {...pageProps} checkoutStatus={this.state.checkoutStatus} selectedPrice={this.props.pageProps.navTrans ? this.state.transaction.price ? this.state.transaction.price : "" : ""} />
+					<Component {...pageProps}  transactionState={this.transactionState} tripState={this.tripState}  checkoutStatusState={this.checkoutStatusState} trip={this.state.trip} transaction={this.state.transaction} />
+					<Footer {...pageProps} />
+				</Provider>
 			</Container>
 		);
 	}
 }
 
-export default MyApp;
+export default withReduxStore(MyApp);

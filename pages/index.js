@@ -1,23 +1,21 @@
 import React from 'react'
 import fetch from 'isomorphic-unfetch'
-// import Link from 'next/link'
-import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import MainCover from '../components/mainCover'
 import TripCard from '../components/tripCard'
-import TextImgCard from '../components/textImgCard'
+import TestimonialCard from '../components/testimonialCard'
+import GalleryCard from '../components/galleryCard'
 import BannerHowItWorks from '../components/fragments/bannerHowItWorks'
 import BannerJoinComm from '../components/fragments/bannerJoinComm'
 import Page from '../components/page'
-import { Container } from 'reactstrap'
 import { getUser } from '../utils/user'
-import { removeHtmlTag } from '../components/functions'
+import { Container, Row, Col } from 'reactstrap'
 
-export default class extends Page {
+export default class Home extends Page {
 	static async getInitialProps({ req }) {
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = await super.getInitialProps({req})
-
+		console.log(props.stateProps)
 		if (typeof window === 'undefined') {
 			try {
 				// Trips Scope
@@ -27,17 +25,17 @@ export default class extends Page {
 				const headlineRes = await fetch(`${process.env.API_URL}/headline`)
 				const headlineData = await headlineRes.json()
 				// Testimonial Scope
-				const testiMonialsRes =await fetch(`${process.env.API_URL}/testimonial/all-testimonials/0/5`)
+				const testiMonialsRes = await fetch(`${process.env.API_URL}/testimonial/all-testimonials/0/5`)
 				const testimonialsData = await testiMonialsRes.json()
 				// Gallery Scope
 				const galleryRes = await fetch(`${process.env.API_URL}/gallery/all-galleries/0/5`)
 				const galleryData = await galleryRes.json()
-
+				// Initial Props Scope
 				props.headline = headlineData.object
 				props.trips = tripsData.object
 				props.testimonials = testimonialsData.object
-				props.gallery = galleryData.object
-				
+				props.gallery = galleryData.object,
+				props.pageUrl = process.env.HOST_DOMAIN
 			} catch (e) {
 				props.error = 'Unable to fetch AsyncData on server'
 			}
@@ -49,82 +47,73 @@ export default class extends Page {
 		getUser()
 
 		this.state = {
-			pageTitle: `ROAD2RING`,
-			pageDescription: removeHtmlTag(props.headline.subtitle),
+			pageTitle: "Road 2 Ring",
+			pageKeywords: "road2ring,traveling,touring,journey,adventure,trip,community",
+			pageDescription: "ROAD2RING - UNFORGETABLE JOURNEY OF A LIFETIME",
 			pageAuthor: "ROAD2RING",
-			pageUrl: props.headline.linkUrl
+			pageUrl: props.pageUrl
 		}
 	}
 
 	render() {
-		// console.log(this.props);
-		const { pageTitle, pageDescription, pageAuthor, pageUrl } = this.state
-		console.log(this.props.headline)
+		const { pageTitle, pageDescription, pageAuthor, pageUrl, pageKeywords } = this.state
+		const { headline, trips, testimonials, gallery } = this.props
 		return (
-			<Container role="main">
+			<div role="main">
 				<Helmet>
                     <title>{pageTitle}</title>
                     <meta name="description" content={pageDescription}/>
-                    <meta name="keywords" content={pageTitle.replace(/\s/g,',').toLowerCase()} />
-                    <link rel="canonical" href={'pageUrl'} />
+                    <meta name="keywords" content={pageKeywords}/>
+                    <link rel="canonical" href={pageUrl} />
 					<script type="application/ld+json">
-					{`
-                        {
-                            "@context": "http://schema.org",
-                            "@type": "WebPage",
-                            "name": "${pageTitle}",
-                            "author": "${pageAuthor}",
-							"description": "${pageDescription}",
-							"logo": "/static/icons/icon.png"
-                        }
-                    `}
+					{`{
+						"@context": "http://schema.org",
+						"@type": "WebPage",
+						"name": "${pageTitle}",
+						"author": "${pageAuthor}",
+						"description": "${pageDescription}"
+                    }`}
 					</script>
                 </Helmet>
-				<MainCover {...this.props.headline} />
-				<div>
-					<div className="my-4 mx-3">
-						<h1 className="h2 title-section mb-3">Next Trips</h1>
-						{this.props.trips.map((item, key) => <TripCard key={key} {...item} />)}
-							<a href={process.env.HOST_DOMAIN+"/trips"} className="btn btn-primary d-block">
-								SEE ALL TRIP
-							</a>
-					</div>
-					<div className="pt-3 my-4 mx-3 border-top">
-						<h1 className="h2 title-section mb-3">Testimonial</h1>
-						<div className="sliderMobile d-flex align-items-stretch">
-							{this.props.testimonials.map((item, key) => (
-								<div key={key} className="mr-3">
-									<TextImgCard {...item} iconTextPostion="align-items-end" section="testimonial" />
-								</div>
-							))}
-						</div>
-					</div>
-					<div>
-						<BannerHowItWorks />
-					</div>
-					<div>
-						<BannerJoinComm />
-					</div>
-					<div className="p-3 bg-dark">
+				<MainCover {...headline} />
+				<Container>
+					<Row>
+						<Col xs="12" lg="12">
+							<h1 className="h2 title-section mb-3">Next Trips</h1>
+						</Col>
+						{trips.map((item, key) => <TripCard key={key} {...item} />)}
+						<Col xs="12" lg="12">
+							<a href={`${pageUrl}/trips`} className="btn btn-primary d-block">SEE ALL TRIP</a>
+							<hr/>
+						</Col>
+						<Col xs="12" lg="12">
+							<h1 className="h2 title-section mb-3">Testimonial</h1>
+						</Col>
+						<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
+							<TestimonialCard sliderData={testimonials} />
+						</Col>
+						<Col sm="12" md="6" className="px-0">
+							<BannerHowItWorks />
+						</Col>
+						<Col sm="12" md="6" className="px-0">
+							<BannerJoinComm />
+						</Col>
+					</Row>
+				</Container>
+				<div className="bg-dark pt-4">
+					<Container>
 						<div className=" d-flex justify-content-between mb-3">
 							<h1 className="h2 title-section text-white m-0">Gallery</h1>
-								<a href={process.env.HOST_DOMAIN+"/gallery"} style={{"top":"5px"}} className="text-sm position-relative text-white d-block font-weight-bold">
-									View All
-								</a>
+							<a href={`${pageUrl}/gallery`} style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
 						</div>
-						<div className="sliderMobile d-flex align-items-stretch">
-							{this.props.gallery.map((item, key) => (
-								<div key={key} className="mr-3">
-									<TextImgCard {...item} isLandscape={true} iconTextPostion="align-items-center" section="gallery" />
-								</div>
-							))}
-						</div>
-					</div>
+						<Row>
+							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
+								<GalleryCard sliderData={gallery} />
+							</Col>
+						</Row>
+					</Container>
 				</div>
-			</Container>
-		);
+			</div>
+		)
 	}
 }
-
-// const mapStateToProps = (state) => { return state }
-// export default connect(mapStateToProps, {})(Page)

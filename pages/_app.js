@@ -1,57 +1,51 @@
-import React from 'react';
-import App, { Container } from 'next/app';
-import Router from 'next/router';
-import withReduxStore from '../libs/withReduxStore';
-import { Provider } from 'react-redux';
+import React from 'react'
+import App, { Container } from 'next/app'
+import Router from 'next/router'
+import withReduxStore from '../libs/withReduxStore'
+import { Provider } from 'react-redux'
 
-import { myProfile } from "../utils/user";
-import cookies from 'next-cookies';
+import { myProfile } from "../utils/user"
+import cookies from 'next-cookies'
 
-import Head from 'next/head';
-import Navigate from '../components/fragments/nav';
-import Footer from '../components/fragments/footer';
-import FloatNotif from '../components/fragments/floatNotif';
-import '../styles/style.scss';
-import { throws } from 'assert';
-import NProgress from 'nprogress';
+import Head from 'next/head'
+import Navigate from '../components/fragments/nav'
+import Footer from '../components/fragments/footer'
+import FloatNotif from '../components/fragments/floatNotif'
+import '../styles/style.scss'
+import { throws } from 'assert'
+import NProgress from 'nprogress'
 
 
-Router.onRouteChangeStart = () => {
-  NProgress.start();
-};
+Router.onRouteChangeStart = () => NProgress.start()
 
 Router.onRouteChangeComplete = () => {
   // console.log('onRouteChnageComplete triggered');
-  NProgress.done();
-};
+  NProgress.done()
+}
 
 Router.onRouteChangeError = () => {
   // console.log('onRouteChnageError triggered');
-  NProgress.done();
-};
+  NProgress.done()
+}
 
 class MyApp extends App {
 	static async getInitialProps({ Component, ctx }) {
 		let pageProps = {}
 		let user = null
-		
 		let {token} = cookies(ctx)
 		if (Component.getInitialProps) {
-		  pageProps = await Component.getInitialProps(ctx)
+			pageProps = await Component.getInitialProps(ctx)
 		}
 		if (token) {
-		  pageProps.token = JSON.parse(token)
-		  pageProps.user = await myProfile(pageProps.token.access_token)
+			pageProps.token = JSON.parse(token)
+			pageProps.user = await myProfile(pageProps.token.access_token)
 		}
 	
 		return { pageProps, token, user }
 	  }
 	constructor(props) {
-		super(props);
-
-		this.state = {
-			...props.pageProps
-		};
+		super(props)
+		this.state = {...props.pageProps}
 		/* this.changePrice = this.changePrice.bind(this) */
 		this.transactionState = this.transactionState.bind(this)
 		this.tripState = this.tripState.bind(this)
@@ -62,9 +56,7 @@ class MyApp extends App {
 		this.setState({ selectedPrice: val })
 	} */
 	transactionState(data) {
-		
 		this.setState({ transaction: {...data} })
-
 	}
 
 	checkoutStatusState(data){
@@ -72,27 +64,38 @@ class MyApp extends App {
 	}
 
 	tripState(data){
-		
 		this.setState({trip: {...data}})
 	}
 
 
 	render() {
-		const { Component, pageProps, reduxStore } = this.props;
+		const { Component, pageProps, reduxStore } = this.props
+		const { checkoutStatus, transaction, trip } = this.state
 		return (
 			<Container>
+				<Head>
+					<title>Road 2 Ring</title>
+				</Head>
 				<Provider store={reduxStore}>
-					<Head>
-						<title>Road 2 Ring</title>
-					</Head>
-					<FloatNotif  message="Thank you for your registration, Please check your email to verify account" />
-					<Navigate {...pageProps} checkoutStatus={this.state.checkoutStatus} selectedPrice={this.props.pageProps.navTrans ? this.state.transaction.price ? this.state.transaction.price : "" : ""} />
-					<Component {...pageProps}  transactionState={this.transactionState} tripState={this.tripState}  checkoutStatusState={this.checkoutStatusState} trip={this.state.trip} transaction={this.state.transaction} />
+					{/* <FloatNotif message="Thank you for your registration, Please check your email to verify account" /> */}
+					<Navigate 
+						{...pageProps} 
+						checkoutStatus={checkoutStatus} 
+						selectedPrice={pageProps.navTrans ? transaction.price ? transaction.price : "" : ""} 
+					/>
+					<Component 
+						{...pageProps} 
+						transactionState={this.transactionState} 
+						tripState={this.tripState}
+						checkoutStatusState={this.checkoutStatusState} 
+						trip={trip} 
+						transaction={transaction} 
+					/>
 					<Footer {...pageProps} />
 				</Provider>
 			</Container>
-		);
+		)
 	}
 }
 
-export default withReduxStore(MyApp);
+export default withReduxStore(MyApp)

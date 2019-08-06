@@ -7,7 +7,7 @@ export default ({ ...props }) => (
 					<div className="d-block w-50">
 						<span className={props.footer != "transparent" ? "h5 icon-logo_ring2ring_full text-white" : "h5 icon-logo_ring2ring_full"}></span>
 					</div>
-					<div className="d-block" style={{ width: '33%' }}>
+					<div className="d-block" style={{width: '33%'}}>
 						<div className={props.footer != "transparent" ? "d-flex justify-content-between text-white h4" : "d-flex justify-content-between h4"}>
 							<span className="icon-facebook" />
 							<span className="icon-instagram" />

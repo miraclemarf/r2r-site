@@ -1,15 +1,15 @@
 import Moment from 'react-moment'
+import { Col } from 'reactstrap'
 
 export default ({ ...props }) => (
-	<div className="mb-4">
+	<Col xs="12" md="4" className="mb-4">
 		{props.index != 0 && props.isTransaction ? <hr className="my-4" /> : ''}
-		
-		<a href={!props.isTransaction ? process.env.HOST_DOMAIN + "/trip/" + props.id : process.env.HOST_DOMAIN + "/user/trip/" + props.id}>
+		<a href={!props.isTransaction ? `${process.env.HOST_DOMAIN}/trip/${props.id}` : `${process.env.HOST_DOMAIN}/user/trip/${props.id}`}>
 			<div className="mb-2 d-flex align-items-center position-relative">
 				<img className="img-fluid" src={process.env.HOST_URL + props.coverLandscape} />
-				<div className="text-center my-2 mx-3 position-absolute" >
-					<img height="50" src={process.env.HOST_URL + props.iconCover} />
-					<h1 style={{ lineHeight: ".8em", fontSize: "3em" }} className="mt-2	 title-section text-white mx-auto">{props.title}</h1>
+				<div className="trip-info-center text-center d-inline-block position-absolute">
+					<img src={process.env.HOST_URL + props.iconCover} />
+					<h1 className="mt-2	title-section text-white mx-auto">{props.title}</h1>
 				</div>
 			</div>
 			{props.isTransaction ?
@@ -61,6 +61,5 @@ export default ({ ...props }) => (
 				<a onClick={props.clickConfirm} className="btn btn-primary d-block text-white">Confirm Payment</a>
 			</div>
 			: ''}
-			
-	</div>
+	</Col>
 );

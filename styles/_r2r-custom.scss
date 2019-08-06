@@ -63,6 +63,9 @@ $navbar-dark-disabled-color: $white;
 $navbar-dark-toggler-icon-bg: str-replace(url($iconmenu), "#", "%23");
 $navbar-dark-toggler-border-color: rgba($white, 0);
 
+.r2r-custom .navbar-brand {
+	padding-top: 8px;
+}
 .r2r-custom .navbar-toggler-icon {
 	width: 1.1em;
 	height: 1.1em;
@@ -70,11 +73,27 @@ $navbar-dark-toggler-border-color: rgba($white, 0);
 
 .r2r-custom .nav-link {
 	font-family: 'Rheiborn_Sans_Clean';
+	font-size: 18pt;
+	letter-spacing: .05rem;
 }
+.r2r-custom .navbar-collapse {
+	background-color: black;
+}
+@media only screen and (min-width: 768px) {
+	.r2r-custom .navbar {
+		display: block;
+		margin: 0 auto;
+		padding: 10px 0 0;
+	
+		.navbar-brand {
+			position: absolute;
+			top: 4px;
+			left: 0;
+		}
 
-@media screen and (max-width: 767px) {
-	.r2r-custom .navbar-collapse {
-		background-color: black;
+		.navbar-collapse {
+			background-color: transparent;
+		}
 	}
 }
 

@@ -8,10 +8,8 @@ import { getLatestGallery } from '../utils/gallery';
 export default class extends Page {
 	static async getInitialProps({ req }) {
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = await super.getInitialProps({
-			req
-		});
-
+		let props = await super.getInitialProps({ req });
+		console.log(props.stateProps)
 		if (typeof window === 'undefined') {
 			try {
 				const galleryData = await getLatestGallery();

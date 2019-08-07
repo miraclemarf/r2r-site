@@ -1,6 +1,6 @@
 require('dotenv').config()
 const path = require('path')
-// const Dotenv = require('dotenv-webpack')
+const Dotenv = require('dotenv-webpack')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
 const withSass = require('@zeit/next-sass')
 const withCss = require('@zeit/next-css')
@@ -16,6 +16,11 @@ module.exports = withCss(withSass(
 
       config.plugins = [
         ...config.plugins,
+        // Read the .env file
+        new Dotenv({
+          path: path.join(__dirname, '.env'),
+          systemvars: true
+        }),
         new WebpackPwaManifest({
           filename: 'static/manifest.json',
           name: 'Road2Ring',

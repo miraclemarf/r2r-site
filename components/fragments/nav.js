@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import MenuItem from "./menuItem";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand } from 'reactstrap';
 import { logout } from '../../utils/user'
@@ -50,11 +51,13 @@ export default class extends React.Component {
 			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
 				<Container className="p-0">
 					<Navbar className={(this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary') + " position-relative"} dark expand="md">
+						<Link href='/' as={`${process.env.HOST_DOMAIN}/`}>
 						<NavbarBrand href={`${process.env.HOST_DOMAIN}/`}>
 							{
 								this.props.navTrans ? <span className="h2 icon-logogram_r2r" /> : <span className="h2 icon-logo_ring2ring_full" />
 							}
 						</NavbarBrand>
+						</Link>
 						{
 							this.props.navTrans ?
 								<div style={{ right: "0", left: "0" }} className={"m-auto position-absolute " + (isCheckoutSuccess ? "collapse" : "")}>

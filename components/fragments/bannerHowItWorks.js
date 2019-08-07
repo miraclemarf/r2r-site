@@ -25,7 +25,7 @@ export default () => (
 						<p className="line-normal">We will take care everything<br/>for your trip!</p>
 					</div>
 					<div style={{ minWidth: '130px' }}>
-						<Link href="/how-it-works">
+						<Link href="/howItWorks" as={process.env.HOST_DOMAIN+"/how-it-works"}>
 							<a className="d-block btn btn-secondary btn-sm">LEARN MORE</a>
 						</Link>
 					</div>

@@ -6,10 +6,7 @@ import { Container } from 'reactstrap'
 
 export default class extends React.Component {
 	static async getInitialProps({ req }) {
-		let props = await super.getInitialProps({
-			req
-		});
-
+		let props = await super.getInitialProps({ req });
 		return props;
 	}
 
@@ -18,7 +15,7 @@ export default class extends React.Component {
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false,
-			isMobile: true
+			isMobile: false
 		};
 	}
 	async componentDidMount() {
@@ -48,9 +45,9 @@ export default class extends React.Component {
 
 		return (
 			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
-				<Container className="p-0">
-					<Navbar className={(this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary') + " position-relative"} dark expand="md">
-						<NavbarBrand href={`${process.env.HOST_DOMAIN}/`}>
+				<Navbar className={(this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary') + " position-relative"} dark expand="md">
+					<Container className="position-relative d-block m-auto">
+						<NavbarBrand className="py-1 px-0" href={`${process.env.HOST_DOMAIN}/`}>
 							{
 								this.props.navTrans ? <span className="h2 icon-logogram_r2r" /> : <span className="h2 icon-logo_ring2ring_full" />
 							}
@@ -88,7 +85,7 @@ export default class extends React.Component {
 							<div className={this.state.isMobile ? 'm-3' : 'ml-auto'}>
 								{this.state.isMobile ? (
 									<div>
-										<div className="text-right text-white pt-3">
+										<div className="text-right text-white pt-0">
 											<span onClick={this.toggle} className="h2 icon-close" />
 										</div>
 										{
@@ -154,8 +151,8 @@ export default class extends React.Component {
 								) : '' }
 							</div>
 						</Collapse>
-					</Navbar>
-				</Container>
+					</Container>
+				</Navbar>
 			</div>
 		);
 	}

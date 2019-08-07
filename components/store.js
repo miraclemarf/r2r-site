@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
-import reducers from '../components/reducers'
+import ReduxThunk from 'redux-thunk'
+import reducers from './reducers'
 
-const initialState = {}
-
-export function initializeStore (state = initialState) {
-    return createStore(
-        reducers,
-        state,
-        composeWithDevTools(applyMiddleware(thunkMiddleware))
-    )
+export const makeStore = initialState => {
+    const store = createStore(reducers, initialState, applyMiddleware(ReduxThunk))
+    if(module.hot) {
+        module.hot.accept('../components/reducers', () => {
+            console.log('Replacing reducer')
+            store.replaceReducer(require('../components/reducers').default)
+        })
+    }
+    return store
 }

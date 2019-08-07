@@ -1,8 +1,9 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import App, { Container } from 'next/app'
 import Router from 'next/router'
-import withReduxStore from '../libs/withReduxStore'
-import { Provider } from 'react-redux'
+import withRedux from 'next-redux-wrapper'
+import { makeStore } from '../components/store'
 
 import { myProfile } from "../utils/user"
 import cookies from 'next-cookies'
@@ -69,14 +70,14 @@ class MyApp extends App {
 
 
 	render() {
-		const { Component, pageProps, reduxStore } = this.props
+		const { Component, pageProps, store } = this.props
 		const { checkoutStatus, transaction, trip } = this.state
 		return (
 			<Container>
 				<Head>
 					<title>Road 2 Ring</title>
 				</Head>
-				<Provider store={reduxStore}>
+				<Provider store={store}>
 					{/* <FloatNotif message="Thank you for your registration, Please check your email to verify account" /> */}
 					<Navigate 
 						{...pageProps} 
@@ -98,4 +99,4 @@ class MyApp extends App {
 	}
 }
 
-export default withReduxStore(MyApp)
+export default withRedux(makeStore)(MyApp)

@@ -1,15 +1,17 @@
-import React from 'react';
-import Link from 'next/link';
-import Page from '../components/page';
-import SquareCover from '../components/squareCover';
-import TextImgCard from '../components/textImgCard';
-import { getLatestGallery } from '../utils/gallery';
+import React from 'react'
+import { connect } from 'react-redux'
+import Link from 'next/link'
+// import Page from '../components/page'
+import SquareCover from '../components/squareCover'
+import TextImgCard from '../components/textImgCard'
+import { getLatestGallery } from '../utils/gallery'
 
-export default class extends Page {
+class HowItWorks extends React.Component {
 	static async getInitialProps({ req }) {
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = await super.getInitialProps({ req });
-		console.log(props.stateProps)
+		// let props = await super.getInitialProps({ req });
+		let props = {}
+		// console.log(props.stateProps)
 		if (typeof window === 'undefined') {
 			try {
 				const galleryData = await getLatestGallery();
@@ -87,3 +89,6 @@ export default class extends Page {
 		);
 	}
 }
+
+const mapStateToProps = (state) => { console.log(state); return state }
+export default connect(mapStateToProps, {})(HowItWorks)

@@ -1,41 +1,45 @@
 import React from 'react'
 import fetch from 'isomorphic-unfetch'
+import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import { actionTypes } from '../components/types'
 import MainCover from '../components/mainCover'
 import TripCard from '../components/tripCard'
 import TestimonialCard from '../components/testimonialCard'
 import GalleryCard from '../components/galleryCard'
 import BannerHowItWorks from '../components/fragments/bannerHowItWorks'
 import BannerJoinComm from '../components/fragments/bannerJoinComm'
-import Page from '../components/page'
 import { getUser } from '../utils/user'
 import { Container, Row, Col } from 'reactstrap'
 
-export default class Home extends Page {
-	static async getInitialProps({ req }) {
-		// Inherit standard props from the Page (i.e. with session data)
-		let props = await super.getInitialProps({req})
-		console.log(props.stateProps)
-		if (typeof window === 'undefined') {
+class Home extends React.Component {
+	static async getInitialProps({ reduxStore }) {
+		let props = {}
+		if(typeof window === 'undefined') {
 			try {
 				// Trips Scope
 				const tripsRes = await fetch(`${process.env.API_URL}/trips/0/4`)
 				const tripsData = await tripsRes.json()
+				reduxStore.dispatch({type: actionTypes.TRIP_LIST, payload: tripsData.object})
 				// Headline Scope
 				const headlineRes = await fetch(`${process.env.API_URL}/headline`)
 				const headlineData = await headlineRes.json()
+				reduxStore.dispatch({type: actionTypes.HEADLINE_DATA, payload: headlineData.object})
 				// Testimonial Scope
 				const testiMonialsRes = await fetch(`${process.env.API_URL}/testimonial/all-testimonials/0/5`)
 				const testimonialsData = await testiMonialsRes.json()
+				reduxStore.dispatch({type: actionTypes.TESTIMONIALS_DATA, payload: testimonialsData.object})
 				// Gallery Scope
 				const galleryRes = await fetch(`${process.env.API_URL}/gallery/all-galleries/0/5`)
 				const galleryData = await galleryRes.json()
+				reduxStore.dispatch({type: actionTypes.GALLERY_DATA, payload: galleryData.object})
+				reduxStore.dispatch({type: actionTypes.HOSTNAME, payload: process.env.HOST_DOMAIN})
 				// Initial Props Scope
-				props.headline = headlineData.object
-				props.trips = tripsData.object
-				props.testimonials = testimonialsData.object
-				props.gallery = galleryData.object,
-				props.pageUrl = process.env.HOST_DOMAIN
+				// props.headline = headlineData.object
+				// props.tripss = tripsData.object
+				// props.testimonials = testimonialsData.object
+				// props.gallery = galleryData.object,
+				// props.pageUrl = process.env.HOST_DOMAIN
 			} catch (e) {
 				props.error = 'Unable to fetch AsyncData on server'
 			}
@@ -51,13 +55,28 @@ export default class Home extends Page {
 			pageKeywords: "road2ring,traveling,touring,journey,adventure,trip,community",
 			pageDescription: "ROAD2RING - UNFORGETABLE JOURNEY OF A LIFETIME",
 			pageAuthor: "ROAD2RING",
-			pageUrl: props.pageUrl
+			pageUrl: props.Hostname,
+			trips: props.TripList,
+			headline: props.HeadlineData,
+			testimonials: props.TestimonialsData,
+			gallery: props.GalleryData
 		}
 	}
 
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			trips: nextProps.TripList,
+			headline: nextProps.HeadlineData,
+			testimonials: nextProps.TestimonialsData,
+			gallery: nextProps.GalleryData
+		})
+	}
+
 	render() {
-		const { pageTitle, pageDescription, pageAuthor, pageUrl, pageKeywords } = this.state
-		const { headline, trips, testimonials, gallery } = this.props
+		const { 
+			pageTitle, pageDescription, pageAuthor, pageUrl, pageKeywords, 
+			trips, headline, testimonials, gallery 
+		} = this.state
 		return (
 			<div role="main">
 				<Helmet>
@@ -117,3 +136,6 @@ export default class Home extends Page {
 		)
 	}
 }
+
+const mapStateToProps = (state) => { console.log(state); return state }
+export default connect(mapStateToProps, {})(Home)

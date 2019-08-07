@@ -1,6 +1,14 @@
 import { combineReducers } from 'redux'
-import FieldReducer from './FieldReducers'
+import HostnameReducer from './hostnameReducers'
+import TripListReducer from './tripListReducers'
+import HeadlineDataReducer from './headlineDataReducers'
+import TestimonialsDataReducer from './testimonialsDataReducers'
+import GalleryDataReducer from './galleryDataReducers'
 
 export default combineReducers({
-    field: FieldReducer
+    Hostname: HostnameReducer,
+    TripList: TripListReducer,
+    HeadlineData: HeadlineDataReducer,
+    TestimonialsData: TestimonialsDataReducer,
+    GalleryData: GalleryDataReducer
 })

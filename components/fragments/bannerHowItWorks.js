@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default () => (
 	<div className="card teaserCard text-white border-0 overlay--img__blue">
 		<img className="card-img rounded-0" src={`${process.env.HOST_URL}/img/assets/1561543693901iw4tqw74.jpeg`} />
@@ -23,7 +25,9 @@ export default () => (
 						<p className="line-normal">We will take care everything<br/>for your trip!</p>
 					</div>
 					<div style={{ minWidth: '130px' }}>
-						<a href={`${process.env.HOST_DOMAIN}/how-it-works`} className="d-block btn btn-secondary btn-sm">LEARN MORE</a>
+						<Link href="/how-it-works">
+							<a className="d-block btn btn-secondary btn-sm">LEARN MORE</a>
+						</Link>
 					</div>
 				</div>
 			</div>

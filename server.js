@@ -54,7 +54,7 @@ app.prepare().then(() => {
 
   // Use default router
   server.use('/api', router)
-  
+
   server.get('/testimonial/:id', (req, res) => {
     const actualPage = '/detailTestimonial'
     const queryParams = { id: req.params.id }
@@ -78,7 +78,6 @@ app.prepare().then(() => {
     const actualPage = '/transaction/'+queryParams.page
     return app.render(req, res, actualPage, queryParams)
   })
-
 
   server.get('/how-it-works', (req, res) => {
     const actualPage = '/howItWorks'

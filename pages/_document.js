@@ -28,7 +28,7 @@ class MyDocument extends Document {
 					<link href={`${process.env.HOST_DOMAIN}/static/font/font.css`} rel="stylesheet" />
 					<script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
 				</Head>
-				<body className="r2r-custom">
+				<body className="r2r-custom position-relative">
 					<Main />
 					<NextScript />
 				</body>

@@ -1,8 +1,10 @@
 import React from 'react'
 import fetch from 'isomorphic-unfetch'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { actionTypes } from '../components/types'
+import Page from '../components/page'
 import MainCover from '../components/mainCover'
 import TripCard from '../components/tripCard'
 import TestimonialCard from '../components/testimonialCard'
@@ -11,40 +13,40 @@ import BannerHowItWorks from '../components/fragments/bannerHowItWorks'
 import BannerJoinComm from '../components/fragments/bannerJoinComm'
 import { getUser } from '../utils/user'
 import { Container, Row, Col } from 'reactstrap'
+import { getLatestGallery } from '../utils/gallery'
 
-class Home extends React.Component {
-	static async getInitialProps({ reduxStore }) {
-		let props = {}
-		if(typeof window === 'undefined') {
-			try {
-				// Trips Scope
-				const tripsRes = await fetch(`${process.env.API_URL}/trips/0/4`)
-				const tripsData = await tripsRes.json()
-				reduxStore.dispatch({type: actionTypes.TRIP_LIST, payload: tripsData.object})
-				// Headline Scope
-				const headlineRes = await fetch(`${process.env.API_URL}/headline`)
-				const headlineData = await headlineRes.json()
-				reduxStore.dispatch({type: actionTypes.HEADLINE_DATA, payload: headlineData.object})
-				// Testimonial Scope
-				const testiMonialsRes = await fetch(`${process.env.API_URL}/testimonial/all-testimonials/0/5`)
-				const testimonialsData = await testiMonialsRes.json()
-				reduxStore.dispatch({type: actionTypes.TESTIMONIALS_DATA, payload: testimonialsData.object})
-				// Gallery Scope
-				const galleryRes = await fetch(`${process.env.API_URL}/gallery/all-galleries/0/5`)
-				const galleryData = await galleryRes.json()
-				reduxStore.dispatch({type: actionTypes.GALLERY_DATA, payload: galleryData.object})
-				reduxStore.dispatch({type: actionTypes.HOSTNAME, payload: process.env.HOST_DOMAIN})
-				// Initial Props Scope
-				// props.headline = headlineData.object
-				// props.tripss = tripsData.object
-				// props.testimonials = testimonialsData.object
-				// props.gallery = galleryData.object,
-				// props.pageUrl = process.env.HOST_DOMAIN
-			} catch (e) {
-				props.error = 'Unable to fetch AsyncData on server'
-			}
+class Home extends Page {
+	static async getInitialProps({ store, req }) {
+		let props = await super.getInitialProps({ req })
+		store.dispatch(getLatestGallery())
+		try {
+			// Trips Scope
+			const tripsRes = await fetch(`${process.env.API_URL}/trips/0/4`)
+			const tripsData = await tripsRes.json()
+			store.dispatch({type: actionTypes.TRIP_LIST, payload: tripsData.object})
+			// Headline Scope
+			const headlineRes = await fetch(`${process.env.API_URL}/headline`)
+			const headlineData = await headlineRes.json()
+			store.dispatch({type: actionTypes.HEADLINE_DATA, payload: headlineData.object})
+			// Testimonial Scope
+			const testiMonialsRes = await fetch(`${process.env.API_URL}/testimonial/all-testimonials/0/5`)
+			const testimonialsData = await testiMonialsRes.json()
+			store.dispatch({type: actionTypes.TESTIMONIALS_DATA, payload: testimonialsData.object})
+			// Gallery Scope
+			// const galleryRes = await GalleryApi.getLatestGallery()
+			
+			// store.dispatch({type: actionTypes.GALLERY_DATA, payload: galleryData.object})
+			store.dispatch({type: actionTypes.HOSTNAME, payload: process.env.HOST_DOMAIN})
+			// Initial Props Scope
+			// props.headline = headlineData.object
+			// props.tripss = tripsData.object
+			// props.testimonials = testimonialsData.object
+			// props.gallery = galleryData.object,
+			// props.pageUrl = process.env.HOST_DOMAIN
+		} catch (e) {
+			props.error = 'Unable to fetch AsyncData on server'
 		}
-		return props;
+		return props
 	}
 	constructor(props) {
 		super(props)
@@ -73,6 +75,7 @@ class Home extends React.Component {
 	}
 
 	render() {
+		console.log(this.props)
 		const { 
 			pageTitle, pageDescription, pageAuthor, pageUrl, pageKeywords, 
 			trips, headline, testimonials, gallery 
@@ -137,5 +140,9 @@ class Home extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => { console.log(state); return state }
-export default connect(mapStateToProps, {})(Home)
+const mapDispatchToProps = dispatch => {
+	return {
+		getLatestGallery: bindActionCreators(getLatestGallery, dispatch)
+	}
+}
+export default connect(state => state, mapDispatchToProps)(Home)

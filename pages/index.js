@@ -13,12 +13,13 @@ import BannerHowItWorks from '../components/fragments/bannerHowItWorks'
 import BannerJoinComm from '../components/fragments/bannerJoinComm'
 import { getUser } from '../utils/user'
 import { Container, Row, Col } from 'reactstrap'
-import { getLatestGallery } from '../utils/gallery'
+import { getLatestGallery, getLatestTestimonial } from '../utils'
 
 class Home extends Page {
 	static async getInitialProps({ store, req }) {
 		let props = await super.getInitialProps({ req })
-		store.dispatch(getLatestGallery())
+		await store.dispatch(getLatestGallery(0, 5))
+		await store.dispatch(getLatestTestimonial(0, 5))
 		try {
 			// Trips Scope
 			const tripsRes = await fetch(`${process.env.API_URL}/trips/0/4`)
@@ -29,20 +30,18 @@ class Home extends Page {
 			const headlineData = await headlineRes.json()
 			store.dispatch({type: actionTypes.HEADLINE_DATA, payload: headlineData.object})
 			// Testimonial Scope
-			const testiMonialsRes = await fetch(`${process.env.API_URL}/testimonial/all-testimonials/0/5`)
-			const testimonialsData = await testiMonialsRes.json()
-			store.dispatch({type: actionTypes.TESTIMONIALS_DATA, payload: testimonialsData.object})
+			// const testiMonialsRes = await fetch(`${process.env.API_URL}/testimonial/all-testimonials/0/5`)
+			// const testimonialsData = await testiMonialsRes.json()
+			// store.dispatch({type: actionTypes.TESTIMONIALS_DATA, payload: testimonialsData.object})
 			// Gallery Scope
-			// const galleryRes = await GalleryApi.getLatestGallery()
+			// store.dispatch(getLatestGallery())
+			// store.dispatch({type: actionTypes.GALLERY_DATA, payload: galleryRes.object})
 			
-			// store.dispatch({type: actionTypes.GALLERY_DATA, payload: galleryData.object})
-			store.dispatch({type: actionTypes.HOSTNAME, payload: process.env.HOST_DOMAIN})
 			// Initial Props Scope
 			// props.headline = headlineData.object
 			// props.tripss = tripsData.object
 			// props.testimonials = testimonialsData.object
-			// props.gallery = galleryData.object,
-			// props.pageUrl = process.env.HOST_DOMAIN
+			// props.gallery = galleryData.object
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}
@@ -57,7 +56,6 @@ class Home extends Page {
 			pageKeywords: "road2ring,traveling,touring,journey,adventure,trip,community",
 			pageDescription: "ROAD2RING - UNFORGETABLE JOURNEY OF A LIFETIME",
 			pageAuthor: "ROAD2RING",
-			pageUrl: props.Hostname,
 			trips: props.TripList,
 			headline: props.HeadlineData,
 			testimonials: props.TestimonialsData,
@@ -75,9 +73,8 @@ class Home extends Page {
 	}
 
 	render() {
-		console.log(this.props)
 		const { 
-			pageTitle, pageDescription, pageAuthor, pageUrl, pageKeywords, 
+			pageTitle, pageDescription, pageAuthor, pageKeywords, 
 			trips, headline, testimonials, gallery 
 		} = this.state
 		return (
@@ -86,7 +83,7 @@ class Home extends Page {
                     <title>{pageTitle}</title>
                     <meta name="description" content={pageDescription}/>
                     <meta name="keywords" content={pageKeywords}/>
-                    <link rel="canonical" href={pageUrl} />
+                    <link rel="canonical" href={this.props.env.HOST_DOMAIN} />
 					<script type="application/ld+json">
 					{`{
 						"@context": "http://schema.org",
@@ -105,7 +102,7 @@ class Home extends Page {
 						</Col>
 						{trips.map((item, key) => <TripCard key={key} {...item} />)}
 						<Col xs="12" lg="12">
-							<a href={`${pageUrl}/trips`} className="btn btn-primary d-block">SEE ALL TRIP</a>
+							<a href={`${this.props.env.HOST_DOMAIN}/trips`} className="btn btn-primary d-block">SEE ALL TRIP</a>
 							<hr/>
 						</Col>
 						<Col xs="12" lg="12">
@@ -115,10 +112,10 @@ class Home extends Page {
 							<TestimonialCard sliderData={testimonials} />
 						</Col>
 						<Col sm="12" md="6" className="px-0">
-							<BannerHowItWorks />
+							<BannerHowItWorks env={this.props.env} />
 						</Col>
 						<Col sm="12" md="6" className="px-0">
-							<BannerJoinComm />
+							<BannerJoinComm env={this.props.env} />
 						</Col>
 					</Row>
 				</Container>
@@ -126,7 +123,7 @@ class Home extends Page {
 					<Container>
 						<div className=" d-flex justify-content-between mb-3">
 							<h1 className="h2 title-section text-white m-0">Gallery</h1>
-							<a href={`${pageUrl}/gallery`} style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
+							<a href={`${this.props.env.HOST_DOMAIN}/gallery`} style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
 						</div>
 						<Row>
 							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
@@ -142,7 +139,8 @@ class Home extends Page {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		getLatestGallery: bindActionCreators(getLatestGallery, dispatch)
+		getLatestGallery: bindActionCreators(getLatestGallery, dispatch),
+		getLatestTestimonial: bindActionCreators(getLatestTestimonial, dispatch)
 	}
 }
 export default connect(state => state, mapDispatchToProps)(Home)

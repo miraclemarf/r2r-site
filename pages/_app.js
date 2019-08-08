@@ -16,7 +16,6 @@ import '../styles/style.scss'
 import { throws } from 'assert'
 import NProgress from 'nprogress'
 
-
 Router.onRouteChangeStart = () => NProgress.start()
 
 Router.onRouteChangeComplete = () => {

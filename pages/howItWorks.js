@@ -1,4 +1,5 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Link from 'next/link'
 import Page from '../components/page'
@@ -6,39 +7,39 @@ import SquareCover from '../components/squareCover'
 import GalleryCard from '../components/galleryCard'
 import GalleryApi from '../utils/gallery'
 import { Container, Row, Col } from 'reactstrap'
+import { getLatestGallery } from '../utils'
 
 class HowItWorks extends Page {
 	static async getInitialProps({ store, req }) {
-		let props = await super.getInitialProps({ req });
-		const initialState = store.getState()
-		console.log(initialState)
-		try {
-			// const galleryRes = await GalleryApi.getLatestGallery()
-			props.nav = 'blue'
-			props.gallery = await galleryRes
-		} catch (e) {}
+		let props = await super.getInitialProps({ req })
+		props.nav = 'blue'
+		let GalleryList = store.getState().GalleryData
+		if (GalleryList.length === 0) {
+			await store.dispatch(getLatestGallery(0, 5))
+		}
 		return props
 	}
 
 	constructor(props) {
 		super(props)
 		this.state = {
-			// gallery: props.gallery
+			gallery: props.GalleryData
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
-		// this.setState({gallery: nextProps.gallery})
+		this.setState({gallery: nextProps.GalleryData})
 	}
 	
 	render() {
 		console.log(this.props)
+		console.log(this.props.env.HOST_URL)
 		return (
 			<div role="main">
 				<Container className="m-auto">
 					<Row>
 						<Col xs="12" lg="12" className="mainBanner-lg p-0 w-100">
-							<img width="100%" height="auto" src={`${process.env.HOST_URL}/img/assets/1561543693901iw4tqw74.jpeg`} className="img-fluid" alt="TOURING WITH US?" />
+							<img width="100%" height="auto" src={`${this.props.env.HOST_URL}/img/assets/1561543693901iw4tqw74.jpeg`} className="img-fluid" alt="TOURING WITH US?" />
 						</Col>
 						<Col xs="12" lg="12" className="p-0">
 							<h1 className="p-3 m-0 title-section">TOURING WITH US?</h1>
@@ -61,11 +62,11 @@ class HowItWorks extends Page {
 					<Container>
 						<div className=" d-flex justify-content-between mb-3">
 							<h1 className="h2 title-section text-white m-0">Gallery</h1>
-							<a href={`${process.env.HOST_DOMAIN}/gallery`} style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
+							<a href={`${this.props.env.HOST_DOMAIN}/gallery`} style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
 						</div>
 						<Row>
 							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
-								{/* <GalleryCard sliderData={this.state.gallery} /> */}
+								<GalleryCard sliderData={this.state.gallery} />
 							</Col>
 						</Row>
 					</Container>
@@ -75,4 +76,9 @@ class HowItWorks extends Page {
 	}
 }
 
-export default connect(state => state)(HowItWorks)
+const mapDispatchToProps = dispatch => {
+	return {
+		getLatestGallery: bindActionCreators(getLatestGallery, dispatch)
+	}
+}
+export default connect(state => state, mapDispatchToProps)(HowItWorks)

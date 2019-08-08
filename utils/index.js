@@ -1,0 +1,7 @@
+export * from './accessories'
+export * from './gallery'
+export * from './motor'
+export * from './testimonial'
+export * from './trips'
+export * from './user'
+export * from './userTransaction'

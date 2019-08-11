@@ -81,6 +81,7 @@ $navbar-dark-toggler-border-color: rgba($white, 0);
 	font-size: 18pt;
 	letter-spacing: .05rem;
 }
+
 .r2r-custom .navbar-collapse {
 	background-color: black;
 }
@@ -95,6 +96,10 @@ $navbar-dark-toggler-border-color: rgba($white, 0);
 			top: 0;
 			left: 0;
 			margin-left: 1rem;
+		}
+
+		.nav-link:hover {
+			opacity: .9;
 		}
 
 		.navbar-collapse {

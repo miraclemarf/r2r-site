@@ -1,4 +1,5 @@
 export * from './accessories'
+export * from './headline'
 export * from './gallery'
 export * from './motor'
 export * from './testimonial'

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import MenuItem from './menuItem';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler } from 'reactstrap';
 import { logout } from '../../utils/user';
 import { Container } from 'reactstrap';
 
@@ -51,14 +51,14 @@ export default class extends React.Component {
 					expand="md"
 				>
 					<Container className="position-relative d-block m-auto">
-						<Link href="/" as={`${process.env.HOST_DOMAIN}/`}>
-							<NavbarBrand className="py-1 px-0" href={`${process.env.HOST_DOMAIN}/`}>
+						<Link href="/index" as={process.env.HOST_DOMAIN}>
+							<div className="navbar-brand py-1 px-0">
 								{this.props.navTrans ? (
 									<span className="h2 icon-logogram_r2r" />
 								) : (
 									<span className="h2 icon-logo_ring2ring_full" />
 								)}
-							</NavbarBrand>
+							</div>
 						</Link>
 						{this.props.navTrans ? (
 							<div
@@ -83,9 +83,7 @@ export default class extends React.Component {
 												? 'border-primary text-primary bg-white'
 												: 'border-white text-white') + ' border text-sm text-center mx-2'
 										}
-									>
-										2
-									</div>
+									>2</div>
 									<div
 										style={{ width: '25px', height: '25px' }}
 										className={
@@ -93,9 +91,7 @@ export default class extends React.Component {
 												? 'border-primary text-primary bg-white'
 												: 'border-white text-white') + ' border text-sm text-center'
 										}
-									>
-										3
-									</div>
+									>3</div>
 								</div>
 							</div>
 						) : (
@@ -119,7 +115,7 @@ export default class extends React.Component {
 						) : (
 							''
 						) : (
-							<NavbarToggler className="p-0" onClick={this.toggle} />
+							<NavbarToggler style={{top: "12px", right: "5px"}} className="position-absolute p-0" onClick={this.toggle} />
 						)}
 						<Collapse
 							style={{ overflowY: 'auto' }}
@@ -162,18 +158,16 @@ export default class extends React.Component {
 											</div>
 										) : (
 											<div className="d-flex justify-content-center my-4">
-												<a
-													href={`${process.env.HOST_DOMAIN}/login`}
-													className="d-block w-100 mr-2 btn btn-info "
-												>
-													LOG IN
-												</a>
-												<a
-													href={`${process.env.HOST_DOMAIN}/register`}
-													className="d-block w-100 ml-2 btn btn-secondary"
-												>
-													REGISTER
-												</a>
+												<Link href="/login" as={`${process.env.HOST_DOMAIN}/login`}>
+													<a className="d-block w-100 mr-2 btn btn-info ">
+														LOG IN
+													</a>
+												</Link>
+												<Link href="/register" as={`${process.env.HOST_DOMAIN}/register`}>
+													<a className="d-block w-100 ml-2 btn btn-secondary">
+														REGISTER
+													</a>
+												</Link>
 											</div>
 										)}
 									</div>

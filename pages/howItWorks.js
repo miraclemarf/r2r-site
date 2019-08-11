@@ -1,21 +1,21 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Link from 'next/link'
-import Page from '../components/page'
-import SquareCover from '../components/squareCover'
-import GalleryCard from '../components/galleryCard'
-import GalleryApi from '../utils/gallery'
+// import Link from 'next/link'
+// import SquareCover from '../components/squareCover'
+import GallerySliderCard from '../components/gallerySlider'
 import { Container, Row, Col } from 'reactstrap'
 import { getLatestGallery } from '../utils'
 
-class HowItWorks extends Page {
-	static async getInitialProps({ store, req }) {
-		let props = await super.getInitialProps({ req })
-		props.nav = 'blue'
-		let GalleryList = store.getState().GalleryData
-		if (GalleryList.length === 0) {
-			await store.dispatch(getLatestGallery(0, 5))
+class HowItWorks extends React.Component {
+	static async getInitialProps({ store }) {
+		let props = { nav: 'blue' }
+		try {
+			// Gallery Scope
+			let GalleryList = await store.getState().GalleryData
+			if (!GalleryList) await store.dispatch(getLatestGallery(0, 5))
+		} catch (e) {
+			props.error = 'Unable to fetch AsyncData on server'
 		}
 		return props
 	}
@@ -32,14 +32,12 @@ class HowItWorks extends Page {
 	}
 	
 	render() {
-		console.log(this.props)
-		console.log(this.props.env.HOST_URL)
 		return (
 			<div role="main">
-				<Container className="m-auto">
+				<Container className="container-sm">
 					<Row>
 						<Col xs="12" lg="12" className="mainBanner-lg p-0 w-100">
-							<img width="100%" height="auto" src={`${this.props.env.HOST_URL}/img/assets/1561543693901iw4tqw74.jpeg`} className="img-fluid" alt="TOURING WITH US?" />
+							<img width="100%" height="auto" src={`${process.env.HOST_URL}/img/assets/1561543693901iw4tqw74.jpeg`} className="img-fluid" alt="TOURING WITH US?" />
 						</Col>
 						<Col xs="12" lg="12" className="p-0">
 							<h1 className="p-3 m-0 title-section">TOURING WITH US?</h1>
@@ -49,24 +47,26 @@ class HowItWorks extends Page {
 								sun rises behind Bromo Volcano.
 							</p>
 						</Col>
+						<Col xs="12" lg="12">
+							<div className="my-4 d-flex align-items-center justify-content-between">
+								<h4 className="title-section text-dark m-0">Share to</h4>
+								<div className="bg-primary text-white py-1 px-3 d-flex align-items-center justify-content-between">
+									<span style={{ top: '4px' }} className="icon-facebook h4 position-relative" />
+									<h5 className="title-section mb-0 pl-3">Facebook Friend</h5>
+								</div>
+							</div>
+						</Col>
 					</Row>
-					<div className="container my-4 d-flex align-items-center justify-content-between">
-						<h4 className="title-section text-dark m-0">Share to</h4>
-						<div className="bg-primary text-white py-1 px-3 d-flex align-items-center justify-content-between">
-							<span style={{ top: '4px' }} className="icon-facebook h4 position-relative" />
-							<h5 className="title-section mb-0 pl-3">Facebook Friend</h5>
-						</div>
-					</div>
 				</Container>
 				<div className="bg-dark pt-4">
-					<Container>
+					<Container className="container-sm">
 						<div className=" d-flex justify-content-between mb-3">
 							<h1 className="h2 title-section text-white m-0">Gallery</h1>
-							<a href={`${this.props.env.HOST_DOMAIN}/gallery`} style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
+							<a href={`${process.env.HOST_DOMAIN}/gallery`} style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
 						</div>
 						<Row>
 							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
-								<GalleryCard sliderData={this.state.gallery} />
+								<GallerySliderCard sliderData={this.state.gallery} />
 							</Col>
 						</Row>
 					</Container>

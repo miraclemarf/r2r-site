@@ -22,7 +22,6 @@ class MyDocument extends Document {
 					<link rel="icon" type="image/png" sizes="16x16" href={`${process.env.HOST_DOMAIN}/_next/static/icons/icon_16x16.png`} />
 					<meta name="msapplication-TileColor" content="#FFFFFF" />
 					<meta name="msapplication-TileImage" content={`${process.env.HOST_DOMAIN}/_next/static/icons/icon_144x144.png`} />
-					<link rel="manifest" href={`${process.env.HOST_DOMAIN}/_next/static/manifest.json`} />
 					<meta name="theme-color" content="#FFFFFF" />
 					<link href={`${process.env.HOST_DOMAIN}/static/r2r-icomoon-010819/style.css`} rel="stylesheet" />
 					<link href={`${process.env.HOST_DOMAIN}/static/font/font.css`} rel="stylesheet" />

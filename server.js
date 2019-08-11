@@ -55,11 +55,17 @@ app.prepare().then(() => {
   // Use default router
   server.use('/api', router)
 
+  server.get('/', (req, res) => {
+    const actualPage = '/index'
+    return app.render(req, res, actualPage)
+  })
+
   server.get('/testimonial/:id', (req, res) => {
-    const actualPage = '/detailTestimonial'
+    const actualPage = '/testimonials/detail'
     const queryParams = { id: req.params.id }
     return app.render(req, res, actualPage, queryParams)
   })
+
   server.get('/gallery/:id', (req, res) => {
     const actualPage = '/detailGallery'
     const queryParams = { id: req.params.id }

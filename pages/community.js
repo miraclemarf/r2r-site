@@ -20,7 +20,7 @@ export default class extends Page {
 	render() {
 		return (
 			<div role="main">
-				<Container className="m-auto">
+				<Container fluid className="m-0 p-0 w-100">
 					<Row>
 						<Col xs="12" lg="12" className="mainBanner-lg p-0 w-100 text-white">
 							<div className="overlay--img__black d-inline-block w-100">
@@ -33,6 +33,10 @@ export default class extends Page {
 								</div>
 							</div>
 						</Col>
+					</Row>
+				</Container>
+				<Container className="container-sm">
+					<Row>
 						<Col xs="12" lg="12" className="p-0">
 							<h1 className="p-3 m-0 title-section">Community</h1>
 							<p className="container mt-0 mb-5">

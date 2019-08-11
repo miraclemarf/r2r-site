@@ -4,44 +4,29 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { actionTypes } from '../components/types'
-import Page from '../components/page'
 import MainCover from '../components/mainCover'
 import TripCard from '../components/tripCard'
-import TestimonialCard from '../components/testimonialCard'
-import GalleryCard from '../components/galleryCard'
+import TestimonialSliderCard from '../components/testimonialSlideCard'
+import GallerySliderCard from '../components/gallerySlider'
 import BannerHowItWorks from '../components/fragments/bannerHowItWorks'
 import BannerJoinComm from '../components/fragments/bannerJoinComm'
 import { getUser } from '../utils/user'
 import { Container, Row, Col } from 'reactstrap'
-import { getLatestGallery, getLatestTestimonial } from '../utils'
+import { getHeadline, getLatestGallery, getLatestTestimonial, getLatestTrips } from '../utils'
 
-class Home extends Page {
-	static async getInitialProps({ store, req }) {
-		let props = await super.getInitialProps({ req })
-		await store.dispatch(getLatestGallery(0, 5))
-		await store.dispatch(getLatestTestimonial(0, 5))
+class Home extends React.Component {
+	static async getInitialProps({ store }) {
+		let props = {}
 		try {
-			// Trips Scope
-			const tripsRes = await fetch(`${process.env.API_URL}/trips/0/4`)
-			const tripsData = await tripsRes.json()
-			store.dispatch({type: actionTypes.TRIP_LIST, payload: tripsData.object})
+			let stores = await store.getState()
 			// Headline Scope
-			const headlineRes = await fetch(`${process.env.API_URL}/headline`)
-			const headlineData = await headlineRes.json()
-			store.dispatch({type: actionTypes.HEADLINE_DATA, payload: headlineData.object})
+			if (!stores.HeadlineData) await store.dispatch(getHeadline()) 
+			// Trips Scope
+			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 10))
 			// Testimonial Scope
-			// const testiMonialsRes = await fetch(`${process.env.API_URL}/testimonial/all-testimonials/0/5`)
-			// const testimonialsData = await testiMonialsRes.json()
-			// store.dispatch({type: actionTypes.TESTIMONIALS_DATA, payload: testimonialsData.object})
+			if (!stores.TestimonialsData) await store.dispatch(getLatestTestimonial(0, 5)) 
 			// Gallery Scope
-			// store.dispatch(getLatestGallery())
-			// store.dispatch({type: actionTypes.GALLERY_DATA, payload: galleryRes.object})
-			
-			// Initial Props Scope
-			// props.headline = headlineData.object
-			// props.tripss = tripsData.object
-			// props.testimonials = testimonialsData.object
-			// props.gallery = galleryData.object
+			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 5))
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}
@@ -56,7 +41,7 @@ class Home extends Page {
 			pageKeywords: "road2ring,traveling,touring,journey,adventure,trip,community",
 			pageDescription: "ROAD2RING - UNFORGETABLE JOURNEY OF A LIFETIME",
 			pageAuthor: "ROAD2RING",
-			trips: props.TripList,
+			trips: props.TripData,
 			headline: props.HeadlineData,
 			testimonials: props.TestimonialsData,
 			gallery: props.GalleryData
@@ -65,7 +50,7 @@ class Home extends Page {
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			trips: nextProps.TripList,
+			trips: nextProps.TripData,
 			headline: nextProps.HeadlineData,
 			testimonials: nextProps.TestimonialsData,
 			gallery: nextProps.GalleryData
@@ -83,7 +68,7 @@ class Home extends Page {
                     <title>{pageTitle}</title>
                     <meta name="description" content={pageDescription}/>
                     <meta name="keywords" content={pageKeywords}/>
-                    <link rel="canonical" href={this.props.env.HOST_DOMAIN} />
+                    <link rel="canonical" href={process.env.HOST_DOMAIN} />
 					<script type="application/ld+json">
 					{`{
 						"@context": "http://schema.org",
@@ -95,39 +80,39 @@ class Home extends Page {
 					</script>
                 </Helmet>
 				<MainCover {...headline} />
-				<Container>
+				<Container className="container-sm">
 					<Row>
 						<Col xs="12" lg="12">
 							<h1 className="h2 title-section mb-3">Next Trips</h1>
 						</Col>
 						{trips.map((item, key) => <TripCard key={key} {...item} />)}
 						<Col xs="12" lg="12">
-							<a href={`${this.props.env.HOST_DOMAIN}/trips`} className="btn btn-primary d-block">SEE ALL TRIP</a>
+							<a href={`${process.env.HOST_DOMAIN}/trips`} className="btn btn-primary d-block">SEE ALL TRIP</a>
 							<hr/>
 						</Col>
 						<Col xs="12" lg="12">
 							<h1 className="h2 title-section mb-3">Testimonial</h1>
 						</Col>
 						<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
-							<TestimonialCard sliderData={testimonials} />
+							<TestimonialSliderCard sliderData={testimonials} />
 						</Col>
 						<Col sm="12" md="6" className="px-0">
-							<BannerHowItWorks env={this.props.env} />
+							<BannerHowItWorks />
 						</Col>
 						<Col sm="12" md="6" className="px-0">
-							<BannerJoinComm env={this.props.env} />
+							<BannerJoinComm />
 						</Col>
 					</Row>
 				</Container>
 				<div className="bg-dark pt-4">
-					<Container>
+					<Container className="container-sm">
 						<div className=" d-flex justify-content-between mb-3">
 							<h1 className="h2 title-section text-white m-0">Gallery</h1>
-							<a href={`${this.props.env.HOST_DOMAIN}/gallery`} style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
+							<a href={`${process.env.HOST_DOMAIN}/gallery`} style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
 						</div>
 						<Row>
 							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
-								<GalleryCard sliderData={gallery} />
+								<GallerySliderCard sliderData={gallery} />
 							</Col>
 						</Row>
 					</Container>
@@ -140,7 +125,9 @@ class Home extends Page {
 const mapDispatchToProps = dispatch => {
 	return {
 		getLatestGallery: bindActionCreators(getLatestGallery, dispatch),
-		getLatestTestimonial: bindActionCreators(getLatestTestimonial, dispatch)
+		getLatestTestimonial: bindActionCreators(getLatestTestimonial, dispatch),
+		getLatestTrips: bindActionCreators(getLatestTrips, dispatch),
+		getHeadline: bindActionCreators(getHeadline, dispatch)
 	}
 }
 export default connect(state => state, mapDispatchToProps)(Home)

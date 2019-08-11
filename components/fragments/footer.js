@@ -3,7 +3,7 @@ import { Container } from 'reactstrap'
 export default ({ ...props }) => (
 	<div className={props.footer == "collapse" ? "collapse" : ""}>
 		<div style={{bottom: 0, left: 0}} className={"position-absolute w-100 " + (props.footer != "transparent" ? "bg-dark py-1" : "py-1")}>
-			<Container>
+			<Container className="container-sm">
 				<div className="d-flex justify-content-between mt-3 mb-2">
 					<div className="d-block w-50">
 						<span className={props.footer != "transparent" ? "h5 icon-logo_ring2ring_full text-white" : "h5 icon-logo_ring2ring_full"}></span>

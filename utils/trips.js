@@ -1,21 +1,23 @@
-import fetch from 'isomorphic-unfetch';
-import moment from 'moment';
+import fetch from 'isomorphic-unfetch'
+// import moment from 'moment'
+import { actionTypes } from '../components/types'
+const API_URL = process.env.API_URL
 
-export const getLatestTrips = async () => {
-    const tripsRes = await fetch(process.env.API_URL + '/trips/0/10');
-    const tripsData = await tripsRes.json();
-
-    return tripsData;
+export const getLatestTrips = (page, total) => async (dispatch) => {
+    const url = `${API_URL}/trips/${page}/${total}`
+    const res = await fetch(url)
+    const data = await res.json()
+    return dispatch({ type: actionTypes.TRIP_LIST, payload: data.object })
 }
 
 export const getDetailTrip = async (id) => {
-
-    const result = await fetch(process.env.API_URL + '/trip/' + id)
-    const data = await result.json()
-
-    return data;
+    const url = `${API_URL}/trip/${id}`
+    const res = await fetch(url)
+    const data = await res.json()
+    return data.object
 }
 
+// bellow not yet changed into dispatch redux
 export const getPriceTrip = async (id) => {
 
     const result = await fetch(process.env.API_URL + '/trip/' + id + '/price')

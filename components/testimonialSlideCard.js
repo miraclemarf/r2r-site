@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default (props) => {
     const Styles = {
         SliderContainer: {
@@ -14,12 +16,12 @@ export default (props) => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            webkitTransform: "translate(-50%, -50%)"
+            WebkitTransform: "translate(-50%, -50%)"
         },
         videoIcon: {
             top: "10px",
             left: "10px",
-            padding: "8px 11px",
+            padding: "10px 13px 8px",
             border: "1px solid white",
             zIndex: 2
         },
@@ -36,7 +38,9 @@ export default (props) => {
             <div style={{top: 0, left: 0}} className="position-absolute d-flex">
                 {props.sliderData.map((data, key) => (
                     <div key={key} style={Styles.SliderItems} className="position-relative d-inline-flex mx-2">
-                        <a href={`${process.env.HOST_DOMAIN}/testimonial/${data.id}`} title={data.title} style={{zIndex: 4}} className="position-absolute w-100 h-100" />
+                        <Link href={`/testimonials/detail?id=${data.id}`} as={`${process.env.HOST_DOMAIN}/testimonial/${data.id}`} >
+                            <a title={data.title} style={{zIndex: 4}} className="position-absolute w-100 h-100" />
+                        </Link>
                         <div className="position-relative w-100 h-100 overflow-hidden">
                             <div style={Styles.videoIcon} className="position-absolute">
                                 <span className="icon icon-icon_play_video text-white" />

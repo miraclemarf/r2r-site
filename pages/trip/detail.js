@@ -1,16 +1,18 @@
 import React from 'react'
 import Link from 'next/link'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 // import Page from '../components/page'
 import { getLatestMotor, getDetailTrip } from '../../utils';
 import SquareCover from '../../components/squareCover';
 
-export default class extends React.Component {
-    static async getInitialProps({ req, query: { id } }) {
+class TripDetail extends React.Component {
+    static async getInitialProps({ store, query: { idTrip } }) {
         let props = {}
-        props.idTrip = id;
+        props.idTrip = idTrip;
         props.footer = 'collapse';
         props.transaction = {
-            idTrip: id,
+            idTrip: idTrip,
             meetingPoint: "",
             startDate: "",
             endDate: "",
@@ -21,27 +23,26 @@ export default class extends React.Component {
             bringOwnHelm:false,
             notes: ""
         };
+        let stores = await store.getState()
+        try {
+            // Detail Scope
+            const detailRes = await getDetailTrip(idTrip)
+            props.tripDetail = detailRes
+            // Motor Scope
+            if (!stores.MotorData) await store.dispatch(getLatestMotor())
 
-        if (typeof window === 'undefined') {
-            try {
-                const tripData = await getDetailTrip(idTrip);
-                const motorData = await getLatestMotor();
-                props.trip = tripData;
-                props.motor = motorData;
+            props.transaction = {
+                idTrip: idTrip,
+                meetingPoint: tripData.object.meetingPoint,
+                startDate: "",
+                endDate: "",
+                motor: {},
+                accesories: [],
+                price: [],
+                notes: ""
+            };
+        } catch (e) {
 
-                props.transaction = {
-                    idTrip: idTrip,
-                    meetingPoint: tripData.object.meetingPoint,
-                    startDate: "",
-                    endDate: "",
-                    motor: {},
-                    accesories: [],
-                    price: [],
-                    notes: ""
-                };
-            } catch (e) {
-
-            }
         }
 
         return props
@@ -49,17 +50,20 @@ export default class extends React.Component {
     }
     constructor(props) {
         super(props);
-
-        this.state = { ...props };
-
+        // this.state = { ...props };
         this.state = {
-            trip: props.trip || null,
-            motor: props.motor || null,
-            id: props.idTrip || ''
-        };
+            ...props,
+            trip: props.tripDetail,
+            motor: props.MotorData,
+            id: props.idTrip
+        }
+    }
 
-
-
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            trip: nextProps.tripDetail,
+            motor: nextProps.MotorData,
+        })
     }
 
     async componentDidMount() {
@@ -142,10 +146,9 @@ export default class extends React.Component {
     render() {
         console.log(this.props.user);
         
-        const motor = this.state.motor.object;
+        const motor = this.state.motor;
 
-
-        const { id, coverLandscape, title, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries, tripPrice } = this.state.trip.object
+        const { id, coverLandscape, title, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries, tripPrice } = this.state.trip
         return (
             <div style={{ "paddingBottom": "4em" }}>
                 <SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
@@ -290,5 +293,11 @@ export default class extends React.Component {
             </div>
         )
     }
-
 }
+
+const mapDispatchToProps = dispatch => {
+	return {
+		getLatestMotor: bindActionCreators(getLatestMotor, dispatch)
+	}
+}
+export default connect(state => state, mapDispatchToProps)(TripDetail)

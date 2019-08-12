@@ -62,7 +62,7 @@ app.prepare().then(() => {
 
   // Testimonial Scope
   server.get('/testimonial/:id', (req, res) => {
-    const actualPage = '/testimonial/landing'
+    const actualPage = '/testimonial/detail'
     const queryParams = { id: req.params.id }
     return app.render(req, res, actualPage, queryParams)
   })

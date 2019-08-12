@@ -20,20 +20,18 @@ export default class extends Page {
 	render() {
 		return (
 			<div role="main">
-				<Container fluid className="m-0 p-0 w-100">
-					<Row>
-						<Col xs="12" lg="12" className="mainBanner-lg p-0 w-100 text-white">
-							<div className="overlay--img__black d-inline-block w-100">
-								<img width="100%" height="auto" className="card-img" src={`${process.env.HOST_URL}/img/assets/15615436185264qcatc0c.jpeg`} />
-								<div className="card-img-overlay d-flex align-items-center">
-									<div className="mx-auto text-center">
-										<span className="d-block icon-logogram_r2r h3 mt-3"></span>
-										<h2 style={{"lineHeight":"normal"}} className="title-section text-center text-break m-0">The Community</h2>
-									</div>
+				<Container fluid className="position-relative m-0 p-0 w-100">
+					<div className="mainBanner-lg p-0 w-100 text-white">
+						<div className="overlay--img__black d-inline-block w-100">
+							<img width="100%" height="auto" className="card-img" src={`${process.env.HOST_URL}/img/assets/15615436185264qcatc0c.jpeg`} />
+							<div className="card-img-overlay d-flex align-items-center">
+								<div className="mx-auto text-center">
+									<span className="d-block icon-logogram_r2r h3 mt-3"></span>
+									<h2 style={{"lineHeight":"normal"}} className="title-section text-center text-break m-0">The Community</h2>
 								</div>
 							</div>
-						</Col>
-					</Row>
+						</div>
+					</div>
 				</Container>
 				<Container className="container-sm">
 					<Row>

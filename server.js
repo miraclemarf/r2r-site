@@ -60,21 +60,33 @@ app.prepare().then(() => {
     return app.render(req, res, actualPage)
   })
 
+  // Testimonial Scope
   server.get('/testimonial/:id', (req, res) => {
-    const actualPage = '/testimonials/detail'
+    const actualPage = '/testimonial/landing'
     const queryParams = { id: req.params.id }
     return app.render(req, res, actualPage, queryParams)
+  })
+
+  // Gallery Index
+  server.get('/gallery', (req, res) => {
+    const actualPage = '/gallery/landing'
+    return app.render(req, res, actualPage)
   })
 
   server.get('/gallery/:id', (req, res) => {
-    const actualPage = '/detailGallery'
+    const actualPage = '/gallery/detail'
     const queryParams = { id: req.params.id }
     return app.render(req, res, actualPage, queryParams)
   })
 
-  server.get('/trip/:id', (req, res) => {
-    const actualPage = '/detailTrip'
+  // Trip Scope
+  server.get('/trips', (req, res) => {
+    const actualPage = '/trip/landing'
+    return app.render(req, res, actualPage)
+  })
 
+  server.get('/trip/:id', (req, res) => {
+    const actualPage = '/trip/detail'
     const queryParams = { idTrip: req.params.id }
     return app.render(req, res, actualPage, queryParams)
   })
@@ -85,15 +97,19 @@ app.prepare().then(() => {
     return app.render(req, res, actualPage, queryParams)
   })
 
+  // How It Works Scope
   server.get('/how-it-works', (req, res) => {
     const actualPage = '/howItWorks'
     return app.render(req, res, actualPage)
   })
+
+  // T & C Scope
   server.get('/term-condition', (req, res) => {
     const actualPage = '/tnc'
     return app.render(req, res, actualPage)
   })
 
+  // Scope User
   server.get('/user/trip/:id', (req, res) => {
     const actualPage = '/user/detailTrip'
 
@@ -103,7 +119,6 @@ app.prepare().then(() => {
 
   server.get('/user/trip/:id/request', (req, res) => {
     const actualPage = '/user/request'
-
     const queryParams = { id: req.params.id }
     return app.render(req, res, actualPage, queryParams)
   })

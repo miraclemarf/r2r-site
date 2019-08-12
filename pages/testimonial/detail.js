@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux' 
 import Link from 'next/link'
 import SquareCover from '../../components/squareCover'
-// import TextImgCardTrip from '../../components/textImgCardTrip'
 import TripSliderCard from '../../components/tripSlider'
 import { Container, Row, Col } from 'reactstrap'
 import { getLatestTrips, getLatestGallery, getDetailTestimonial } from "../../utils"
@@ -13,15 +12,14 @@ class TestimonialDetail extends React.Component {
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = { footer: 'transparent' }
 		let stores = await store.getState()
-		// let detailRes = null
 		try {
-			// Trip Scope
-			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 10))
-			// Gallery Scope
-			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 6))
 			// Detail Scope
 			const detailRes = await getDetailTestimonial(id)
 			props.testimonialDetail = detailRes
+			// Gallery Scope
+			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 6))
+			// Trip Scope
+			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 10))
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}
@@ -45,48 +43,8 @@ class TestimonialDetail extends React.Component {
 		})
 	}
 
-	renderTimeline() {
-		return (
-			<div className="pt-4 mt-4">
-				<div className="text-center mb-4">
-					<span className="h2 title-section title-section__with-border">13 OCT 18</span>
-				</div>
-				<div className="body-desc">
-					<img src="https://loremflickr.com/600/680/potrait,street" className="img-fluid d-block" />
-					<br />
-					<p className="container mb-0">
-						when an unknown printer took a galley of type and scrambled it to make a type specimen book. It
-						has survived not only five centuries, but also the leap into electronic typesetting, remaining
-						essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
-						containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
-						PageMaker including versions of Lorem Ipsum.
-					</p>
-					<br />
-					<img src="https://loremflickr.com/600/375/potrait,street" className="img-fluid d-block" />
-					<br />
-					<p className="container mb-0">
-						There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-						alteration in some form
-					</p>
-				</div>
-			</div>
-		);
-	}
-
-	renderGalleryCol() {
-		return (
-			<div style={{ margin: '0 -4px' }} className="row no-gutters">
-				{this.state.gallery.slice(0, 2).map((item, key) => (
-					<div key={key} className={key == 2 ? 'col-12' : 'col-6'}>
-						<img src={process.env.HOST_URL+item.coverLandscape} className="img-fluid" />
-					</div>
-				))}
-			</div>
-		)
-	}
-
 	render() {
-		const { testimonial, trips } = this.state
+		const { testimonial, gallery, trips } = this.state
 		return (
 			<div role="main">
 				<SquareCover imgCover={testimonial.coverPotrait} withIcon={true} />
@@ -139,16 +97,18 @@ class TestimonialDetail extends React.Component {
 					<Container className="container-sm">
 						<div className="py-2" />
 						<h2 className="title-section text-center title-section__with-border pb-2">Gallery</h2>
-						{ this.renderGalleryCol() }
+						<div style={{ margin: '0 -4px' }} className="row no-gutters">
+							{gallery.slice(0, 2).map((item, key) => (
+								<div key={key} className={key == 2 ? 'col-12' : 'col-6'}>
+									<img src={process.env.HOST_URL+item.coverLandscape} className="img-fluid" />
+								</div>
+							))}
+						</div>
 						<Link href={"/gallery"} href={`${process.env.HOST_DOMAIN}/gallery`}>
 							<a className="mt-3 btn btn-primary d-block">SEE ALL</a>
 						</Link>
 					</Container>
 				</div>
-				{/* <div>
-					{this.renderTimeline()}
-					{this.renderTimeline()}
-				</div> */}
 				{
 					trips ? 
 					<Container className="container-sm pt-2">
@@ -167,7 +127,7 @@ class TestimonialDetail extends React.Component {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		getDetailTestimonial: bindActionCreators(getDetailTestimonial, dispatch),
+		getLatestGallery: bindActionCreators(getLatestGallery, dispatch),
 		getLatestTrips: bindActionCreators(getLatestTrips, dispatch)
 	}
 }

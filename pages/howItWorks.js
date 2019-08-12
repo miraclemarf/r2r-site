@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-// import Link from 'next/link'
+import Link from 'next/link'
 // import SquareCover from '../components/squareCover'
 import GallerySliderCard from '../components/gallerySlider'
 import { Container, Row, Col } from 'reactstrap'
@@ -62,7 +62,9 @@ class HowItWorks extends React.Component {
 					<Container className="container-sm">
 						<div className=" d-flex justify-content-between mb-3">
 							<h1 className="h2 title-section text-white m-0">Gallery</h1>
-							<a href={`${process.env.HOST_DOMAIN}/gallery`} style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
+							<Link href="/gallery" as={`${process.env.HOST_DOMAIN}/gallery`}>
+								<a style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
+							</Link>
 						</div>
 						<Row>
 							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">

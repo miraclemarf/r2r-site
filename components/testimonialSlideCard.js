@@ -38,7 +38,7 @@ export default (props) => {
             <div style={{top: 0, left: 0}} className="position-absolute d-flex">
                 {props.sliderData.map((data, key) => (
                     <div key={key} style={Styles.SliderItems} className="position-relative d-inline-flex mx-2">
-                        <Link href={`/testimonials/detail?id=${data.id}`} as={`${process.env.HOST_DOMAIN}/testimonial/${data.id}`} >
+                        <Link href={`/testimonial/detail?id=${data.id}`} as={`${process.env.HOST_DOMAIN}/testimonial/${data.id}`} >
                             <a title={data.title} style={{zIndex: 4}} className="position-absolute w-100 h-100" />
                         </Link>
                         <div className="position-relative w-100 h-100 overflow-hidden">

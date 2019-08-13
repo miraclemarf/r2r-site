@@ -32,7 +32,7 @@ export default class extends React.Component {
             notes: ""
         };
         try {
-            const data = await getPriceTrip(idTrip);
+            const data = await getPriceTrip(idTrip);            
             props.price = data.object;
         } catch (e) {
 
@@ -101,7 +101,6 @@ export default class extends React.Component {
     }
     render() {
         const { idTrip, price, transaction, selectedPriceId } = this.state
-        console.log(selectedPriceId);
         
         return (
             <div>

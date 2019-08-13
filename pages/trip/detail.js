@@ -119,7 +119,7 @@ class TripDetail extends React.Component {
                         <div>
                             {item.imageItinerary ? <img src={process.env.HOST_URL + item.imageItinerary} className="img-fluid mb-2" /> : ''}
                             <h3 className="title-section text-white m-0">{item.title}</h3>
-                            {item.description ? <div className="text-white text-sm">{item.description}</div> : ""}
+                            {item.description ? <div className="text-white text-sm" dangerouslySetInnerHTML={{__html:item.description}}>{}</div> : ""}
                         </div>
                         {index == data.details.length - 1 ? <div className="verticalLine bg-dark"></div> : ""}
                     </div>
@@ -148,7 +148,7 @@ class TripDetail extends React.Component {
         
         const motor = this.state.motor;
 
-        const { id, coverLandscape, title, iconCover, location, distance, duration, terrain, maxRider, description, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries, tripPrice } = this.state.trip
+        const { id, coverLandscape, title, iconCover, location, distance, duration, terrain, maxRider, description, map, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries, tripPrice } = this.state.trip
         return (
             <div style={{ "paddingBottom": "4em" }}>
                 <SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
@@ -156,7 +156,7 @@ class TripDetail extends React.Component {
                     <div className="py-3">
                         <span className="text-primary text-sm"><b>{location}</b></span>
                     </div>
-                    <div>
+                    <div className="mb-4 pb-2">
                         <h2 className="title-section">About the tour</h2>
                         <div className="d-flex justify-content-around mb-3">
                             <div className="text-center">
@@ -208,7 +208,7 @@ class TripDetail extends React.Component {
                 </div>
                 <div className="container my-4">
                     <h2 className="title-section mb-2">THE ROUTE</h2>
-                    <img src="http://www.outdoorblueprint.com/outdoors-101/plan-a-road-trip-route-with-google-maps/step6.png" className="img-fluid" />
+                    <img src={process.env.HOST_URL + map} className="img-fluid" />
                 </div>
                 <div className="container mb-4 pb-4">
                     <div className=" d-flex justify-content-between mb-3">

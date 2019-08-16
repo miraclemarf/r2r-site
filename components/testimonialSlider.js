@@ -1,4 +1,4 @@
-import PortraitCard from '../components/cards/portraitCard'
+import PortraitCard from './cards/portraitCard'
 
 export default (props) => (
     <div className="sliderPortraitWrapper position-relative d-inline-block w-100 overflow-auto">

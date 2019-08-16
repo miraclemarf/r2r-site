@@ -19,7 +19,7 @@ class TestimonialDetail extends React.Component {
 			// Gallery Scope
 			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 6))
 			// Trip Scope
-			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 10))
+			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 6))
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}

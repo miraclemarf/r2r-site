@@ -13,7 +13,7 @@ class HowItWorks extends React.Component {
 		try {
 			// Gallery Scope
 			let GalleryList = await store.getState().GalleryData
-			if (!GalleryList) await store.dispatch(getLatestGallery(0, 5))
+			if (!GalleryList) await store.dispatch(getLatestGallery(0, 6))
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}

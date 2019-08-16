@@ -1,6 +1,6 @@
 import React from 'react';
 import TabMenu from '../components/tabMenu';
-import Page from '../components/page';
+// import Page from '../components/page';
 import Moment from 'react-moment'
 import { register } from '../utils/user'
 

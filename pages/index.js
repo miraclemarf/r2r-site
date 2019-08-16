@@ -25,7 +25,7 @@ class Home extends React.Component {
 			// Testimonial Scope
 			if (!stores.TestimonialsData) await store.dispatch(getLatestTestimonial(0, 5)) 
 			// Gallery Scope
-			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 5))
+			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 6))
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}

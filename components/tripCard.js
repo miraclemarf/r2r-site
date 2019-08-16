@@ -9,7 +9,6 @@ export default ({ ...props }) => (
 			href={!props.isTransaction ? `/trip?id=${props.id}` : `/user/trip?id=${props.id}`}
 			as={!props.isTransaction ? `${process.env.HOST_DOMAIN}/trip/${props.id}` : `${process.env.HOST_DOMAIN}/user/trip/${props.id}`}
 		>
-		
 			<a>
 				<div className="overlay--img__black mb-2 d-flex align-items-center position-relative">
 					<img className="img-fluid" src={process.env.HOST_URL + props.coverLandscape} />

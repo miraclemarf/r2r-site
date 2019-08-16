@@ -1,14 +1,13 @@
-import LandscapeCard from './cards/landscapeCard'
+import PortraitCard from '../components/cards/portraitCard'
 
 export default (props) => (
-    <div className="sliderLandscapeWrapper position-relative d-inline-block w-100 overflow-auto">
+    <div className="sliderPortraitWrapper position-relative d-inline-block w-100 overflow-auto">
         <div className="mobileSlider">
             {props.sliderData.map((data, key) => (
-                <LandscapeCard 
+                <PortraitCard 
                     key={key}
                     slides={data}
-                    textPosition={"bottom"}
-                    pathname={"trip"}
+                    pathname={"testimonial"}
                     iconPlay={true}
                     overlay={true}
                     withTitle={true}

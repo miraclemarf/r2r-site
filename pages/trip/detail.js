@@ -33,7 +33,8 @@ class TripDetail extends React.Component {
 
             props.transaction = {
                 idTrip: idTrip,
-                meetingPoint: tripData.object.meetingPoint,
+                tripTitle:detailRes.title,
+                meetingPoint: detailRes.meetingPoint,
                 startDate: "",
                 endDate: "",
                 motor: {},

@@ -7,9 +7,9 @@ export default (props) => (
                 <LandscapeCard 
                     key={key}
                     slides={data}
-                    textPosition={"bottom"}
+                    textPosition={"center"}
                     pathname={"trip"}
-                    iconPlay={true}
+                    iconPlay={false}
                     overlay={true}
                     withTitle={true}
                     withSubTitle={false}

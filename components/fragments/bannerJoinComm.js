@@ -8,7 +8,7 @@ export default () => (
 				<h2 className="card-title title-section text-center mb-3">WANT TO JOIN OUR COMMUNITY??</h2>
 				<div className="mx-auto"  style={{maxWidth: '180px'}}>
 					<Link href="/community" as={`${process.env.HOST_DOMAIN}/community`}>
-						<a className="d-block btn btn-secondary btn-sm" title="">LEARN MORE</a>
+						<a className="d-block btn btn-secondary btn-sm rounded-lg" title="">LEARN MORE</a>
 					</Link>
 				</div>
 			</div>

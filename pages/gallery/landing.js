@@ -1,8 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import TextImgCard from '../../components/textImgCard'
+import { Container, Row, Col } from 'reactstrap'
+// import TextImgCard from '../../components/textImgCard'
+import GalleryCard from '../../components/galleryCard'
 import Pagination from '../../components/pagination'
+// import LandscapeCard from '../../components/cards/landscapeCard'
 import { getLatestGallery, getLatestTrips } from '../../utils'
 
 class Gallery extends React.Component {
@@ -35,24 +38,23 @@ class Gallery extends React.Component {
 		})
 	}
 
-	render() {        
+	render() {   
+		const { gallery } = this.state     
+		console.log(gallery)
 		return (
 			<div role="main">
-				<div className="py-2" />
-				<h1 className="h2 title-section mx-3 mb-3">TRIPS GALLERY</h1>
-				{
-					this.state.gallery ?
-					<div>
-						{this.state.gallery.map((item, key) => (
-							<div key={key} className="mb-1">
-								<TextImgCard {...item} isLandscape={true} iconTextPostion="align-items-center" section="gallery" />
-							</div>
-                        ))}
-                        <div className="mt-4 mb-4">
-							<Pagination />
-                        </div>
-					</div> : ""
-				}
+				<Container className="container-sm">
+					<Row>
+						<Col lg="12">
+							<h1 className="h2 title-section my-3">TRIPS GALLERY</h1>
+						</Col>
+						{gallery.map((data, key) => (
+							<Col key={key} sm="12" md="6" lg="4">
+								<GalleryCard data={data} pathname={"gallery"} />
+							</Col> 
+						))}
+					</Row>
+				</Container>
 			</div>
 		)
 	}

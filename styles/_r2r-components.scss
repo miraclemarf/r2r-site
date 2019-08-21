@@ -115,6 +115,7 @@
 }
 
 .teaserCard {
+	
 	.card-title {
 		margin-bottom: 0;
 	}
@@ -138,6 +139,9 @@
 
 @media screen and (min-width: 768px) {
 	.teaserCard {
+		border-radius: 20px;
+		-webkit-border-radius: 20px;
+		overflow: hidden;
 		margin: 0 1rem 2rem !important;
 
 		.card-title {
@@ -217,7 +221,7 @@
 
 	.sliderPortraitWrapper {
 		height: auto;
-		padding-bottom: 15px;
+		padding-bottom: 0;
 	
 		.mobileSlider {
 			position: relative;

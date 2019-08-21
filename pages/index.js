@@ -87,7 +87,7 @@ class Home extends React.Component {
 						{trips.map((item, key) => <TripCard key={key} {...item} />)}
 						<Col xs="12" lg="12">
 							<Link href="/trips" as={`${process.env.HOST_DOMAIN}/trips`}>
-								<a className="btn btn-primary d-block">SEE ALL TRIP</a>
+								<a className="btn btn-primary d-block rounded-lg">SEE ALL TRIP</a>
 							</Link>
 							<hr/>
 						</Col>
@@ -95,7 +95,7 @@ class Home extends React.Component {
 							<h1 className="h2 title-section mb-3">Testimonial</h1>
 						</Col>
 						<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
-							<TestimonialSliderCard sliderData={testimonials} />
+							<TestimonialSliderCard sliderData={testimonials.slice(0, 5)} />
 						</Col>
 						<Col sm="12" md="6" className="px-0">
 							<BannerHowItWorks />
@@ -110,12 +110,12 @@ class Home extends React.Component {
 						<div className=" d-flex justify-content-between mb-3">
 							<h1 className="h2 title-section text-white m-0">Gallery</h1>
 							<Link href="/gallery" as={`${process.env.HOST_DOMAIN}/gallery`}>
-								<a style={{"top":"8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
+								<a style={{top: "8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
 							</Link>
 						</div>
 						<Row>
 							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
-								<GallerySliderCard sliderData={gallery} />
+								<GallerySliderCard sliderData={gallery.slice(0, 6)} />
 							</Col>
 						</Row>
 					</Container>

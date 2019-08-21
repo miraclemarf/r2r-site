@@ -33,7 +33,7 @@ export default (props) => {
     }
 
     return (
-        <div className="objectItem position-relative d-inline-flex mx-2">
+        <div className="objectItem position-relative d-inline-flex mx-2 rounded-lg overflow-hidden">
             <Link href={`/${props.pathname}?id=${props.slides.id}`} as={`${process.env.HOST_DOMAIN}/${props.pathname}/${props.slides.id}`} >
                 <a title={props.slides.title} style={{zIndex: 4}} className="position-absolute w-100 h-100" />
             </Link>

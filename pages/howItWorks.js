@@ -50,7 +50,7 @@ class HowItWorks extends React.Component {
 						<Col xs="12" lg="12">
 							<div className="my-4 d-flex align-items-center justify-content-between">
 								<h4 className="title-section text-dark m-0">Share to</h4>
-								<div className="bg-primary text-white py-1 px-3 d-flex align-items-center justify-content-between">
+								<div className="bg-primary text-white py-1 px-3 d-flex align-items-center justify-content-between rounded-lg">
 									<span style={{ top: '4px' }} className="icon-facebook h4 position-relative" />
 									<h5 className="title-section mb-0 pl-3">Facebook Friend</h5>
 								</div>
@@ -68,7 +68,7 @@ class HowItWorks extends React.Component {
 						</div>
 						<Row>
 							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
-								<GallerySliderCard sliderData={this.state.gallery} />
+								<GallerySliderCard sliderData={this.state.gallery.slice(0, 6)} />
 							</Col>
 						</Row>
 					</Container>

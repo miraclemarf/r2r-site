@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // import Page from '../components/page'
+import { Container } from 'reactstrap';
 import { getLatestMotor, getDetailTrip } from '../../utils';
 import SquareCover from '../../components/squareCover';
 
@@ -103,7 +104,6 @@ class TripDetail extends React.Component {
 			collapseEl.style.display = 'none';
 		}
 	}
-
 	renderItineraries(data, key) {
 		return (
 			<div key={key} className="mb-2 position-relative list-element">
@@ -124,11 +124,9 @@ class TripDetail extends React.Component {
 							<h3 className="title-section text-white m-0">{item.title}</h3>
 							{item.description ? (
 								<div
-									className="text-white text-sm"
+									className="text-white text-sm text-justify"
 									dangerouslySetInnerHTML={{ __html: item.description }}
-								>
-									{}
-								</div>
+								/>
 							) : (
 								''
 							)}
@@ -169,87 +167,86 @@ class TripDetail extends React.Component {
 			terrain,
 			maxRider,
 			description,
-			map,
 			facilityNotIncluded,
 			roadCaptainName,
 			imageRoadCaptain,
 			roadCaptainDescription,
 			facilities,
 			itineraries,
-			tripPrice
+			tripPrice,
+			map
 		} = this.state.trip;
 		return (
 			<div style={{ paddingBottom: '4em' }}>
 				<SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
-				<div className="container">
+				<Container className="container-sm">
 					<div className="py-3">
 						<span className="text-primary text-sm">
 							<b>{location}</b>
 						</span>
 					</div>
-					<div className="mb-4 pb-2">
-						<h2 className="title-section">About the tour</h2>
-						<div className="d-flex justify-content-around mb-3">
-							<div className="text-center">
-								<span className="h3 icon-icon_distance text-gray80" />
-								<br />
-								<span className="text-sm">Distance</span>
-								<br />
-								<b className="text-sm">{distance} Km</b>
-							</div>
-							<div className="text-center">
-								<span className="h3 icon-icon_duration text-gray80" />
-								<br />
-								<span className="text-sm">Duration</span>
-								<br />
-								<b className="text-sm">{duration} Days</b>
-							</div>
-							<div className="text-center">
-								<span className="h3 icon-icon_terrain text-gray80" />
-								<br />
-								<span className="text-sm">Terrain</span>
-								<br />
-								<b className="text-sm">{terrain}</b>
-							</div>
-							<div className="text-center">
-								<span className="h3 icon-icon_bike text-gray80" />
-								<br />
-								<span className="text-sm">Max Rider</span>
-								<br />
-								<b className="text-sm">{maxRider}</b>
-							</div>
+					<h2 className="title-section">About the tour</h2>
+					<div className="d-flex justify-content-around mb-3">
+						<div className="text-center">
+							<span className="h3 icon-icon_distance text-gray80" />
+							<br />
+							<span className="text-sm">Distance</span>
+							<br />
+							<b className="text-sm">{distance} Km</b>
 						</div>
-						<div dangerouslySetInnerHTML={{ __html: description }} />
+						<div className="text-center">
+							<span className="h3 icon-icon_duration text-gray80" />
+							<br />
+							<span className="text-sm">Duration</span>
+							<br />
+							<b className="text-sm">{duration} Days</b>
+						</div>
+						<div className="text-center">
+							<span className="h3 icon-icon_terrain text-gray80" />
+							<br />
+							<span className="text-sm">Terrain</span>
+							<br />
+							<b className="text-sm">{terrain}</b>
+						</div>
+						<div className="text-center">
+							<span className="h3 icon-icon_bike text-gray80" />
+							<br />
+							<span className="text-sm">Max Rider</span>
+							<br />
+							<b className="text-sm">{maxRider}</b>
+						</div>
 					</div>
-				</div>
-				<div
+					<div className="pb-3 text-justify" dangerouslySetInnerHTML={{ __html: description }} />
+				</Container>
+				<Container
+					fluid
 					id="itinerary"
 					style={{ overflowY: 'hidden' }}
-					className="container bg-dark py-4 position-relative"
+					className="bg-dark py-4 position-relative"
 				>
-					<h2 className="title-section text-white pb-3">itinerary</h2>
-					<div>
-						{itineraries.map((data, key) => this.renderItineraries(data, key))}
-						{itineraries.length > 1 ? (
-							<div
-								id="collapseTransparent"
-								className="position-absolute w-100 pb-2"
-								style={{ bottom: '0', margin: '0 -15px', paddingTop: '6em', zIndex: '100' }}
+					<Container className="container-sm">
+						<h2 className="title-section text-white pb-3">itinerary</h2>
+						<div>{itineraries.map((data, key) => this.renderItineraries(data, key))}</div>
+					</Container>
+					{itineraries.length > 1 ? (
+						<div
+							id="collapseTransparent"
+							className="position-absolute w-100 pb-2"
+							style={{ bottom: '0', margin: '0 -15px', paddingTop: '6em', zIndex: '100' }}
+						>
+							<h3
+								onClick={(e) => this.toggleItinerary(e)}
+								className="title-section text-center text-secondary position-relative py-1 mx-auto"
+								style={{ zIndex: '100', border: '1px solid', width: '160px', top: '-10px' }}
 							>
-								<h3
-									onClick={(e) => this.toggleItinerary(e)}
-									className="title-section text-center text-secondary position-relative py-1 mx-auto"
-									style={{ zIndex: '100', border: '1px solid', width: '160px', top: '-10px' }}
-								>
-									Show All
-								</h3>
-								<div />
-							</div>
-						) : (
-							''
-						)}
-					</div>
-				</div>
+								Show All
+							</h3>
+							<div />
+						</div>
+					) : (
+						''
+					)}
+				</Container>
 				<div className="container my-4">
 					<h2 className="title-section mb-2">THE ROUTE</h2>
 					<img src={process.env.HOST_URL + map} className="img-fluid" />

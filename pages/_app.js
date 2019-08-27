@@ -67,6 +67,14 @@ class MyApp extends App {
 		this.setState({trip: {...data}})
 	}
 
+	componentWillReceiveProps(nextProps) {
+		console.log(nextProps);
+		
+     /*    this.setState({
+            trip: nextProps.tripDetail,
+            motor: nextProps.MotorData,
+        }) */
+	}
 
 	render() {
 		const { Component, pageProps, store } = this.props
@@ -81,7 +89,8 @@ class MyApp extends App {
 					<Navigate 
 						{...pageProps} 
 						checkoutStatus={checkoutStatus} 
-						selectedPrice={pageProps.navTrans ? transaction.price ? transaction.price : "" : ""} 
+						//selectedPrice={pageProps.navTrans ? transaction.price ? transaction.price : "" : ""} 
+						//selectedPrice={store.getState().TransactionData} 
 					/>
 					<Component 
 						{...pageProps} 

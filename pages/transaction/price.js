@@ -1,14 +1,17 @@
 import React from 'react'
 import Link from 'next/link'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import Router from 'next/router'
 import Moment from 'react-moment'
 import { getPriceTrip } from '../../utils/trips'
+import { selectedPrice } from '../../utils/userTransaction'
 
-export default class extends React.Component {
-    static async getInitialProps({ req, query: { idTrip }, res }) {
+class TripPrice extends React.Component {
+    static async getInitialProps({store, req, query: { id }, res }) {
         if (res) {
             res.writeHead(302, {
-                Location: process.env.HOST_DOMAIN + '/trip/' + idTrip
+                Location: process.env.HOST_DOMAIN + '/trip/' + id
             })
             res.end()
         }
@@ -17,31 +20,25 @@ export default class extends React.Component {
         props.nav = 'blue';
         props.navTrans = { step: 1 }
         props.footer = 'transparent';
-        props.idTrip = idTrip;
-        props.selectedPriceId = '';
-        props.transaction = {
-            idTrip: idTrip,
-            meetingPoint: "",
+        props.idTrip = id;
+        //props.selectedPriceId = '';
+        /* props.transaction = {
+            idTrip: id,
             startDate: "",
             endDate: "",
-            motor: {},
-            accesories: [],
             price: [],
             bringOwnMotor:false,
             bringOwnHelm:false,
             notes: ""
-        };
-        try {
-            const data = await getPriceTrip(idTrip);            
-            props.price = data.object;
-        } catch (e) {
-
-        }
+        }; */
+        
+        await store.dispatch(getPriceTrip(id))
+        
         return props;
     }
     constructor(props) {
         super(props);
-
+        
         this.state = { ...props };
         this.selectedItem = this.selectedItem.bind(this);
     }
@@ -50,15 +47,20 @@ export default class extends React.Component {
             this.props.transactionState(this.state.transaction)
         }
     }
-    selectedItem(e) {
+    async selectedItem(e) {
 
-        const { transaction } = this.state
+        const { TripData } = this.state
         const priceId = e.currentTarget.getAttribute('data-id');
-        const priceObj = this.state.price.find((obj) => obj.id === parseInt(priceId))
-        let price = [...transaction.price]
-        price = [priceObj.price]
+        const priceObj = TripData.price.find((obj) => obj.id === parseInt(priceId))
+        //let price = [...transaction.price]
+        //price = [priceObj.price]
+        await this.props.selectedPrice(priceObj)
 
-        this.setState(
+        this.setState({...this.props})
+        
+        //console.log(price);
+        
+       /*  this.setState(
             {
                 selectedPriceId: priceId,
                 transaction: {
@@ -68,11 +70,13 @@ export default class extends React.Component {
                     price: price
 
                 }
-            })
+            }) */
     }
     renderCardDate(data, index) {
+        const {TransactionData} = this.state
+        const initPrice = TransactionData ? TransactionData.price : 0
         return (
-            <div onClick={this.selectedItem} key={index} data-id={data.id} data-price={data.price} className={(this.state.selectedPriceId == data.id ? "bg-primary border-primary text-white" : "border-softgray") + " border p-3 d-flex justify-content-between align-items-center mb-3"} style={{ borderRadius: "8px", boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.3)" }}>
+            <div onClick={this.selectedItem} key={index} data-id={data.id} data-price={data.price} className={(initPrice.id == data.id ? "bg-primary border-primary text-white" : "border-softgray") + " border p-3 d-flex justify-content-between align-items-center mb-3"} style={{ borderRadius: "8px", boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.3)" }}>
                 <div className="abs-border">
                     <h3 className="title-section m-0">
                         <Moment unix format="DD MMM YY">{data.startTrip / 1000}</Moment>
@@ -100,7 +104,8 @@ export default class extends React.Component {
         )
     }
     render() {
-        const { idTrip, price, transaction, selectedPriceId } = this.state
+        const { idTrip, selectedPriceId, TripData } = this.state
+        //console.log(this.state);
         
         return (
             <div>
@@ -114,7 +119,7 @@ export default class extends React.Component {
                         <div>
                             <h4 className="title-section text-gray80">MEETING POINT</h4>
                         </div>
-                        <div className="pl-3" dangerouslySetInnerHTML={{ __html: transaction.meetingPoint }}>
+                        <div className="pl-3" dangerouslySetInnerHTML={{ __html: TripData.detail.meetingPoint }}>
 
                         </div>
                     </div>
@@ -123,7 +128,7 @@ export default class extends React.Component {
                         <h2 className="title-section text-center">AVAILABLE DATE</h2>
                         <div className="mt-3">
                             {
-                                price.map((item, index) => (
+                                TripData.price.map((item, index) => (
                                     this.renderCardDate(item, index)
                                 ))
                             }
@@ -145,3 +150,10 @@ export default class extends React.Component {
         )
     }
 }
+const mapDispatchToProps = dispatch => {
+	return {
+		getPriceTrip: bindActionCreators(getPriceTrip, dispatch),
+		selectedPrice: bindActionCreators(selectedPrice, dispatch),
+	}
+}
+export default connect(state => state, mapDispatchToProps)(TripPrice)

@@ -1,11 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import MenuItem from './menuItem';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { Collapse, Navbar, NavbarToggler } from 'reactstrap';
 import { logout } from '../../utils/user';
 import { Container } from 'reactstrap';
 
-export default class extends React.Component {
+class Navigate extends React.Component {
 	static async getInitialProps({ req }) {
 		let props = await super.getInitialProps({ req });
 		return props;
@@ -37,11 +39,12 @@ export default class extends React.Component {
 		});
 	}
 	render() {
-		let { token, user } = this.props;
+		let { token, user, TransactionData } = this.props;
 		let isCheckoutSuccess = false;
 		if (this.props.checkoutStatus) {
 			isCheckoutSuccess = Object.keys(this.props.checkoutStatus).length === 0 ? false : true;
 		}
+		const totalPrice = TransactionData ? [TransactionData.price.price] : []
 
 		return (
 			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
@@ -100,7 +103,7 @@ export default class extends React.Component {
 								</button> } */
 							''
 						)}
-						{this.props.navTrans ? this.props.selectedPrice.length ? (
+						{this.props.navTrans ? totalPrice.length ? (
 							<div
 								style={{ lineHeight: '18px', marginTop: '-1px' }}
 								className={'text-white ' + (isCheckoutSuccess ? 'collapse' : '')}
@@ -109,7 +112,7 @@ export default class extends React.Component {
 									TOTAL
 								</div>
 								<div className="h5 font-weight-bold">
-									${this.props.selectedPrice.reduce((total, amount) => total + amount)}
+									${totalPrice.reduce((total, amount) => total + amount)}
 								</div>
 							</div>
 						) : (
@@ -222,3 +225,5 @@ export default class extends React.Component {
 		);
 	}
 }
+
+export default connect(state => state)(Navigate)

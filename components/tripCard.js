@@ -6,7 +6,7 @@ export default ({ ...props }) => (
 	<Col xs="12" md="4" className="mb-4">
 		{props.index != 0 && props.isTransaction ? <hr className="my-4" /> : ''}
 		<Link
-			href={!props.isTransaction ? `/trip?id=${props.id}` : `/user/trip?id=${props.id}`}
+			href={!props.isTransaction ? `/trip/detail?id=${props.id}` : `/user/trip?id=${props.id}`}
 			as={!props.isTransaction ? `${process.env.HOST_DOMAIN}/trip/${props.id}` : `${process.env.HOST_DOMAIN}/user/trip/${props.id}`}
 		>
 		

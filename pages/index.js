@@ -19,28 +19,31 @@ class Home extends React.Component {
 		try {
 			let stores = await store.getState()
 			// Headline Scope
-			if (!stores.HeadlineData) await store.dispatch(getHeadline()) 
+			await store.dispatch(getHeadline()) 
 			// Trips Scope
-			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 10))
+			await store.dispatch(getLatestTrips(0, 10))
 			// Testimonial Scope
-			if (!stores.TestimonialsData) await store.dispatch(getLatestTestimonial(0, 5)) 
+			await store.dispatch(getLatestTestimonial(0, 5)) 
 			// Gallery Scope
-			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 5))
+			await store.dispatch(getLatestGallery(0, 5))
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}
+		
+
 		return props
 	}
 	constructor(props) {
 		super(props)
 		getUser()
 
+
 		this.state = {
 			pageTitle: "Road 2 Ring",
 			pageKeywords: "road2ring,traveling,touring,journey,adventure,trip,community",
 			pageDescription: "ROAD2RING - UNFORGETABLE JOURNEY OF A LIFETIME",
 			pageAuthor: "ROAD2RING",
-			trips: props.TripData,
+			trips: props.TripData.list,
 			headline: props.HeadlineData,
 			testimonials: props.TestimonialsData,
 			gallery: props.GalleryData
@@ -49,7 +52,7 @@ class Home extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			trips: nextProps.TripData,
+			trips: nextProps.TripData.list,
 			headline: nextProps.HeadlineData,
 			testimonials: nextProps.TestimonialsData,
 			gallery: nextProps.GalleryData

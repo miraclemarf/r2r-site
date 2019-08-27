@@ -1,12 +1,16 @@
-import { actionTypes } from '../types'
+import { actionTypes } from '../types';
 
-const initialState = null
+const initialState = null;
 
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.TRIP_LIST:
-			return Object.assign([], state, action.payload)
+			return Object.assign({}, state, { list: action.payload });
+		case actionTypes.TRIP_DETAIL:
+			return Object.assign({}, state, { detail: action.payload });
+			case actionTypes.TRIP_PRICE:
+				return Object.assign({}, state, { price: action.payload });
 		default:
-			return state
+			return state;
 	}
-}
+};

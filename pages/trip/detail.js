@@ -7,45 +7,22 @@ import { getLatestMotor, getDetailTrip } from '../../utils';
 import SquareCover from '../../components/squareCover';
 
 class TripDetail extends React.Component {
-    static async getInitialProps({ store, query: { idTrip } }) {
+    static async getInitialProps({ store, query: { id } }) {
         let props = {}
-        props.idTrip = idTrip;
+        props.idTrip = id;
         props.footer = 'collapse';
-        props.transaction = {
-            idTrip: idTrip,
-            meetingPoint: "",
+      /*   props.transaction = {
+            idTrip: id,
             startDate: "",
             endDate: "",
-            motor: {},
-            accesories: [],
             price: [],
             bringOwnMotor:false,
             bringOwnHelm:false,
             notes: ""
-        };
-        let stores = await store.getState()
-        try {
-            // Detail Scope
-            const detailRes = await getDetailTrip(idTrip)
-            props.tripDetail = detailRes
-            // Motor Scope
-            if (!stores.MotorData) await store.dispatch(getLatestMotor())
-
-            props.transaction = {
-                idTrip: idTrip,
-                tripTitle:detailRes.title,
-                meetingPoint: detailRes.meetingPoint,
-                startDate: "",
-                endDate: "",
-                motor: {},
-                accesories: [],
-                price: [],
-                notes: ""
-            };
-        } catch (e) {
-
-        }
-
+        }; */
+        
+        await store.dispatch(getLatestMotor())
+        await store.dispatch(getDetailTrip(id))
         return props
 
     }
@@ -53,51 +30,23 @@ class TripDetail extends React.Component {
         super(props);
         // this.state = { ...props };
         this.state = {
-            ...props,
-            trip: props.tripDetail,
-            motor: props.MotorData,
-            id: props.idTrip
+            ...props
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    /* componentWillReceiveProps(nextProps) {
         this.setState({
             trip: nextProps.tripDetail,
             motor: nextProps.MotorData,
         })
-    }
+    } */
 
     async componentDidMount() {
-        const { idTrip } = this.state
-        window.onload = () => {
-            console.log('window load');
             var itinerariesListEl = document.querySelectorAll('#itinerary .list-element');
             var itinerariesEl = document.querySelector('#itinerary');
 
             var collapseHight = itinerariesListEl[0].clientHeight + 225
             itinerariesEl.setAttribute('style', itinerariesEl.getAttribute('style') + '; max-height:' + collapseHight + 'px')
-
-        };
-
-        if (this.state.trip === null) {
-            try {
-                const tripData = await getDetailTrip(idTrip);
-                const motorData = await getLatestMotor();
-                this.setState({
-                    trip: tripData,
-                    motor: motorData,
-                    transaction: this.props.transaction,
-                });
-            } catch (e) {
-                this.setState({
-                    error: "Unable to fetch AsyncData on client"
-                });
-            }
-        }
-        if (this.props.transaction.meetingPoint) {
-            this.props.transactionState(this.props.transaction)
-            this.props.tripState(this.props.trip)
-        }
     }
     toggleItinerary(e) {
         var itinerariesEl = document.querySelector('#itinerary');
@@ -145,11 +94,10 @@ class TripDetail extends React.Component {
 
 
     render() {
-        console.log(this.props.user);
         
-        const motor = this.state.motor;
+        const motor = this.state.MotorData;
 
-        const { id, coverLandscape, title, iconCover, location, distance, duration, terrain, maxRider, description, map, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries, tripPrice } = this.state.trip
+        const { id, coverLandscape, title, iconCover, location, distance, duration, terrain, maxRider, description, map, facilityNotIncluded, roadCaptainName, imageRoadCaptain, roadCaptainDescription, facilities, itineraries, tripPrice } = this.state.TripData.detail
         return (
             <div style={{ "paddingBottom": "4em" }}>
                 <SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
@@ -275,7 +223,7 @@ class TripDetail extends React.Component {
                     </div>
                 </div>
                 <div className="fixed-bottom">
-                    <Link href={'/transaction/price?page=price&idTrip=' + id} as={process.env.HOST_DOMAIN + '/trip/' + id + '/price'} >
+                    <Link href={'/transaction/price?page=price&id=' + id} as={process.env.HOST_DOMAIN + '/trip/' + id + '/price'} >
                         <button className="btn btn-primary w-100">
                             <div className="d-flex justify-content-between">
                                 <div className="invisible" style={{ fontFamily: '"Open Sans", sans-serif', lineHeight: "18px" }}>
@@ -298,7 +246,8 @@ class TripDetail extends React.Component {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		getLatestMotor: bindActionCreators(getLatestMotor, dispatch)
+		getLatestMotor: bindActionCreators(getLatestMotor, dispatch),
+		getDetailTrip: bindActionCreators(getDetailTrip, dispatch)
 	}
 }
 export default connect(state => state, mapDispatchToProps)(TripDetail)

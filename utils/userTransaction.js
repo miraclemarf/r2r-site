@@ -1,4 +1,9 @@
 import fetch from 'isomorphic-unfetch';
+import { actionTypes } from '../components/types'
+
+export const selectedPrice  = (obj)  => async (dispatch) => {
+    return dispatch({ type: actionTypes.TRANSACTION_DATA, payload: obj })
+}
 
 export const getDetailUserTransaction= async (accessToken, id) =>{
     console.log(id);

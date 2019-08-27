@@ -9,10 +9,10 @@ export default ({ ...props }) => (
                     <div style={{fontSize: "10pt"}} dangerouslySetInnerHTML={{ __html: props.subtitle }}></div>
                     {
                         props.isVideo ?
-                        <div className="video-section position-absolute">
+                        {/* <div className="video-section position-absolute">
                             <span className="icon icon-icon_play_video text-white" />
                             <span className="section-info text-white">WATCH VIDEO</span>
-                        </div> : ''
+                        </div> */} : ''
                     }
                 </div>
             </Container>

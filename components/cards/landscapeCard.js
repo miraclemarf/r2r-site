@@ -56,7 +56,7 @@ export default (props) => {
                     }
                     {
                         props.withTitle ?
-                        <h2 style={{lineHeight: "normal"}} className="title-section text-center text-break m-0">{props.slides.title}</h2> : ""
+                        <h3 style={{lineHeight: "normal"}} className="title-section text-center text-break m-0">{props.slides.title}</h3> : ""
                     }
                     {
                         props.withSubTitle ? 

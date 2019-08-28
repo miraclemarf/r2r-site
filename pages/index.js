@@ -114,7 +114,7 @@ class Home extends React.Component {
 							</Link>
 						</div>
 						<Row>
-							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
+							<Col xs="12" lg="12" className="mb-0 px-2 overflow-hidden">
 								<GallerySliderCard sliderData={gallery.slice(0, 6)} />
 							</Col>
 						</Row>

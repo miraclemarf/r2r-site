@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Container, Row, Col } from 'reactstrap'
+import { Container, Row, Col, Spinner } from 'reactstrap'
 // import TextImgCard from '../../components/textImgCard'
 import GalleryCard from '../../components/galleryCard'
 import Pagination from '../../components/pagination'
@@ -11,11 +11,14 @@ import { getLatestGallery, getLatestTrips } from '../../utils'
 class Gallery extends React.Component {
 	static async getInitialProps({ store }) {
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = { nav: 'blue', footer: 'transparent' }
+		let props = { 
+			nav: 'blue', footer: 'transparent',
+			galleryOptions: { page: 1, max: 6 } 
+		}
 		let stores = await store.getState()
 		try {
 			// Gallery Scope
-			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 6))
+			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, props.galleryOptions.max))
 			// Trip Scope
 			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 6))
 		} catch (e) {
@@ -27,20 +30,23 @@ class Gallery extends React.Component {
 		super(props)
 		this.state = {
 			trips: props.TripData,
-			gallery: props.GalleryData
-		};
+			gallery: props.GalleryData,
+			galleryTotal: props.GalleryTotal,
+			galleryPage: props.galleryOptions.page,
+			galleryMax: props.galleryOptions.max
+		}
 	}
 	
 	componentWillReceiveProps(nextProps) {
 		this.setState({
 			trips: nextProps.TripData,
-			gallery: nextProps.GalleryData
+			gallery: nextProps.GalleryData,
+			galleryTotal: nextProps.GalleryTotal
 		})
 	}
 
-	render() {   
-		const { gallery } = this.state     
-		console.log(gallery)
+	render() {
+		const { gallery, galleryTotal, galleryMax, galleryPage } = this.state
 		return (
 			<div role="main">
 				<Container className="container-sm">
@@ -48,12 +54,16 @@ class Gallery extends React.Component {
 						<Col lg="12">
 							<h1 className="h2 title-section my-3">TRIPS GALLERY</h1>
 						</Col>
-						{gallery.map((data, key) => (
-							<Col key={key} sm="12" md="6" lg="4">
-								<GalleryCard data={data} pathname={"gallery"} />
-							</Col> 
-						))}
 					</Row>
+					<GalleryCard datas={gallery} pathname={"gallery"} />
+					{
+						gallery.length >= galleryMax ? 
+							<Pagination 
+								total={galleryTotal} 
+								display={galleryMax}
+								page={galleryPage} 
+							/> : ""
+					}
 				</Container>
 			</div>
 		)

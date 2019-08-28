@@ -1,7 +1,8 @@
-const pagination = () => {
+const pagination = (props) => {
+	const { total, display, page } = props
 	return (
 		<nav aria-label="Page navigation example">
-			<ul className="pagination d-flex justify-content-center">
+			<ul className="pagination d-flex justify-content-center mx-3">
 				<li className="page-item invisible mr-4">
 					<a className="page-link" href="#" aria-label="Previous">
 						<span aria-hidden="true">&laquo;</span>

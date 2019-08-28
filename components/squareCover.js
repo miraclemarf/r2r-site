@@ -23,7 +23,7 @@ export default ({ ...props }) => {
                     {
                         props.iconTrip ?
                         <div style={Styles.CoverIcon} className="position-absolute">
-                            <img style={{marginTop: "10px"}} height="50" src={process.env.HOST_URL+props.iconTrip} />
+                            <img className="invisible" style={{marginTop: "10px"}} height="50" src={process.env.HOST_URL+props.iconTrip} />
                             <h1 style={{lineHeight:".8em", fontSize:"3em"}} className="mt-3 title-section text-white">{props.text}</h1>
                         </div>
                         :

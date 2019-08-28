@@ -14,7 +14,9 @@ class UserRequest extends React.Component {
 
         if (typeof window === 'undefined') {
             try {
+                
                 const tripData = await getDetailTrip(id);
+                
                 props.idTrip = id;
                 props.trip = tripData;
                 props.nav = 'blue';
@@ -93,7 +95,7 @@ class UserRequest extends React.Component {
         const bulan = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         const tahun = range(2019, 2023)
         let { token, user } = this.props;
-        const { id, coverLandscape, title, iconCover, distance, duration, terrain, maxRider } = this.state.trip.object
+        const { id, coverLandscape, title, iconCover, distance, duration, terrain, maxRider } = this.state.trip
 
         return (
             <div className="">

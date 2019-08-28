@@ -5,11 +5,11 @@ import { Col } from 'reactstrap'
 export default ({ ...props }) => (
 	<Col xs="12" md="4" className="mb-4">
 		{props.index != 0 && props.isTransaction ? <hr className="my-4" /> : ''}
-		<Link
+		{/* <Link
 			href={!props.isTransaction ? `/trip/detail?idTrip=${props.id}` : `/user/trip?id=${props.id}`}
 			as={!props.isTransaction ? `${process.env.HOST_DOMAIN}/trip/${props.id}` : `${process.env.HOST_DOMAIN}/user/trip/${props.id}`}
-		>
-			<a>
+		> */}
+			<a href={!props.isTransaction ? `${process.env.HOST_DOMAIN}/trip/${props.id}` : `${process.env.HOST_DOMAIN}/user/trip/${props.id}`}>
 				<div className="overlay--img__black mb-2 d-flex align-items-center position-relative rounded-lg overflow-hidden">
 					<img className="img-fluid" src={process.env.HOST_URL + props.coverLandscape} />
 					<div className="trip-info-center text-center d-inline-block position-absolute">
@@ -61,7 +61,7 @@ export default ({ ...props }) => (
 				</div>
 
 			</a>
-		</Link>
+		{/* </Link> */}
 		{props.isTransaction && props.paymentStatus == 'WAITING'?
 			<div className="mt-3">
 				<a onClick={props.clickConfirm} className="btn btn-primary d-block text-white">Confirm Payment</a>

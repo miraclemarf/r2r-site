@@ -32,10 +32,10 @@ export default (props) => {
             </Link>
             <div className="position-relative w-100 h-100 overflow-hidden">
                 {
-                    props.iconPlay ?
-                    {/* <div style={Styles.videoIcon} className="position-absolute">
+                    !props.iconPlay ?
+                    <div style={Styles.videoIcon} className="position-absolute">
                         <span className="icon icon-icon_play_video text-white" />
-                    </div> */} : ""
+                    </div> : ""
                 }
                 {
                     props.overlay ?

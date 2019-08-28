@@ -91,10 +91,10 @@ class TripDetail extends React.Component {
 				});
 			}
 		}
-		if (this.props.transaction.meetingPoint) {
+		//if (this.state.transaction.meetingPoint) {
 			this.props.transactionState(this.props.transaction);
 			this.props.tripState(this.props.trip);
-		}
+		//}
 	}
 	toggleItinerary(e) {
 		var itinerariesEl = document.querySelector('#itinerary');
@@ -108,11 +108,11 @@ class TripDetail extends React.Component {
 		return (
 			<div key={key} className="mb-2 position-relative list-element">
 				<h2 className="title-section text-white mb-3">{data.groupTitle}</h2>
-				<div className="verticalLine bg-gray80" />
+				<div className="verticalLine bg-gray80 collapse" />
 				{data.details.map((item, index) => (
 					<div key={index} className="mb-4 position-relative" style={{ paddingLeft: '2.3em' }}>
 						<div
-							className="rounded-circle bg-secondary position-absolute"
+							className="rounded-circle bg-secondary position-absolute collapse"
 							style={{ width: '11px', height: '11px', left: '0', zIndex: '4' }}
 						/>
 						<div>

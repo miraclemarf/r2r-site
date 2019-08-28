@@ -13,12 +13,12 @@ class Gallery extends React.Component {
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = { 
 			nav: 'blue', footer: 'transparent',
-			galleryOptions: { page: 1, max: 6 } 
+			page: 0, max: 6
 		}
 		let stores = await store.getState()
 		try {
 			// Gallery Scope
-			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, props.galleryOptions.max))
+			if (!stores.GalleryData) await store.dispatch(getLatestGallery(props.page, props.max))
 			// Trip Scope
 			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 6))
 		} catch (e) {
@@ -32,8 +32,8 @@ class Gallery extends React.Component {
 			trips: props.TripData,
 			gallery: props.GalleryData,
 			galleryTotal: props.GalleryTotal,
-			galleryPage: props.galleryOptions.page,
-			galleryMax: props.galleryOptions.max
+			galleryPage: props.page,
+			galleryMax: props.max
 		}
 	}
 	
@@ -61,7 +61,7 @@ class Gallery extends React.Component {
 							<Pagination 
 								total={galleryTotal} 
 								display={galleryMax}
-								page={galleryPage} 
+								current={galleryPage}
 							/> : ""
 					}
 				</Container>

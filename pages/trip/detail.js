@@ -281,10 +281,12 @@ class TripDetail extends React.Component {
 							<span className="icon-right-arrow text-primary" />
 						</div>
 					</a>
+					<a className="d-block text-black" href={process.env.HOST_DOMAIN + '/what-to-be-prepared'}>
 					<div className="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
 						<h2 className="title-section m-0">WHAT TO BE PREPARED?</h2>
 						<span className="icon-right-arrow text-primary" />
 					</div>
+					</a>
 					<a className="d-block text-black" href={process.env.HOST_DOMAIN + '/faq'}>
 						<div className="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
 							<h2 className="title-section m-0">FAQ</h2>

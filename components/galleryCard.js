@@ -14,7 +14,7 @@ export default (props) => {
 				/>
 			</Link>
 			<div style={{zIndex: 3, width: "100%"}} className="trip-info-center text-center d-inline-block position-absolute">
-				<img src={process.env.HOST_URL + props.data.iconCover} alt={props.data.title} />
+				<img src={process.env.HOST_URL + props.data.iconCover} alt={props.data.title} className="invisible" />
 				<h1 className="mt-2	title-section text-white mx-auto">{props.data.title}</h1>
 			</div>
 			<div className="position-absolute w-100 h-100 overflow-hidden">

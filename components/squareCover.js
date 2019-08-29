@@ -27,7 +27,7 @@ export default ({ ...props }) => {
                             <h1 style={{lineHeight:".8em", fontSize:"3em"}} className="mt-3 title-section text-white">{props.text}</h1>
                         </div>
                         :
-                        <div style={Object.assign(Styles.CoverIcon, Styles.VideoIcon)} className="video-icon position-absolute border border-white">
+                        <div style={Object.assign(Styles.CoverIcon, Styles.VideoIcon)} className="invisible video-icon position-absolute border border-white">
                             <span className="icon icon-icon_play_video text-white" />
                         </div>
                     }

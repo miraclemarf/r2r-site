@@ -9,21 +9,23 @@ import SquareCover from '../../components/squareCover';
 
 class TripDetail extends React.Component {
 	static async getInitialProps({ store, query: { idTrip } }) {
-		let props = {};
-		props.idTrip = idTrip;
-		props.footer = 'collapse';
-		props.transaction = {
+		let props = {
 			idTrip: idTrip,
-			meetingPoint: '',
-			startDate: '',
-			endDate: '',
-			motor: {},
-			accesories: [],
-			price: [],
-			bringOwnMotor: false,
-			bringOwnHelm: false,
-			notes: ''
-		};
+			footer: 'collapse',
+			header: 'white',
+			transaction: {
+				idTrip: idTrip,
+				meetingPoint: '',
+				startDate: '',
+				endDate: '',
+				motor: {},
+				accesories: [],
+				price: [],
+				bringOwnMotor: false,
+				bringOwnHelm: false,
+				notes: ''
+			}
+		}
 		let stores = await store.getState();
 		try {
 			// Detail Scope
@@ -236,11 +238,9 @@ class TripDetail extends React.Component {
 						>
 							<h3
 								onClick={(e) => this.toggleItinerary(e)}
-								className="title-section text-center text-secondary position-relative py-1 mx-auto"
+								className="title-section text-center text-secondary position-relative py-1 mx-auto rounded-lg"
 								style={{ zIndex: '100', border: '1px solid', width: '160px', top: '-10px' }}
-							>
-								Show All
-							</h3>
+							>Show All</h3>
 							<div />
 						</div>
 					) : (

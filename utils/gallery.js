@@ -11,6 +11,7 @@ export const getLatestGallery = (page, limit) => async (dispatch) => {
     // const total = await headers.get('x-total-count')
     // dispatch(setGalleryLength(total))
     const data = await res.json()
+    // console.log(data)
     return dispatch({ type: actionTypes.GALLERY_DATA, payload: data.object })
     // return dispatch({ type: actionTypes.GALLERY_DATA, payload: data })
 }

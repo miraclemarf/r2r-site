@@ -16,7 +16,8 @@ export default class extends React.Component {
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false,
-			isMobile: false
+			isMobile: false,
+			headerBg: props.nav != 'blue' ? 'bg-transparent' : 'bg-primary'
 		};
 	}
 	async componentDidMount() {
@@ -30,6 +31,13 @@ export default class extends React.Component {
 				isMobile: window.innerWidth < 768
 			});
 		};
+		window.addEventListener('scroll', e => { 
+			if(e.target.scrollingElement.scrollTop > 50) {
+				this.setState({headerBg: 'bg-primary'})
+			} else {
+				this.setState({headerBg: this.props.nav != 'blue' ? 'bg-transparent' : 'bg-primary'})
+			}
+		})
 	}
 	toggle() {
 		this.setState({
@@ -44,12 +52,8 @@ export default class extends React.Component {
 		}
 
 		return (
-			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
-				<Navbar
-					className={(this.props.nav != 'blue' ? 'bg-transparent my-1' : 'bg-primary') + ' position-relative'}
-					dark
-					expand="md"
-				>
+			<div className={`position-fixed w-100 ${this.state.headerBg} ${this.props.nav != 'blue' ? '' : ''}`} style={{ zIndex: 10, top: 0 }}>
+				<Navbar className="position-relative" dark expand="md">
 					<Container className="position-relative d-flex align-items-center m-auto">
 						<Link href="/index" as={process.env.HOST_DOMAIN}>
 							<div className="navbar-brand py-1 px-0" style={{zIndex:1}}>

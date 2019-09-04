@@ -45,8 +45,13 @@ class Gallery extends React.Component {
 		})
 	}
 
+	onPaginationClick = (page) => {
+		this.props.getLatestGallery(page, this.state.galleryMax)
+	}
+
 	render() {
 		const { gallery, galleryTotal, galleryMax, galleryPage } = this.state
+		// console.log(galleryTotal)
 		return (
 			<div role="main">
 				<Container className="container-sm">
@@ -60,8 +65,8 @@ class Gallery extends React.Component {
 						gallery.length >= galleryMax ? 
 							<Pagination 
 								total={galleryTotal} 
-								display={galleryMax}
 								current={galleryPage}
+								onClick={this.onPaginationClick}
 							/> : ""
 					}
 				</Container>

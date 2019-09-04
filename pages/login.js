@@ -48,7 +48,7 @@ export default class extends React.Component {
 			menu: [{ name: 'Log in', url: process.env.HOST_DOMAIN + '/login', active: true }, { divider: true }, { name: 'Register', url: process.env.HOST_DOMAIN + '/register', active: false }]
 		};
 		return (
-			<div className="container" style={{minHeight:"80vh"}}>
+			<div className="container" style={{minHeight:"80vh", maxWidth:"480px", paddingTop: "65px"}}>
 				<div className="py-3" />
 				<div className="mb-4">
 					<TabMenu {...tabMenuData} />
@@ -84,11 +84,11 @@ export default class extends React.Component {
 					<form ref={this.form} onSubmit={this.handleSubmit}>
 						<div className="form-group">
 							<label className="text-black text-sm">Email</label>
-							<input type="email" name="email" className="form-control" placeholder="Your Email" onChange={this.handleChange} required />
+							<input type="email" name="email" className="form-control rounded-lg" placeholder="Your Email" onChange={this.handleChange} required />
 						</div>
 						<div className="form-group">
 							<label className="text-black text-sm">Password</label>
-							<input type="password" name="password" className="form-control" placeholder="Your Password" minLength={6} onChange={this.handleChange} required />
+							<input type="password" name="password" className="form-control rounded-lg" placeholder="Your Password" minLength={6} onChange={this.handleChange} required />
 						</div>
 						<div className="py-2"></div>
 						{/* <div className="py-3 mx-3 text-center">
@@ -99,7 +99,7 @@ export default class extends React.Component {
 							</p>
 						</div> */}
 						<div>
-							<button className="btn btn-info w-100" onClick={this.validate}>LOG IN</button>
+							<button className="btn btn-info w-100 rounded-lg" onClick={this.validate}>LOG IN</button>
 						</div>
 					</form>
 				</div>

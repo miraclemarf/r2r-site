@@ -75,7 +75,7 @@ export default class extends React.Component {
 		const tahun = range(1930, 2002)
 
 		return (
-			<div className="container">
+			<div className="container" style={{maxWidth:"480px", paddingTop: "65px"}}>
 				<div className="py-3" />
 				<div className="mb-4">
 					<TabMenu {...tabMenuData} />
@@ -112,11 +112,11 @@ export default class extends React.Component {
 					<form ref={this.form} onSubmit={this.handleSubmit}>
 						<div className="form-group">
 							<label className="text-black text-sm">Email</label>
-							<input type="email" name="email" className="form-control" placeholder="Your Email" onChange={this.handleChange} required />
+							<input type="email" name="email" className="form-control rounded-lg" placeholder="Your Email" onChange={this.handleChange} required />
 						</div>
 						<div className="form-group">
 							<label className="text-black text-sm">Create Password</label>
-							<input type="password" name="password" className="form-control" placeholder="Create your password" minLength={6} onChange={this.handleChange} required />
+							<input type="password" name="password" className="form-control rounded-lg" placeholder="Create your password" minLength={6} onChange={this.handleChange} required />
 						</div>
 						<div className="form-row">
 							<div className="form-group col">
@@ -168,7 +168,7 @@ export default class extends React.Component {
 							</p>
 						</div>
 						<div>
-							<button className="btn btn-info w-100" onClick={this.validate}>REGISTER</button>
+							<button className="btn btn-info w-100 rounded-lg" onClick={this.validate}>REGISTER</button>
 						</div>
 					</form>
 				</div>

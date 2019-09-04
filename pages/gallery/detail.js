@@ -76,7 +76,7 @@ class GalleryDetail extends React.Component {
                         <Col xs="12" lg="12">
                             <div className="my-4 d-flex align-items-center justify-content-between">
 								<h4 className="title-section text-dark m-0">Share to</h4>
-								<div className="bg-primary text-white py-1 px-3 d-flex align-items-center justify-content-between">
+								<div className="bg-primary text-white py-1 px-3 d-flex align-items-center justify-content-between rounded-lg">
 									<span style={{ top: '4px' }} className="icon-facebook h4 position-relative" />
 									<h5 className="title-section mb-0 pl-3">Facebook Friend</h5>
 								</div>
@@ -90,13 +90,13 @@ class GalleryDetail extends React.Component {
 						<h2 className="title-section text-center title-section__with-border pb-2">Gallery</h2>
 						<div style={{ margin: '0 -4px' }} className="row no-gutters">
 							{gallery.slice(0, 2).map((item, key) => (
-								<div key={key} className={key == 2 ? 'col-12' : 'col-6'}>
-									<img src={process.env.HOST_URL+item.coverLandscape} className="img-fluid" />
+								<div key={key} className={`p-2 ${key == 2 ? 'col-12' : 'col-6'}`}>
+									<img src={process.env.HOST_URL+item.coverLandscape} className="img-fluid border-0 rounded-lg" />
 								</div>
 							))}
 						</div>
 						<Link href={"/gallery"} href={`${process.env.HOST_DOMAIN}/gallery`}>
-							<a className="mt-3 btn btn-primary d-block">SEE ALL</a>
+							<a className="mt-2 btn btn-primary d-block rounded-lg">SEE ALL</a>
 						</Link>
 					</Container>
 				</div>

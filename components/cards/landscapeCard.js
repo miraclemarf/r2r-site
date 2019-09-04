@@ -40,7 +40,7 @@ export default (props) => {
             <div className="position-relative w-100 h-100 overflow-hidden">
                 { 
                     props.iconPlay ?
-                    <div style={Styles.videoIcon} className="position-absolute">
+                    <div style={Styles.videoIcon} className="position-absolute invisible">
                         <span className="icon icon-icon_play_video text-white" />
                     </div> : ""
                 }
@@ -52,7 +52,7 @@ export default (props) => {
                 <div style={Styles.infoWrapper} className="position-absolute d-inline-block w-100 text-white">
                     {
                         !props.iconPlay ?
-                        <img src={process.env.HOST_URL+props.slides.iconCover} style={Styles.SliderItemsIcon} className="d-block m-auto pb-2" alt={props.slides.title}/> : ""
+                        <img src={process.env.HOST_URL+props.slides.iconCover} style={Styles.SliderItemsIcon} className="d-block m-auto pb-2 invisible" alt={props.slides.title}/> : ""
                     }
                     {
                         props.withTitle ?

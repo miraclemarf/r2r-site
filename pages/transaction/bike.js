@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import StepTransaction from '../../components/stepTransaction'
-import { getLatestMotor } from '../../utils/motor'
+import { getLatestMotorNonRedux } from '../../utils/motor'
 
 export default class extends React.Component {
     static async getInitialProps({ req, query: { idTrip }, res }) {
@@ -30,7 +30,7 @@ export default class extends React.Component {
             notes: ""
         };
         try {
-            const data = await getLatestMotor();
+            const data = await getLatestMotorNonRedux();
             props.motor = data.object;
         } catch (e) {
 

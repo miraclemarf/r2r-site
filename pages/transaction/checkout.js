@@ -64,7 +64,7 @@ export default class extends React.Component {
 
     renderPrice(data, index) {
         return (
-            <div className="d-flex justify-content-between align-items-center pt-3">
+            <div key={index} className="d-flex justify-content-between align-items-center pt-3">
                 <div style={{ lineHeight: "14px" }}>
                     <h5 className="title-section m-0">ADDITIONAL COST</h5>
                     <span style={{ fontSize: "80%" }} className="text-sm">{data.title}</span>
@@ -188,7 +188,7 @@ export default class extends React.Component {
                                     <div className="d-flex justify-content-between align-items-center pb-3 border-softgray" style={{ borderBottom: "1px solid" }}>
                                         <div style={{ lineHeight: "14px" }}>
                                             <h5 className="title-section m-0">EXPLORING </h5>
-                                            <span style={{ fontSize: "80%" }} className="text-sm">{trip.object.title}</span>
+                                            <span style={{ fontSize: "80%" }} className="text-sm">{transaction.tripTitle}</span>
                                         </div>
                                         <div>
                                             <h3 className="title-section m-0">$ {transaction.price[0]}</h3>

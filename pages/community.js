@@ -36,11 +36,12 @@ export default class extends Page {
 				<Container className="container-sm">
 					<Row>
 						<Col xs="12" lg="12" className="p-0">
-							<h1 className="p-3 m-0 title-section">Community</h1>
-							<p className="container mt-0 mb-5">
-								The Bromo Tengger Semeru National Park offers some of the most amazing landscapes in the whole
-								of Indonesia. It is especially beautiful at sunrise as the mist rolls over the valley and the
-								sun rises behind Bromo Volcano.
+							<h1 className="p-3 m-0 title-section">Join the Community!</h1>
+							<p className="container">
+							Freedom and ease is all we could offer to our customer and friends.. the experience that no other travel service could give you, Enjoying Indonesia with our selection Premium Motorcycle. From West To East, Mountains and exotic beaches..come Join us and start your unforgettable adventure today! We know traveling in motorcycle is more than just travelling, We are more like a family and We welcome you to join to our community!
+							</p>
+							<p className="container">
+							Feel free if you want to visit our office to have a chit chat with us!
 							</p>
 						</Col>
 					</Row>

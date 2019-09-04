@@ -50,9 +50,9 @@ export default class extends React.Component {
 					dark
 					expand="md"
 				>
-					<Container className="position-relative d-block m-auto">
+					<Container className="position-relative d-flex align-items-center m-auto">
 						<Link href="/index" as={process.env.HOST_DOMAIN}>
-							<div className="navbar-brand py-1 px-0">
+							<div className="navbar-brand py-1 px-0" style={{zIndex:1}}>
 								{this.props.navTrans ? (
 									<span className="h2 icon-logogram_r2r" />
 								) : (

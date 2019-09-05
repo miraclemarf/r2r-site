@@ -120,6 +120,21 @@ $navbar-dark-toggler-border-color: rgba($white, 0);
 	}
 }
 
+// R2R Trip Gallery
+@media screen and (max-width: 768px) {
+	.galleryLists.row > div {
+		padding: 0 !important;
+
+		&>div {
+			border-radius: 0 !important;
+			margin-bottom: 5px !important;
+		}
+		&:last-child {
+			margin-bottom: 20px !important;
+		}
+	}
+}
+
 //R2R BTN
 $input-btn-font-family: 'Rheiborn_Sans_Clean';
 $btn-border-radius: 0;

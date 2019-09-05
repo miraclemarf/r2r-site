@@ -4,7 +4,7 @@ import { timestampToDate } from './functions'
 
 export default (props) => {
 	return (
-		<Row>
+		<Row className={props.className}>
 			{
 				props.datas.map((data) => (
 					<Col key={data.id} id={`gallery${data.id}`} sm="12" md="6" lg="4">

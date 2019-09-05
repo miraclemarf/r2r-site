@@ -18,7 +18,7 @@ class Gallery extends React.Component {
 			// Gallery Scope
 			if (!stores.GalleryData) await store.dispatch(getLatestGallery(props.page, props.max))
 			// Trip Scope
-			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 6))
+			if (!stores.TripData) await store.dispatch(getLatestTrips(props.page, props.max))
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}
@@ -58,7 +58,7 @@ class Gallery extends React.Component {
 							<h1 className="h2 title-section my-3 pt-3">TRIPS GALLERY</h1>
 						</Col>
 					</Row>
-					<GalleryCard datas={gallery} pathname={"gallery"} />
+					<GalleryCard datas={gallery} pathname={"gallery"} withDate={true} />
 					{
 						gallery.length > 0 ? 
 							<Pagination 

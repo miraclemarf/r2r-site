@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Row, Col } from 'reactstrap'
+import { timestampToDate } from './functions'
 
 export default (props) => {
 	return (
@@ -21,6 +22,17 @@ export default (props) => {
 							<div style={{zIndex: 3, width: "100%"}} className="trip-info-center text-center d-inline-block position-absolute">
 								<img src={process.env.HOST_URL + data.iconCover} alt={data.title} />
 								<h1 className="mt-2	title-section text-white mx-auto">{data.title}</h1>
+								{
+									props.withDate ? 
+										<span 
+											className="d-flex justify-content-center text-white pt-1"
+											style={{fontSize: "10pt"}}
+										>
+											<p className="m-0">{timestampToDate(data.startTripDate).slice(0, 6)}</p>
+											&nbsp;&ndash;&nbsp;
+											<p className="m-0">{timestampToDate(data.endTripDate)}</p>
+										</span> : ""
+								}
 							</div>
 							<div className="position-absolute w-100 h-100 overflow-hidden">
 								<div style={{zIndex: 1}} className="position-absolute overlay--img__black w-100 h-100" />

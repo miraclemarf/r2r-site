@@ -1,15 +1,15 @@
 export default (props) => {
-	const { total, current, onClick } = props
+	const { totalPage, currentPage, onClick } = props
     const createPagination = () => {
-        var lists = [],
-            currentPage = current + 1,
+		var lists = [],
+			current = currentPage + 1,
             delta = 2,
-            left = currentPage - delta,
-            right = currentPage + delta + 1,
+            left = current - delta,
+            right = current + delta + 1,
             range = [], rangeWithDots = [], l
 
-        for (let i = 1; i <= total; i++) {
-            if (i == 1 || i == total || i >= left && i < right) {
+        for (let i = 1; i <= totalPage; i++) {
+            if (i == 1 || i == totalPage || i >= left && i < right) {
                 range.push(i)
             }
         }
@@ -26,14 +26,14 @@ export default (props) => {
         }
 
         for (let i of rangeWithDots) {
-			const btn = i === '...' ? 
+			const btn = i == '...' ? 
 				<li key={i} className="page-item mx-1">
-					<button className="page-link px-2 rounded-0" aria-label="Previous">{i}</button>
+					<button className="page-link px-2 rounded-lg" aria-label="Previous">{i}</button>
 				</li>
 				:
-				<li key={i} className="page-item mx-1">
+				<li key={i} className={`page-item mx-1 ${i === current ? 'active': ''}`}>
 					<button 
-						className="page-link px-2 rounded-0" 
+						className="page-link px-2 rounded-lg" 
 						aria-label="Previous" 
 						onClick={() => onClick(i-1)}
 					>{i}</button>
@@ -48,10 +48,10 @@ export default (props) => {
 		<nav aria-label="Page navigation example">
 			<ul className="pagination d-flex justify-content-center mx-3">
 				{
-                    current > 0 ?
+                    currentPage > 0 ?
 						<li className="page-item mx-1">
 							<button 
-								className="page-link px-2 rounded-0" 
+								className="page-link px-2 rounded-lg" 
 								aria-label="Previous" 
 								onClick={() => onClick(0)}
 							>
@@ -60,14 +60,14 @@ export default (props) => {
 							</button>
 						</li> : ""
                 }
-				{current > total ? createPagination() : ""}
+				{createPagination()}
 				{
-                    current+1 < total ?
+                    currentPage+1 < totalPage ?
 						<li className="page-item mx-1">
 							<button 
-								className="page-link px-2 rounded-0" 
+								className="page-link px-2 rounded-lg" 
 								aria-label="Next" 
-								onClick={() => onClick(total-1)}
+								onClick={() => onClick(totalPage-1)}
 							>
 								<span aria-hidden="true" className="icon-right-arrow" />
 								<span className="sr-only">Next</span>

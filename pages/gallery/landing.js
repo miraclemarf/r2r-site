@@ -1,11 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Container, Row, Col, Spinner } from 'reactstrap'
-// import TextImgCard from '../../components/textImgCard'
+import { Container, Row, Col } from 'reactstrap'
 import GalleryCard from '../../components/galleryCard'
 import Pagination from '../../components/pagination'
-// import LandscapeCard from '../../components/cards/landscapeCard'
 import { getLatestGallery, getLatestTrips } from '../../utils'
 
 class Gallery extends React.Component {
@@ -47,27 +45,29 @@ class Gallery extends React.Component {
 
 	onPaginationClick = (page) => {
 		this.props.getLatestGallery(page, this.state.galleryMax)
+		this.setState({galleryPage: page})
 	}
 
 	render() {
-		const { gallery, galleryTotal, galleryMax, galleryPage } = this.state
-		// console.log(galleryTotal)
+		const { gallery, galleryTotal, galleryPage } = this.state
 		return (
 			<div role="main">
 				<Container className="container-sm">
-					<Row>
+					<Row className="pt-5">
 						<Col lg="12">
-							<h1 className="h2 title-section my-3">TRIPS GALLERY</h1>
+							<h1 className="h2 title-section my-3 pt-3">TRIPS GALLERY</h1>
 						</Col>
 					</Row>
 					<GalleryCard datas={gallery} pathname={"gallery"} />
 					{
-						gallery.length >= galleryMax ? 
+						gallery.length > 0 ? 
 							<Pagination 
-								total={galleryTotal} 
-								current={galleryPage}
+								totalPage={galleryTotal} 
+								currentPage={galleryPage}
 								onClick={this.onPaginationClick}
-							/> : ""
+							/>
+							:
+							<div className="text-secondary font-14 w-100 text-center py-5 my-5">No Result Found!</div> 
 					}
 				</Container>
 			</div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Page from '../components/page';
+import { UncontrolledCollapse } from 'reactstrap';
 
 export default class extends Page {
 	static async getInitialProps({ req }) {
@@ -12,7 +13,7 @@ export default class extends Page {
 			try {
 				props.nav = 'blue';
 				props.footer = 'transparent';
-			} catch (e) { }
+			} catch (e) {}
 		}
 		return props;
 	}
@@ -23,25 +24,57 @@ export default class extends Page {
 	}
 	render() {
 		return (
-			<div style={{ "minHeight": "77.5vh" }} className="container">
+			<div style={{ minHeight: '77.5vh' }} className="container">
 				<div className="py-3" />
 				<div className="mb-4">
 					<h1 className="title-section">FAQ</h1>
 				</div>
 				<div>
-					<a className="d-block text-black" href={process.env.HOST_DOMAIN + '/term-condition'}>
-						<div className="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
-							<h3 className="title-section m-0">TERM AND CONDITION</h3>
-							<span className="icon-right-arrow text-primary"></span>
+					<div className="border-bottom mb-3 pb-2">
+						<div className="d-flex justify-content-between align-items-center" id="acc1" style={{cursor:"pointer"}}>
+							<h3 className="title-section m-0">
+								Do i have to have driving licenses?
+							</h3>
+							<span className="icon-right-arrow text-primary" />
 						</div>
-					</a>
-					<div className="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
-						<h3 className="title-section m-0">WHAT TO BE PREPARED?</h3>
-						<span className="icon-right-arrow text-primary"></span>
+						<UncontrolledCollapse toggler="#acc1">
+							<div>
+							Yes, you must have motorcycle driving license at least 3 years active.
+							</div>
+						</UncontrolledCollapse>
 					</div>
-					<div className="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
-						<h3 className="title-section m-0">Do We NEED DRIVING LICENSES?</h3>
-						<span className="icon-right-arrow text-primary"></span>
+					<div className="border-bottom mb-3 pb-2">
+						<div className="d-flex justify-content-between align-items-center"  id="acc2" style={{cursor:"pointer"}}>
+							<h3 className="title-section m-0">What if i never experience to ride 250cc motorcycle?</h3>
+							<span className="icon-right-arrow text-primary" />
+						</div>
+						<UncontrolledCollapse toggler="#acc2">
+							<div>
+							We are sorry, at the moment  road2ring trips is only for those that experienced 250cc up motorcycle before and if you haven’t experience to ride 250 cc motorcycle. Feel free to reach us and simply you can join our community.
+							</div>
+						</UncontrolledCollapse>
+					</div>
+					<div className="border-bottom mb-3 pb-2">
+						<div className="d-flex justify-content-between align-items-center" id="acc3" style={{cursor:"pointer"}}>
+							<h3 className="title-section m-0">Can I bring my a pillion?</h3>
+							<span className="icon-right-arrow text-primary" />
+						</div>
+						<UncontrolledCollapse toggler="#acc3">
+							<div>
+							Sure you can bring your pillion, but all pillion’s cost is not included on trip package, like meals, and tickets to some attractions.
+							</div>
+						</UncontrolledCollapse>
+					</div>
+					<div className="border-bottom mb-3 pb-2">
+						<div className="d-flex justify-content-between align-items-center" id="acc4" style={{cursor:"pointer"}}>
+							<h3 className="title-section m-0">Can I choose my roommate?</h3>
+							<span className="icon-right-arrow text-primary" />
+						</div>
+						<UncontrolledCollapse toggler="#acc4">
+							<div>
+							No, you cannot choose your roommate, because all of our trips is a single room. We want to make all our guest have a comfortable sleep.
+							</div>
+						</UncontrolledCollapse>
 					</div>
 				</div>
 				<div className="py-3" />

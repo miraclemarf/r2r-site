@@ -115,6 +115,7 @@
 }
 
 .teaserCard {
+	
 	.card-title {
 		margin-bottom: 0;
 	}
@@ -138,6 +139,9 @@
 
 @media screen and (min-width: 768px) {
 	.teaserCard {
+		border-radius: 20px;
+		-webkit-border-radius: 20px;
+		overflow: hidden;
 		margin: 0 1rem 2rem !important;
 
 		.card-title {
@@ -161,6 +165,74 @@
 @media screen and (min-width: 575px) {
 	.testimonialList .testimonialList-wrapper {
 		padding: 0 20px;
+	}
+}
+
+.sliderLandscapeWrapper {
+	height: 181px;
+	padding-bottom: 15px;
+
+	.mobileSlider {
+		position: absolute;
+		display: flex;
+		top: 0;
+		left: 0;
+	
+		.objectItem {
+			width: 256px;
+			height: 166px;
+		}
+	}
+}
+
+.sliderPortraitWrapper {
+	height: 250px;
+	padding-bottom: 15px;
+
+	.mobileSlider {
+		position: absolute;
+		display: flex;
+		top: 0;
+		left: 0;
+
+		.objectItem {
+			width: 180px;
+			height: 250px;
+		}
+	}
+}
+
+@media screen and (min-width: 900px) {
+	.sliderLandscapeWrapper {
+		height: auto;
+		padding-bottom: 0;
+
+		.mobileSlider {
+			position: relative;
+			display: block;
+
+			.objectItem {
+				width: 278px;
+				height: 174px;
+				margin-bottom: 15px;
+			}
+		}
+	}
+
+	.sliderPortraitWrapper {
+		height: auto;
+		padding-bottom: 0;
+	
+		.mobileSlider {
+			position: relative;
+			display: block;
+	
+			.objectItem {
+				width: 160px;
+    			height: 222px;
+				margin-bottom: 15px;
+			}
+		}
 	}
 }
 

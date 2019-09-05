@@ -8,13 +8,12 @@ export default ({ ...props }) => (
 		<Link
 			href={!props.isTransaction ? `/trip/detail?id=${props.id}` : `/user/trip?id=${props.id}`}
 			as={!props.isTransaction ? `${process.env.HOST_DOMAIN}/trip/${props.id}` : `${process.env.HOST_DOMAIN}/user/trip/${props.id}`}
-		>
-		
-			<a>
-				<div className="overlay--img__black mb-2 d-flex align-items-center position-relative">
+		> 
+			<a href={!props.isTransaction ? `${process.env.HOST_DOMAIN}/trip/${props.id}` : `${process.env.HOST_DOMAIN}/user/trip/${props.id}`}>
+				<div className="overlay--img__black mb-2 d-flex align-items-center position-relative rounded-lg overflow-hidden">
 					<img className="img-fluid" src={process.env.HOST_URL + props.coverLandscape} />
 					<div className="trip-info-center text-center d-inline-block position-absolute">
-						<img src={process.env.HOST_URL + props.iconCover} />
+						<img className="invisible" src={process.env.HOST_URL + props.iconCover} />
 						<h1 className="mt-2	title-section text-white mx-auto">{props.title}</h1>
 					</div>
 				</div>
@@ -62,7 +61,7 @@ export default ({ ...props }) => (
 				</div>
 
 			</a>
-		</Link>
+		 </Link>
 		{props.isTransaction && props.paymentStatus == 'WAITING'?
 			<div className="mt-3">
 				<a onClick={props.clickConfirm} className="btn btn-primary d-block text-white">Confirm Payment</a>

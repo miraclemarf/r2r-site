@@ -58,7 +58,7 @@ class UserGallery extends React.Component {
                     </div>
                     <div className="pt-4" style={{ minHeight: "50vh" }}>
                         <div className="alert alert-danger" role="alert">
-                            <h4 className="text-center font-italict title-section m-0">Sorry, You haven't Any Gallery!</h4>
+                        <h5 className="text-center font-italic title-section m-0">Sorry, You don't Have Any Trips!</h5>
                         </div>
                     </div>
                 </div>

@@ -19,7 +19,7 @@ class TestimonialDetail extends React.Component {
 			// Gallery Scope
 			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 6))
 			// Trip Scope
-			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 10))
+			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 6))
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}
@@ -85,7 +85,7 @@ class TestimonialDetail extends React.Component {
 						<Col xs="12" lg="12">
 							<div className="my-4 d-flex align-items-center justify-content-between">
 								<h4 className="title-section text-dark m-0">Share to</h4>
-								<div className="bg-primary text-white py-1 px-3 d-flex align-items-center justify-content-between">
+								<div className="bg-primary text-white py-1 px-3 d-flex align-items-center justify-content-between rounded-lg">
 									<span style={{ top: '4px' }} className="icon-facebook h4 position-relative" />
 									<h5 className="title-section mb-0 pl-3">Facebook Friend</h5>
 								</div>
@@ -100,12 +100,19 @@ class TestimonialDetail extends React.Component {
 						<div style={{ margin: '0 -4px' }} className="row no-gutters">
 							{gallery.slice(0, 2).map((item, key) => (
 								<div key={key} className={key == 2 ? 'col-12' : 'col-6'}>
-									<img src={process.env.HOST_URL+item.coverLandscape} className="img-fluid" />
+									<img 
+										src={process.env.HOST_URL+item.coverLandscape} 
+										className="img-fluid"
+										style={{
+											borderRadius: "10px",
+											WebkitBorderRadius: "10px"
+										}} 
+									/>
 								</div>
 							))}
 						</div>
 						<Link href={"/gallery"} href={`${process.env.HOST_DOMAIN}/gallery`}>
-							<a className="mt-3 btn btn-primary d-block">SEE ALL</a>
+							<a className="mt-3 btn btn-primary d-block rounded-lg">SEE ALL</a>
 						</Link>
 					</Container>
 				</div>
@@ -115,7 +122,7 @@ class TestimonialDetail extends React.Component {
 						<h1 className="h2 title-section text-primary my-3">MAKE YOUR OWN TRIP!</h1>
 						<Row>
 							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
-								<TripSliderCard sliderData={trips} />
+								<TripSliderCard sliderData={trips.slice(0, 6)} />
 							</Col>
 						</Row>
 					</Container> : ''

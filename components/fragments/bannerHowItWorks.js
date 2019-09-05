@@ -26,7 +26,7 @@ export default () => (
 					</div>
 					<div style={{ minWidth: '130px' }}>
 						<Link href="/howItWorks" as={`${process.env.HOST_DOMAIN}/how-it-works`}>
-							<a className="d-block btn btn-secondary btn-sm" title="">LEARN MORE</a>
+							<a className="d-block btn btn-secondary btn-sm rounded-lg" title="">LEARN MORE</a>
 						</Link>
 					</div>
 				</div>

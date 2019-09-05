@@ -1,8 +1,9 @@
-import React from 'react'
-import Link from 'next/link'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React from 'react';
+import Link from 'next/link';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 // import Page from '../components/page'
+import { Container } from 'reactstrap';
 import { getLatestMotor, getDetailTrip } from '../../utils';
 import SquareCover from '../../components/squareCover';
 
@@ -55,42 +56,53 @@ class TripDetail extends React.Component {
             itinerariesEl.setAttribute('style', '')
             collapseEl.style.display = 'none'
         }
+	}
+	renderItineraries(data, key) {
+		return (
+			<div key={key} className="mb-2 position-relative list-element">
+				<h2 className="title-section text-white mb-3">{data.groupTitle}</h2>
+				<div className="verticalLine bg-gray80 collapse" />
+				{data.details.map((item, index) => (
+					<div key={index} className="mb-4 position-relative" style={{ paddingLeft: '2.3em' }}>
+						<div
+							className="rounded-circle bg-secondary position-absolute collapse"
+							style={{ width: '11px', height: '11px', left: '0', zIndex: '4' }}
+						/>
+						<div>
+							{item.imageItinerary ? (
+								<img src={process.env.HOST_URL + item.imageItinerary} className="img-fluid mb-2" />
+							) : (
+								''
+							)}
+							<h3 className="title-section text-white m-0">{item.title}</h3>
+							{item.description ? (
+								<div
+									className="text-white text-sm text-justify"
+									dangerouslySetInnerHTML={{ __html: item.description }}
+								/>
+							) : (
+								''
+							)}
+						</div>
+						{index == data.details.length - 1 ? <div className="verticalLine bg-dark" /> : ''}
+					</div>
+				))}
+			</div>
+		);
+	}
 
-    }
-
-    renderItineraries(data, key) {
-        return (
-            <div key={key} className="mb-2 position-relative list-element">
-                <h2 className="title-section text-white mb-3">{data.groupTitle}</h2>
-                <div className="verticalLine bg-gray80"></div>
-                {data.details.map((item, index) => (
-                    <div key={index} className="mb-4 position-relative" style={{ paddingLeft: "2.3em" }}>
-                        <div className="rounded-circle bg-secondary position-absolute" style={{ width: "11px", height: "11px", left: "0", zIndex: "4" }}></div>
-                        <div>
-                            {item.imageItinerary ? <img src={process.env.HOST_URL + item.imageItinerary} className="img-fluid mb-2" /> : ''}
-                            <h3 className="title-section text-white m-0">{item.title}</h3>
-                            {item.description ? <div className="text-white text-sm" dangerouslySetInnerHTML={{__html:item.description}}>{}</div> : ""}
-                        </div>
-                        {index == data.details.length - 1 ? <div className="verticalLine bg-dark"></div> : ""}
-                    </div>
-                ))}
-            </div>
-        )
-    }
-
-    renderFaciltyInclude(data, key) {
-        return (
-            <div key={key} className="d-flex justify-content-start align-items-center pb-3">
-                <div className="mr-3">
-                    <img src={process.env.HOST_URL + data.picture} className="img-fluid" width="35" />
-                </div>
-                <div className="align-self-center">
-                    <span>{data.title}</span>
-                </div>
-            </div>
-        )
-
-    }
+	renderFaciltyInclude(data, key) {
+		return (
+			<div key={key} className="d-flex justify-content-start align-items-center pb-3">
+				<div className="mr-3">
+					<img src={process.env.HOST_URL + data.picture} className="img-fluid" width="35" />
+				</div>
+				<div className="align-self-center">
+					<span>{data.title}</span>
+				</div>
+			</div>
+		);
+	}
 
 
     render() {
@@ -164,15 +176,15 @@ class TripDetail extends React.Component {
                         <h2 className="title-section">MOTORCYCLE CHOICES</h2>
                         {/* <a href={process.env.HOST_DOMAIN + "/gallery"} style={{ "top": "7px" }} className="text-sm position-relative text-primary d-block font-weight-bold">
                             View All</a> */}
-                    </div>
-                    <div className="sliderMobile d-flex align-items-stretch" style={{ marginRight: "-15px" }}>
-                        {motor.map((item, key) => (
-                            <div key={key} className="mr-3">
-                                <img src={process.env.HOST_URL + item.picture} height="110" />
-                            </div>
-                        ))}
-                    </div>
-                </div>
+					</div>
+					<div className="sliderMobile d-flex align-items-stretch" style={{ marginRight: '-15px' }}>
+						{motor.map((item, key) => (
+							<div key={key} className="mr-3">
+								<img src={process.env.HOST_URL + item.picture} height="110" />
+							</div>
+						))}
+					</div>
+				</div>
 
                 <div className="container">
                     <h2 className="title-section">INCLUDED</h2>
@@ -244,7 +256,7 @@ class TripDetail extends React.Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
 		getLatestMotor: bindActionCreators(getLatestMotor, dispatch),
 		getDetailTrip: bindActionCreators(getDetailTrip, dispatch)

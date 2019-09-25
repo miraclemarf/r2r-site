@@ -7,10 +7,12 @@ import { register } from '../utils/user'
 export default class extends React.Component {
 	static async getInitialProps({ req }) {
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = {};
-		props.nav = 'blue';
-		props.transaction = {};
-		return props;
+		let props = {
+			nav: 'blue',
+			transaction: {},
+			scrollHeader: false
+		}
+		return props
 	}
 	constructor(props) {
 		super(props);

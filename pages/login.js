@@ -7,9 +7,11 @@ export default class extends React.Component {
 	static async getInitialProps({ req }) {
 
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = {};
-		props.nav = 'blue';
-		props.transaction = {};
+		let props = {
+			nav: 'blue',
+			transaction: {},
+			scrollHeader: false
+		}
 		return props;
 	}
 	constructor(props) {

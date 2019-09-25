@@ -10,7 +10,7 @@ class Gallery extends React.Component {
 	static async getInitialProps({ store }) {
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = { 
-			nav: 'blue', footer: 'transparent',
+			nav: 'blue', footer: 'transparent', scrollHeader: false,
 			page: 0, max: 6
 		}
 		let stores = await store.getState()

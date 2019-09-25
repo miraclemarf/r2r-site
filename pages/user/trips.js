@@ -1,7 +1,7 @@
 import React from 'react'
 import cookies from 'next-cookies'
-import TabMenu from '../../components/tabMenu';
-import TripCard from '../../components/tripCard';
+import TabNavigation from '../../components/tabNavigation'
+import TripCard from '../../components/tripCard'
 import { withAuthSync } from "../../utils/user"
 import { getUserTransaction, postConfirmTransaction } from "../../utils/userTransaction";
 
@@ -18,9 +18,10 @@ class UserTrip extends React.Component {
 
 				const userTransactionData = await getUserTransaction(objToken.access_token)
 
-				props.trips = userTransactionData.object;
-				props.nav = 'blue';
-				props.footer = 'transparent';
+				props.trips = userTransactionData.object
+				props.nav = 'blue'
+				props.footer = 'transparent'
+				props.scrollHeader = false
 			} catch (e) {
 				props.error = 'Unable to fetch AsyncData on server';
 			}
@@ -148,11 +149,15 @@ class UserTrip extends React.Component {
 		console.log(token);
 		
 		const tabMenuData = {
-			menu: [{ name: 'Gallery', url: process.env.HOST_DOMAIN + '/user/gallery', active: false }, { divider: true }, { name: 'Next Trips', url: process.env.HOST_DOMAIN + '/user/trips', active: true }]
+			menu: [
+				{ name: 'Gallery', url: process.env.HOST_DOMAIN + '/user/gallery', path: '/user/gallery', active: false }, 
+				{ divider: true }, 
+				{ name: 'Next Trips', url: process.env.HOST_DOMAIN + '/user/trips', path: '/user/trips', active: true }
+			]
 		};
 
 		return (
-			<div className="py-4">
+			<div className="mt-5 pt-5 pb-4">
 				<div className={this.state.isViewConfirm ? "collapse" : ""}>
 					<div className="container">
 						<div className="d-flex justify-content-between mb-4 pb-2">
@@ -176,7 +181,7 @@ class UserTrip extends React.Component {
 							<div>{/* <a href={process.env.HOST_DOMAIN + '/user/profile'} className="text-primary text-sm"><b>EDIT</b></a> */}</div>
 						</div>
 						<div className="mb-4">
-							<TabMenu {...tabMenuData} />
+							<TabNavigation {...tabMenuData} />
 						</div>
 						{this.props.trips ?
 							<div>

@@ -1,6 +1,6 @@
 import { Container, Nav, NavItem, NavLink } from 'reactstrap'
 
-export default () => (
+export default (props) => (
     <Container className="p-0 m-0">
         <Nav className="text-white" navbar>
             <NavItem>

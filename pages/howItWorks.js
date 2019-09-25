@@ -9,7 +9,7 @@ import { getLatestGallery } from '../utils';
 
 class HowItWorks extends React.Component {
 	static async getInitialProps({ store }) {
-		let props = { nav: 'blue' };
+		let props = { nav: 'blue', scrollHeader: false };
 		try {
 			// Gallery Scope
 			let GalleryList = await store.getState().GalleryData;

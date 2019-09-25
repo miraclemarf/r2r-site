@@ -10,7 +10,7 @@ import { getDetailGallery, getLatestGallery, getLatestTrips } from '../../utils'
 class GalleryDetail extends React.Component {
 	static async getInitialProps({ store , query: { id } }) {
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = { footer: 'transparent' }
+		let props = { footer: 'transparent', scrollHeader: true }
         let stores = await store.getState()
         try {
             // Detail Scope

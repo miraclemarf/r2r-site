@@ -7,8 +7,9 @@ export default class extends React.Component {
 
 		if (typeof window === 'undefined') {
 			try {
-				props.nav = 'blue';
-				props.footer = 'transparent';
+				props.nav = 'blue'
+				props.footer = 'transparent'
+				props.scrollHeader = false
 			} catch (e) {}
 		}
 		return props;

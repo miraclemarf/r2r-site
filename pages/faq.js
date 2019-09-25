@@ -11,8 +11,9 @@ export default class extends Page {
 
 		if (typeof window === 'undefined') {
 			try {
-				props.nav = 'blue';
-				props.footer = 'transparent';
+				props.nav = 'blue'
+				props.footer = 'transparent'
+				props.scrollHeader = false
 			} catch (e) {}
 		}
 		return props;
@@ -24,7 +25,7 @@ export default class extends Page {
 	}
 	render() {
 		return (
-			<div style={{ minHeight: '77.5vh' }} className="container">
+			<div style={{ minHeight: '77.5vh' }} className="container pt-5">
 				<div className="py-3" />
 				<div className="mb-4">
 					<h1 className="title-section">FAQ</h1>

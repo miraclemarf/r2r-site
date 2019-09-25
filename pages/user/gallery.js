@@ -1,6 +1,6 @@
 import React from 'react'
 import cookies from 'next-cookies'
-import TabMenu from '../../components/tabMenu';
+import TabNavigation from '../../components/tabNavigation'
 import { withAuthSync } from "../../utils/user"
 
 class UserGallery extends React.Component {
@@ -12,8 +12,9 @@ class UserGallery extends React.Component {
 
         if (typeof window === 'undefined') {
             try {
-                props.nav = 'blue';
-                props.footer = 'transparent';
+                props.nav = 'blue'
+                props.footer = 'transparent'
+                props.scrollHeader = false
             } catch (e) {
                 props.error = 'Unable to fetch AsyncData on server';
             }
@@ -27,11 +28,15 @@ class UserGallery extends React.Component {
     }
     render() {
         const tabMenuData = {
-            menu: [{ name: 'Gallery', url: process.env.HOST_DOMAIN + '/user/gallery', active: true }, { divider: true }, { name: 'Next Trips', url: process.env.HOST_DOMAIN + '/user/trips', active: false }]
+            menu: [
+                { name: 'Gallery', url: process.env.HOST_DOMAIN + '/user/gallery', path: '/user/gallery', active: true }, 
+                { divider: true }, 
+                { name: 'Next Trips', url: process.env.HOST_DOMAIN + '/user/trips', path: '/user/trips', active: false }
+            ]
         };
         let { token, user } = this.props;
         return (
-            <div className="py-4">
+            <div className="mt-5 pt-5 pb-4">
                 <div className="container">
                     <div className="d-flex justify-content-between mb-4 pb-2">
                         <div className="d-flex justify-content-start">
@@ -54,7 +59,7 @@ class UserGallery extends React.Component {
                         <div>{/* <a href={process.env.HOST_DOMAIN + '/user/profile'} className="text-primary text-sm"><b>EDIT</b></a> */}</div>
                     </div>
                     <div className="mb-4">
-                        <TabMenu {...tabMenuData} />
+                        <TabNavigation {...tabMenuData} />
                     </div>
                     <div className="pt-4" style={{ minHeight: "50vh" }}>
                         <div className="alert alert-danger" role="alert">

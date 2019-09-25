@@ -12,8 +12,9 @@ class UserDetailTrip extends React.Component {
         let objToken = JSON.parse(token)
         if (typeof window === 'undefined') {
             try {
-                props.nav = 'blue';
-                props.footer = 'transparent';
+                props.nav = 'blue'
+                props.footer = 'transparent'
+                props.scrollHeader = false
                 const userTransaction = await getDetailUserTransaction(objToken.access_token, id);
 
                 props.userTransaction = userTransaction.object

@@ -9,7 +9,8 @@ export default class extends Page {
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = {}
 		try {
-			props.footer = 'transparent';
+			props.footer = 'transparent'
+			props.scrollHeader = false
 		} catch (e) {}
 		return props;
 	}

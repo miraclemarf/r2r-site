@@ -18,31 +18,24 @@ export default class extends React.Component {
 			isOpen: false,
 			isMobile: false,
 			headerBg: props.nav != 'blue' ? 'bg-transparent' : 'bg-primary'
-		};
+		}
 	}
 	async componentDidMount() {
-		window.onload = () => {
-			this.setState({
-				isMobile: window.innerWidth < 768
-			});
-		};
-		window.onresize = () => {
-			this.setState({
-				isMobile: window.innerWidth < 768
-			});
-		};
+		window.onload = () => this.setState({isMobile: window.innerWidth < 768})
+		window.onresize = () => this.setState({isMobile: window.innerWidth < 768})
 		window.addEventListener('scroll', e => { 
-			if(e.target.scrollingElement.scrollTop > 50) {
-				this.setState({headerBg: 'bg-primary'})
-			} else {
-				this.setState({headerBg: this.props.nav != 'blue' ? 'bg-transparent' : 'bg-primary'})
+			console.log(this.props.scrollHeader)
+			if(this.props.scrollHeader) {
+				if(e.target.scrollingElement.scrollTop > 50) {
+					this.setState({headerBg: 'bg-primary'})
+				} else {
+					this.setState({headerBg: this.props.nav != 'blue' ? 'bg-transparent' : 'bg-primary'})
+				}
 			}
 		})
 	}
 	toggle() {
-		this.setState({
-			isOpen: !this.state.isOpen
-		});
+		this.setState({isOpen: !this.state.isOpen})
 	}
 	render() {
 		let { token, user } = this.props;
@@ -119,7 +112,7 @@ export default class extends React.Component {
 						) : (
 							''
 						) : (
-							<NavbarToggler style={{top: "12px", right: "5px"}} className="position-absolute p-0" onClick={this.toggle} />
+							<NavbarToggler style={{top: "12px", right: "5px"}} className={`position-absolute p-0 ${this.state.txtColor}`} onClick={this.toggle} />
 						)}
 						<Collapse
 							style={{ overflowY: 'auto' }}

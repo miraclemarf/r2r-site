@@ -13,6 +13,7 @@ class TripDetail extends React.Component {
 			idTrip: idTrip,
 			footer: 'collapse',
 			header: 'white',
+			scrollHeader: true,
 			transaction: {
 				idTrip: idTrip,
 				meetingPoint: '',

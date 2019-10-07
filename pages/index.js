@@ -85,7 +85,9 @@ class Home extends React.Component {
 						<Col xs="12" lg="12">
 							<h1 className="h2 title-section mb-3">Next Trips</h1>
 						</Col>
-						{trips.map((item, key) => <TripCard key={key} {...item} />)}
+						<Row className="m-auto w-100">
+							{trips.map((item, key) => <TripCard key={key} {...item} />)}
+						</Row>
 						<Col xs="12" lg="12">
 							<Link href="/trips" as={`${process.env.HOST_DOMAIN}/trips`}>
 								<a className="btn btn-primary d-block rounded-lg">SEE ALL TRIP</a>

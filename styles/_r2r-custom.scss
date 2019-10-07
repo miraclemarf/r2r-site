@@ -120,6 +120,17 @@ $navbar-dark-toggler-border-color: rgba($white, 0);
 	}
 }
 
+// R2R MY TRIP
+.tripCard > hr {
+	display: none;
+}
+
+@media screen and (max-width: 768px) {
+	.tripCard:not(:first-child) > hr {
+		display: block;
+	}
+}
+
 // R2R Trip Gallery
 @media screen and (max-width: 768px) {
 	.galleryLists.row > div {

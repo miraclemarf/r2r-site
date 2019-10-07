@@ -127,78 +127,60 @@ export const saveProfile = async (user, access_token) => {
 		console.error('You have an error in your code or there are Network issues.', error);
 		throw new Error(error);
 	}
-	
-
-
-
-
-};
+}
 
 export const getUser = () => {
-	const token = cookie.get('token');
-	console.log(token);
-
+	const token = cookie.get('token')
+	console.log(token)
 }
 
 export const logout = () => {
-	cookie.remove('token');
-	window.localStorage.setItem('logout', Date.now());
-	Router.push(process.env.HOST_DOMAIN + '/login');
-};
+	cookie.remove('token')
+	window.localStorage.setItem('logout', Date.now())
+	Router.push(process.env.HOST_DOMAIN + '/login')
+}
 
-export const withAuthSync = (WrappedComponent) =>
-	class extends Component {
-		//static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
-		static async getInitialProps(ctx) {
-			const token = auth(ctx);
+export const withAuthSync = (WrappedComponent) => class extends Component {
+	//static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
+	static async getInitialProps(ctx) {
+		const token = auth(ctx)
+		const componentProps = WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx))
+		return { ...componentProps, token }
+	}
 
+	constructor(props) {
+		super(props)
+		this.syncLogout = this.syncLogout.bind(this)
+	}
 
-			const componentProps = WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx));
+	componentDidMount() {
+		window.addEventListener('storage', this.syncLogout)
+	}
 
-			return { ...componentProps, token };
+	componentWillUnmount() {
+		window.removeEventListener('storage', this.syncLogout)
+		window.localStorage.removeItem('logout')
+	}
+
+	syncLogout(event) {
+		if (event.key === 'logout') {
+			// console.log('logged out from storage!')
+			Router.push('/login')
 		}
+	}
 
-		constructor(props) {
-			super(props);
-
-			this.syncLogout = this.syncLogout.bind(this);
-		}
-
-		componentDidMount() {
-			window.addEventListener('storage', this.syncLogout);
-		}
-
-		componentWillUnmount() {
-			window.removeEventListener('storage', this.syncLogout);
-			window.localStorage.removeItem('logout');
-		}
-
-		syncLogout(event) {
-			if (event.key === 'logout') {
-				console.log('logged out from storage!');
-				Router.push('/login');
-			}
-		}
-
-		render() {
-			return <WrappedComponent {...this.props} />;
-		}
-	};
+	render() {
+		return <WrappedComponent {...this.props} />;
+	}
+}
 
 export const auth = (ctx) => {
-
-	const { token } = nextCookie(ctx);
-
-
+	const { token } = nextCookie(ctx)
 	if (ctx.req && !token) {
-		ctx.res.writeHead(302, { Location: process.env.HOST_DOMAIN + '/login' });
-		ctx.res.end();
-		return;
+		ctx.res.writeHead(302, { Location: process.env.HOST_DOMAIN + '/login' })
+		ctx.res.end()
+		return
 	}
-
-	if (!token) {
-		Router.push(process.env.HOST_DOMAIN + '/login');
-	}
-
-	return token;
-};
+	if (!token) Router.push(process.env.HOST_DOMAIN + '/login')
+	return token
+}

@@ -9,13 +9,13 @@ export default (props) => {
 						<div className="v-divider position-relative mx-4"></div>
 					) : (
 						item.active ?
-							<span className="h4 mx-3 title-section text-primary" title={item.name}>
+							<span className="h4 mx-auto title-section text-primary" title={item.name}>
 								{item.name}
 							</span>
 							:
 							<Link href={item.path} as={item.url}>
 								<a 
-									className="h4 mx-3 title-section text-softgray" 
+									className="h4 mx-auto title-section text-softgray" 
 									title={item.name}
 								>
 									{item.name}

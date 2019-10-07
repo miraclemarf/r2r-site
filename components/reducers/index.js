@@ -5,6 +5,7 @@ import TestimonialsDataReducer from './testimonialsDataReducers'
 import GalleryDataReducer from './galleryDataReducers'
 import GalleryTotalReducer from './galleryTotalReducers'
 import MotorDataReducer from './motorDataReducers'
+import MyTransactionsReducer from './myTransactionsReducers'
 
 export default combineReducers({
     TripData: TripDataReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     TestimonialsData: TestimonialsDataReducer,
     GalleryData: GalleryDataReducer,
     GalleryTotal: GalleryTotalReducer,
-    MotorData: MotorDataReducer
+    MotorData: MotorDataReducer,
+    MyTransactions: MyTransactionsReducer
 })

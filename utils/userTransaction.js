@@ -1,4 +1,7 @@
-import fetch from 'isomorphic-unfetch';
+import fetch from 'isomorphic-unfetch'
+import { actionTypes } from '../components/types'
+
+const API_URL = process.env.API_URL
 
 export const getDetailUserTransaction= async (accessToken, id) =>{
     console.log(id);
@@ -13,16 +16,15 @@ export const getDetailUserTransaction= async (accessToken, id) =>{
     return data;
 }
 
-export const getUserTransaction= async (accessToken) =>{
-    
-    const response = await fetch(process.env.API_URL+'/transaction/get-my-transaction/0/5', {
-        headers: {
-            Authorization: 'Bearer '+accessToken
-        }
+export const getUserTransaction = (accessToken, page, limit, loadMore) => async (dispatch) => {
+    const url = `${API_URL}/transaction/get-my-transaction/${page}/${limit}`
+    const options = { headers: {Authorization: `Bearer ${accessToken}`} }
+    const res = await fetch(url, options)
+    const data = await res.json()
+    return dispatch({ 
+        type: loadMore ? actionTypes.MY_TRANSACTIONS_MORE : actionTypes.MY_TRANSACTIONS, 
+        payload: data.object 
     })
-    const data = await response.json();  
-
-    return data;
 }
 
 export const postConfirmTransaction = async (param, accessToken)=>{

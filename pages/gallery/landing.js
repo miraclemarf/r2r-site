@@ -58,7 +58,18 @@ class Gallery extends React.Component {
 							<h1 className="h2 title-section my-3 pt-3">TRIPS GALLERY</h1>
 						</Col>
 					</Row>
-					<GalleryCard datas={gallery} pathname={"gallery"} withDate={true} className="galleryLists" />
+					<Row className="galleryLists">
+						{
+							gallery.map((data, key) => (
+								<GalleryCard 
+									key={key} 
+									data={data} 
+									pathname={"gallery"} 
+									withDate={true}
+								/>
+							))
+						}
+					</Row>
 					{
 						gallery.length > 0 ? 
 							<Pagination 

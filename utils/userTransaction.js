@@ -3,17 +3,14 @@ import { actionTypes } from '../components/types'
 
 const API_URL = process.env.API_URL
 
-export const getDetailUserTransaction= async (accessToken, id) =>{
+export const getDetailUserTransaction = async (accessToken, id) => {
     console.log(id);
     
     const response = await fetch(process.env.API_URL+'/transaction/detail/'+id, {
-        headers: {
-            Authorization: 'Bearer '+accessToken
-        }
+        headers: { Authorization: 'Bearer '+accessToken }
     })
     const data = await response.json();
-    
-    return data;
+    return data
 }
 
 export const getUserTransaction = (accessToken, page, limit, loadMore) => async (dispatch) => {
@@ -21,6 +18,9 @@ export const getUserTransaction = (accessToken, page, limit, loadMore) => async 
     const options = { headers: {Authorization: `Bearer ${accessToken}`} }
     const res = await fetch(url, options)
     const data = await res.json()
+    if(!data.object) {
+        return dispatch({ type: actionTypes.MY_TRANSACTIONS_FETCHED, payload: true })
+    }
     return dispatch({ 
         type: loadMore ? actionTypes.MY_TRANSACTIONS_MORE : actionTypes.MY_TRANSACTIONS, 
         payload: data.object 

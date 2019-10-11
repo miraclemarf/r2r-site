@@ -10,7 +10,7 @@ import { getLatestTrips, getLatestGallery, getDetailTestimonial } from "../../ut
 class TestimonialDetail extends React.Component {
 	static async getInitialProps({ store, query: { id } }) {
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = { footer: 'transparent', scrollHeader: false }
+		let props = { footer: 'transparent', scrollHeader: true }
 		let stores = await store.getState()
 		try {
 			// Detail Scope
@@ -27,7 +27,7 @@ class TestimonialDetail extends React.Component {
 	}
 
 	constructor(props) {
-		super(props);
+		super(props)
 		this.state = {
 			trips: props.TripData,
 			testimonial: props.testimonialDetail,

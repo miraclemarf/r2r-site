@@ -71,9 +71,9 @@ class UserGallery extends React.Component {
         }
 
         return (
-            <div role="main" className="mt-5 pt-5">
+            <div role="main" className="mt-4 pt-5">
                 <Container className="container-sm px-0">
-                    <div className="d-flex justify-content-between mb-4 px-3">
+                    <div className="d-flex justify-content-between my-1 px-3">
                         <div className="d-flex justify-content-start">
                             <div className="mt-1">
                                 <img

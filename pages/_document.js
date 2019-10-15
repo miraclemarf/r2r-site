@@ -26,6 +26,7 @@ class MyDocument extends Document {
 					<link href={`${process.env.HOST_DOMAIN}/static/r2r-icomoon-010819/style.css`} rel="stylesheet" />
 					<link href={`${process.env.HOST_DOMAIN}/static/font/font.css`} rel="stylesheet" />
 					<script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
+					
 				</Head>
 				<body className="r2r-custom position-relative">
 					<Main />

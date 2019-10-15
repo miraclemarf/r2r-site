@@ -1,8 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import MenuItem from './menuItem';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import {priceAbbr} from '../../components/functions'
+import { connect } from 'react-redux';
 import { Collapse, Navbar, NavbarToggler } from 'reactstrap';
 import { logout } from '../../utils/user';
 import { Container } from 'reactstrap';
@@ -41,10 +42,15 @@ class Navigate extends React.Component {
 	render() {
 		let { token, user, TransactionData } = this.props;
 		let isCheckoutSuccess = false;
+		let totalPrice = [];
 		if (this.props.checkoutStatus) {
 			isCheckoutSuccess = Object.keys(this.props.checkoutStatus).length === 0 ? false : true;
 		}
-		const totalPrice = TransactionData ? [TransactionData.price.price] : []
+		if (TransactionData) {
+			const datePrice = TransactionData.price ? TransactionData.price.price : 0;
+			const motorPrice = TransactionData.motor ? !TransactionData.motor.bringOwnMotor  ? TransactionData.motor.price : 0 : 0;
+			totalPrice = [ datePrice, motorPrice ];
+		}
 
 		return (
 			<div className={this.props.nav != 'blue' ? 'position-absolute w-100' : ''} style={{ zIndex: 10 }}>
@@ -55,7 +61,7 @@ class Navigate extends React.Component {
 				>
 					<Container className="position-relative d-flex align-items-center m-auto">
 						<Link href="/index" as={process.env.HOST_DOMAIN}>
-							<div className="navbar-brand py-1 px-0" style={{zIndex:1}}>
+							<div className="navbar-brand py-1 px-0" style={{ zIndex: 1 }}>
 								{this.props.navTrans ? (
 									<span className="h2 icon-logogram_r2r" />
 								) : (
@@ -86,7 +92,9 @@ class Navigate extends React.Component {
 												? 'border-primary text-primary bg-white'
 												: 'border-white text-white') + ' border text-sm text-center mx-2'
 										}
-									>2</div>
+									>
+										2
+									</div>
 									<div
 										style={{ width: '25px', height: '25px' }}
 										className={
@@ -94,7 +102,9 @@ class Navigate extends React.Component {
 												? 'border-primary text-primary bg-white'
 												: 'border-white text-white') + ' border text-sm text-center'
 										}
-									>3</div>
+									>
+										3
+									</div>
 								</div>
 							</div>
 						) : (
@@ -111,14 +121,17 @@ class Navigate extends React.Component {
 								<div style={{ fontSize: '70%' }} className="text-sm font-weight-light text-right">
 									TOTAL
 								</div>
-								<div className="h5 font-weight-bold">
-									${totalPrice.reduce((total, amount) => total + amount)}
+								<div className="h5 font-weight-bold"  dangerouslySetInnerHTML={{__html:priceAbbr(true,totalPrice.reduce((total, amount) => total + amount))}}>
 								</div>
 							</div>
 						) : (
 							''
 						) : (
-							<NavbarToggler style={{top: "12px", right: "5px"}} className="position-absolute p-0" onClick={this.toggle} />
+							<NavbarToggler
+								style={{ top: '12px', right: '5px' }}
+								className="position-absolute p-0"
+								onClick={this.toggle}
+							/>
 						)}
 						<Collapse
 							style={{ overflowY: 'auto' }}
@@ -162,14 +175,10 @@ class Navigate extends React.Component {
 										) : (
 											<div className="d-flex justify-content-center my-4">
 												<Link href="/login" as={`${process.env.HOST_DOMAIN}/login`}>
-													<a className="d-block w-100 mr-2 btn btn-info ">
-														LOG IN
-													</a>
+													<a className="d-block w-100 mr-2 btn btn-info ">LOG IN</a>
 												</Link>
 												<Link href="/register" as={`${process.env.HOST_DOMAIN}/register`}>
-													<a className="d-block w-100 ml-2 btn btn-secondary">
-														REGISTER
-													</a>
+													<a className="d-block w-100 ml-2 btn btn-secondary">REGISTER</a>
 												</Link>
 											</div>
 										)}
@@ -226,4 +235,4 @@ class Navigate extends React.Component {
 	}
 }
 
-export default connect(state => state)(Navigate)
+export default connect((state) => state)(Navigate);

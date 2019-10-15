@@ -20,13 +20,19 @@ export const getDetailTrip = (id)  => async (dispatch) =>  {
 
 export const getPriceTrip  = (id)  => async (dispatch) => {
 
-    const result = await fetch(process.env.API_URL + '/trip/' + id + '/price')
+    const result = await fetch(API_URL + '/trip/' + id + '/price')
     const data = await result.json()
 
     return dispatch({ type: actionTypes.TRIP_PRICE, payload: data.object })
 }
 
+export const getMotorTrip = (id) => async(dispatch)=>{
+    const result = await fetch(API_URL + '/trip/motor/' + id )
+    const data = await result.json()
 
+    return dispatch({ type: actionTypes.TRIP_MOTOR, payload: data.object })
+
+}
 // bellow not yet changed into dispatch redux
 
 export const confirmOrder = async (data) => {

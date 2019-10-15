@@ -5,6 +5,10 @@ export const selectedPrice  = (obj)  => async (dispatch) => {
     return dispatch({ type: actionTypes.TRANSACTION_DATA, payload: obj })
 }
 
+export const selectedMotor = (obj) => async (dispatch) =>{
+    return dispatch({ type: actionTypes.TRANSACTION_DATA, payload: obj })
+}
+
 export const getDetailUserTransaction= async (accessToken, id) =>{
     console.log(id);
     

@@ -11,9 +11,9 @@ export default ({ ...props }) => (
 		> 
 			<a href={!props.isTransaction ? `${process.env.HOST_DOMAIN}/trip/${props.id}` : `${process.env.HOST_DOMAIN}/user/trip/${props.id}`}>
 				<div className="overlay--img__black mb-2 d-flex align-items-center position-relative rounded-lg overflow-hidden">
-					<img className="img-fluid" src={process.env.HOST_URL + props.coverLandscape} />
+					<img className="img-fluid" src={props.coverLandscape} />
 					<div className="trip-info-center text-center d-inline-block position-absolute">
-						<img className="invisible" src={process.env.HOST_URL + props.iconCover} />
+						<img className="invisible" src={props.iconCover} />
 						<h1 className="mt-2	title-section text-white mx-auto">{props.title}</h1>
 					</div>
 				</div>

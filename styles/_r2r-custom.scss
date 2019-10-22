@@ -162,6 +162,7 @@ $navbar-dark-toggler-border-color: rgba($white, 0);
 	.container {
 		min-width: 100%;
 	}
+	.isDesktop { display: none !important; }
 	.tripCard:not(:first-child) > hr {
 		display: block;
 	}

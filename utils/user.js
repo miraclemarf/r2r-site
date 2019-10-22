@@ -80,21 +80,26 @@ export const register = async (data) => {
 	}
 };
 
-export const saveProfile = async (user, access_token) => {
+export const saveProfile = async (props) => {
 
-	const postData = {
-		'email': user.email, 'fullName': user.fullName, 'userIdentity': user.userIdentity, 'userIdentityNumber': user.userIdentityNumber, 'driverLicenseNumber': user.driverLicenseNumber, 'bloodType': user.bloodType,
-		'phoneNumber': user.phoneNumber,
-		'userPicture': user.userPictureObj,
-		'useridentityPicture': user.useridentityPictureObj,
-		'driverlicensePicture': user.driverlicensePictureObj
-	}
+	// const postData = {
+	// 	'email': user.email, 
+	// 	'fullName': user.fullName, 
+	// 	'userIdentity': user.userIdentity, 
+	// 	'userIdentityNumber': user.userIdentityNumber, 
+	// 	'driverLicenseNumber': user.driverLicenseNumber, 
+	// 	'bloodType': user.bloodType,
+	// 	'phoneNumber': user.phoneNumber,
+	// 	'userPicture': user.userPictureObj,
+	// 	'useridentityPicture': user.useridentityPictureObj,
+	// 	'driverlicensePicture': user.driverlicensePictureObj
+	// }
+	console.log(props)
+	// const dataForm = new FormData()
 
-	const dataForm = new FormData()
-
-	for (var key in postData) {
-		dataForm.append(key, postData[key]);
-	}
+	// for (var key in postData) {
+	// 	dataForm.append(key, postData[key]);
+	// }
 
 /* 
 	console.log(user);
@@ -106,27 +111,27 @@ export const saveProfile = async (user, access_token) => {
 
 	console.log(postData); */
 
-	try {
-		const response = await fetch(process.env.API_URL + '/user/profile', {
-			method: 'POST', 
-			headers: {
-				'Authorization': 'Bearer ' + access_token,
-			},
-			body: dataForm
-		});
-		if (response.ok) {
-			window.location.href = process.env.HOST_DOMAIN + '/user/profile';
-		} else {
-			console.log('Login failed.');
-			// https://github.com/developit/unfetch#caveats
-			let error = new Error(response.statusText);
-			error.response = response;
-			return Promise.reject(error);
-		}
-	} catch (error) {
-		console.error('You have an error in your code or there are Network issues.', error);
-		throw new Error(error);
-	}
+	// try {
+	// 	const response = await fetch(process.env.API_URL + '/user/profile', {
+	// 		method: 'POST', 
+	// 		headers: {
+	// 			'Authorization': 'Bearer ' + access_token,
+	// 		},
+	// 		body: dataForm
+	// 	});
+	// 	if (response.ok) {
+	// 		window.location.href = process.env.HOST_DOMAIN + '/user/profile';
+	// 	} else {
+	// 		console.log('Login failed.');
+	// 		// https://github.com/developit/unfetch#caveats
+	// 		let error = new Error(response.statusText);
+	// 		error.response = response;
+	// 		return Promise.reject(error);
+	// 	}
+	// } catch (error) {
+	// 	console.error('You have an error in your code or there are Network issues.', error);
+	// 	throw new Error(error);
+	// }
 }
 
 export const getUser = () => {

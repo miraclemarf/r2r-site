@@ -112,7 +112,6 @@ app.prepare().then(() => {
   // Scope User
   server.get('/user/trip/:id', (req, res) => {
     const actualPage = '/user/detailTrip'
-
     const queryParams = { id: req.params.id }
     return app.render(req, res, actualPage, queryParams)
   })

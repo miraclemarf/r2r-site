@@ -29,14 +29,14 @@ export default (props) => {
                 </NavItem>
                 {
                     token ?
-                        <NavItem className="isDesktop">
+                        <NavItem className="isDesktop mr-1">
                             <NavLink className="h2 m-0" href={`${process.env.HOST_DOMAIN}/user/profile`}>Profile</NavLink>
                         </NavItem> : ""
                 }
                 {
                     token ?
-                        <NavItem className="isDesktop cursor-pointer">
-                            <div className="h2 m-0 nav-link" href={`${process.env.HOST_DOMAIN}/logout`}>Logout</div>
+                        <NavItem className="isDesktop cursor-pointer bg-white rounded-lg">
+                            <div className="h2 m-0 nav-link text-primary" href={`${process.env.HOST_DOMAIN}/logout`}>Logout</div>
                         </NavItem> : ""
                 }
                 {

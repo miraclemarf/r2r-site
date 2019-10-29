@@ -186,7 +186,7 @@ class TripDetail extends React.Component {
 				</div>
 				<div className="container my-4">
 					<h2 className="title-section mb-2">THE ROUTE</h2>
-					<div class="embed-responsive embed-responsive-4by3" dangerouslySetInnerHTML={{__html:map}}>
+					<div className="embed-responsive embed-responsive-4by3" dangerouslySetInnerHTML={{__html:map}}>
 					</div>
 				</div>
 				<div className="container mb-4 pb-4">

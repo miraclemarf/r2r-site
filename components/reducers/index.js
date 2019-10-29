@@ -5,6 +5,7 @@ import HeadlineDataReducer from './headlineDataReducers'
 import TestimonialsDataReducer from './testimonialsDataReducers'
 import GalleryDataReducer from './galleryDataReducers'
 import MotorDataReducer from './motorDataReducers'
+import AccessoriesDataReducer from './accessoriesDataReducers'
 
 export default combineReducers({
     TripData: TripDataReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     HeadlineData: HeadlineDataReducer,
     TestimonialsData: TestimonialsDataReducer,
     GalleryData: GalleryDataReducer,
-    MotorData: MotorDataReducer
+    MotorData: MotorDataReducer,
+    AccessoriesData: AccessoriesDataReducer
 })

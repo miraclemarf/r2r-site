@@ -82,8 +82,8 @@ class TripBike extends React.Component {
 						<strong dangerouslySetInnerHTML={{__html:priceAbbr(false, data.price)}}></strong>
 					</div>
 				</div>
-				<div className="position-absolute" style={{ right: '0', zIndex: '1', bottom: '-30px' }}>
-					<img src={process.env.HOST_URL + data.picture} height="120" />
+				<div className="position-absolute" style={{ maxWidth:'60%', right: '0', zIndex: '1', bottom: '-30px' }}>
+					<img style={{width:"100%"}} src={process.env.DUMMY + '/motor-r2r-'+index+'.png'} />
 				</div>
 			</div>
 		);
@@ -143,8 +143,8 @@ class TripBike extends React.Component {
 
 				<div className="fixed-bottom">
 					<Link
-						href={'/transaction/helm?page=helm&idTrip=' + idTrip}
-						as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/helm'}
+						href={'/transaction/accessories?page=accessories&id=' + idTrip}
+						as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/accessories'}
 					>
 						<button
 							onClick={(e) => {
@@ -155,7 +155,7 @@ class TripBike extends React.Component {
 							}}
 							className="btn btn-primary w-100"
 						>
-							NEXT : ACCESORIES
+							NEXT : ACCESSORIES
 						</button>
 					</Link>
 				</div>

@@ -51,7 +51,7 @@ class GalleryDetail extends React.Component {
                 <Container className="container-sm">
                     <div className="text-center position-relative mb-4">
                         <div className="pt-4">
-                            <img height="120" src={process.env.HOST_URL + galleryDetail.iconCover} />
+                            <img height="120" src={galleryDetail.iconCover} />
                         </div>
                         <div className="pt-3 d-flex justify-content-center">
                             <div className="text-center mr-3">
@@ -91,7 +91,7 @@ class GalleryDetail extends React.Component {
 						<div style={{ margin: '0 -4px' }} className="row no-gutters">
 							{gallery.slice(0, 2).map((item, key) => (
 								<div key={key} className={`p-2 ${key == 2 ? 'col-12' : 'col-6'}`}>
-									<img src={process.env.HOST_URL+item.coverLandscape} className="img-fluid border-0 rounded-lg" />
+									<img src={item.coverLandscape} className="img-fluid border-0 rounded-lg" />
 								</div>
 							))}
 						</div>

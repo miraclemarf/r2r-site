@@ -18,7 +18,7 @@ export default (props) => {
 					/>
 				</Link>
 				<div style={{zIndex: 3, width: "100%"}} className="trip-info-center text-center d-inline-block position-absolute">
-					<img src={process.env.HOST_URL + data.iconCover} alt={data.title} />
+					<img src={data.iconCover} alt={data.title} />
 					<h1 className="mt-2	title-section text-white mx-auto">{data.title}</h1>
 					{
 						props.withDate ? 
@@ -44,7 +44,7 @@ export default (props) => {
 							WebkitTransform: "translate(-50%, -50%)"
 						}} 
 						className="position-absolute" 
-						src={process.env.HOST_URL + data.coverLandscape}
+						src={data.coverLandscape}
 					/>
 				</div>
 			</div>

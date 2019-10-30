@@ -174,7 +174,7 @@ export default class extends React.Component {
                                     <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px", minHeight: "150px" }}>
                                         <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{transaction.motor.brand} {transaction.motor.title}</h4>
                                         <div className="position-absolute" style={{ right: "0", zIndex: "1", bottom: "-30px" }}>
-                                            <img src={process.env.HOST_URL + transaction.motor.picture} height="120" />
+                                            <img src={transaction.motor.picture} height="120" />
                                         </div>
                                     </div>
                                     <div className="py-3"></div>

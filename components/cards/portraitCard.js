@@ -41,7 +41,7 @@ export default (props) => {
                     props.overlay ?
                     <div style={{zIndex: 1}} className="position-absolute overlay--img__black w-100 h-100"/> : ""
                 }
-                <img style={Styles.SliderImage} className="position-absolute" src={process.env.HOST_URL+props.slides.coverPotrait} alt={props.slides.title} />
+                <img style={Styles.SliderImage} className="position-absolute" src={props.slides.coverPotrait} alt={props.slides.title} />
                 <div style={Styles.infoWrapper} className="position-absolute d-inline-block w-100 text-white">
                     {
                         props.withTitle ?

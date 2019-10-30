@@ -88,7 +88,7 @@ class UserDetailTrip extends React.Component {
         return (
             <div className="mb-4">
                 <div className="mb-2 position-relative">
-                    <img className="img-fluid" src={process.env.HOST_URL + userTransaction.coverLandscape} />
+                    <img className="img-fluid" src={userTransaction.coverLandscape} />
                     <div className="position-absolute" style={{ top: "0", bottom: "0", left: "0", right: "0", margin: "auto", width: "60%", height: "55%", textAlign: "center" }} >
                         <img height="50" src={process.env.HOST_DOMAIN + "/static/slicing/img/destination/symbol_dieng.svg"} />
                         <h1 style={{ lineHeight: ".8em", fontSize: "3em" }} className="mt-2	 title-section text-white mx-auto">{userTransaction.title}</h1>
@@ -227,7 +227,7 @@ class UserDetailTrip extends React.Component {
                                     <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px", minHeight: "150px" }}>
                                         <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{userTransaction.motor.brand} {userTransaction.motor.title}</h4>
                                         <div className="position-absolute" style={{ right: "0", zIndex: "1", bottom: "-30px" }}>
-                                            <img src={process.env.HOST_URL + userTransaction.motor.picture} height="120" />
+                                            <img src={userTransaction.motor.picture} height="120" />
                                         </div>
                                     </div>
                                     <div className="py-3"></div>

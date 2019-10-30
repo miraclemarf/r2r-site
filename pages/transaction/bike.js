@@ -93,7 +93,7 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div className="position-absolute" style={{ right: "0", zIndex: "1", bottom: "-30px" }}>
-                    <img src={process.env.HOST_URL + data.picture} height="120" />
+                    <img src={data.picture} height="120" />
                 </div>
             </div>
         )

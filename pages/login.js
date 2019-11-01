@@ -1,8 +1,9 @@
 import React from 'react'
-import { Container } from 'reactstrap'
+import { Container, Label } from 'reactstrap'
 import TabNavigation from '../components/tabNavigation'
 // import Page from '../components/page'
 import { login } from '../utils/user'
+import { validateEmailAddress } from '../components/functions'
 
 export default class extends React.Component {
 	static async getInitialProps({ req }) {
@@ -22,7 +23,8 @@ export default class extends React.Component {
 			...props,
 			email: '',
 			password: '',
-			isSubmitted: false
+			isSubmitted: false,
+			invalidEmail: false
 		};
 		this.form = React.createRef();
 		this.handleChange = this.handleChange.bind(this)
@@ -38,12 +40,17 @@ export default class extends React.Component {
 		this.setState({ [name]: value });
 	}
 	async handleSubmit(e) {
+		const { transaction, email, password } = this.state
 		e.preventDefault();
-		let isHasTransaction = Object.keys(this.state.transaction).length === 0 ? false : true
-		let idTrip = isHasTransaction ? this.state.transaction.idTrip : ""
-		const postData = { 'email': this.state.email, 'password': this.state.password, 'isHasTransaction': isHasTransaction, 'idTrip': idTrip }
-		login(postData)
-
+		let isHasTransaction = Object.keys(transaction).length === 0 ? false : true
+		let idTrip = isHasTransaction ? transaction.idTrip : ""
+		if(validateEmailAddress(email)) {
+			this.setState({invalidEmail: false})
+			const postData = { 'email': email, 'password': password, 'isHasTransaction': isHasTransaction, 'idTrip': idTrip }
+			login(postData)
+		} else {
+			this.setState({invalidEmail: true})
+		}
 	}
 	render() {
 		const tabMenuData = {
@@ -91,13 +98,31 @@ export default class extends React.Component {
 					<Container style={{maxWidth:"480px", padding: "20px"}}>
 						{/* <h2 className="title-section text-center">LOG IN WITH EMAIL</h2> */}
 						<form ref={this.form} onSubmit={this.handleSubmit}>
-							<div className="form-group mb-3">
+							<div className={`form-group ${this.state.invalidEmail ? 'mb-1' : 'mb-3'}`}>
 								<label className="text-black text-sm">Email</label>
-								<input type="email" name="email" className="form-control rounded-lg" placeholder="Your Email" onChange={this.handleChange} required />
+								<input 
+									type="email" 
+									name="email" 
+									className="form-control rounded-lg" 
+									placeholder="Your Email" 
+									autoComplete="off"
+									onChange={this.handleChange} 
+									required 
+								/>
 							</div>
+							{this.state.invalidEmail ? <Label className="text-sm text-danger mb-3">Invalid Email Address</Label> : ""}
 							<div className="form-group mb-2">
 								<label className="text-black text-sm">Password</label>
-								<input type="password" name="password" className="form-control rounded-lg" placeholder="Your Password" minLength={6} onChange={this.handleChange} required />
+								<input 
+									type="password" 
+									name="password" 
+									className="form-control rounded-lg" 
+									placeholder="Your Password" 
+									minLength={6} 
+									autoComplete="off"
+									onChange={this.handleChange} 
+									required 
+								/>
 							</div>
 							{/* <div className="py-3 mx-3 text-center">
 								<p>

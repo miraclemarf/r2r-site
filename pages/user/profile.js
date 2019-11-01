@@ -231,7 +231,7 @@ class Profile extends React.Component {
 										className="border border-softgray rounded-lg text-center d-flex cursor-pointer"
 										
 									>
-										<div className="align-self-center mx-auto w-100 py-4">
+										<div className="align-self-center mx-auto w-100 py-5">
 											<span 
 												id="inputIdpicture"
 												style={{fontSize: "5em"}}
@@ -271,7 +271,7 @@ class Profile extends React.Component {
 										className="border border-softgray rounded-lg text-center d-flex cursor-pointer"
 										
 									>
-										<div className="align-self-center mx-auto w-100 py-4">
+										<div className="align-self-center mx-auto w-100 py-5">
 											<span 
 												id="inputDriverlicensedpicture"
 												style={{fontSize: "5em"}}

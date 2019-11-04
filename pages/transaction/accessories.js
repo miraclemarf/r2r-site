@@ -35,7 +35,7 @@ class Accessories extends React.Component {
                 <h2 className="title-section text-center mb-4">SUB ACCESSORIES</h2>
                 {data.map((item, index) =>
                     <div key={index} style={{ 'backgroundImage': 'url(' + process.env.DUMMY + '/acc-' + index + ')', 'backgroundSize': 'cover', 'backgroundPosition': 'center', 'minHeight': '7.5em' }} className="h-100 d-flex justify-content-center flex-column overlay-black position-relative">
-                        <h3 className="text-white title-section position-absolute w-100 mx-3">{item}</h3>
+                        <h3 className="text-white title-section position-absolute mx-3">{item}</h3>
                     </div>
                 )}
                 <style jsx>{`

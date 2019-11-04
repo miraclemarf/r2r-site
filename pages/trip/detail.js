@@ -56,7 +56,7 @@ class TripDetail extends React.Component {
 						/>
 						<div>
 							{item.imageItinerary ? (
-								<img src={process.env.HOST_URL + item.imageItinerary} className="img-fluid mb-2" />
+								<img src={item.imageItinerary} className="img-fluid mb-2" />
 							) : (
 								''
 							)}
@@ -81,7 +81,7 @@ class TripDetail extends React.Component {
 		return (
 			<div key={key} className="d-flex justify-content-start align-items-center pb-3">
 				<div className="mr-3">
-					<img src={process.env.HOST_URL + data.picture} className="img-fluid" width="35" />
+					<img src={data.picture} className="img-fluid" width="35" />
 				</div>
 				<div className="align-self-center">
 					<span>{data.title}</span>
@@ -198,7 +198,7 @@ class TripDetail extends React.Component {
 					<div className="sliderMobile d-flex align-items-stretch" style={{ marginRight: '-15px' }}>
 						{motor.map((item, key) => (
 							<div key={key} className="mr-3">
-								<img src={process.env.HOST_URL + item.picture} height="110" />
+								<img src={item.picture} height="110" />
 							</div>
 						))}
 					</div>
@@ -237,7 +237,7 @@ class TripDetail extends React.Component {
 							className="rounded-circle border border-white"
 							width="80"
 							height="80"
-							src={process.env.HOST_URL + imageRoadCaptain}
+							src={imageRoadCaptain}
 						/>
 						<div className="pt-3">
 							<h3 className="title-section">{roadCaptainName} </h3>

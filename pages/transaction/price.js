@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Router from 'next/router'
+import {priceAbbr} from '../../components/functions'
 import Moment from 'react-moment'
 import { getPriceTrip } from '../../utils/trips'
 
@@ -94,7 +95,7 @@ export default class extends React.Component {
                 </div>
                 <div>
                     <div className="text-center"><span style={{ fontSize: "75%" }} className="text-sm">PRICE</span></div>
-                    <h4 className="font-weight-bold">$ {data.price}</h4>
+                    <h4 className="font-weight-bold" dangerouslySetInnerHTML={{__html:priceAbbr(true, data.price)}}></h4>
                 </div>
             </div>
         )

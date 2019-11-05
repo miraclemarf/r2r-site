@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { priceAbbr } from './functions';
 import Moment from 'react-moment'
 import { Col } from 'reactstrap'
 
@@ -53,7 +54,9 @@ export default ({ ...props }) => (
 					<div style={{ lineHeight: 'normal' }}>
 						<span className="d-block font-weight-bold text-black">{props.location}</span>
 						<span className="text-gray80 pr-3">{props.duration} Days Trip</span>
-						<span className="text-gray80">Start From ${props.tripPrice}</span>
+						<span className="text-gray80">
+							Start From <span dangerouslySetInnerHTML={{ __html: priceAbbr(true, props.tripPrice) }}></span>
+						</span>
 					</div>
 					<div>
 						<span className="icon-logogram_r2r h5 text-black"></span>

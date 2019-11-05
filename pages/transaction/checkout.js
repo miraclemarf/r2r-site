@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { throws } from 'assert';
 import Moment from 'react-moment'
 import { checkout } from '../../utils/trips'
+import { priceAbbr } from '../../components/functions'
 
 export default class extends React.Component {
     static async getInitialProps({ req, query: { idTrip }, res }) {
@@ -70,7 +71,7 @@ export default class extends React.Component {
                     <span style={{ fontSize: "80%" }} className="text-sm">{data.title}</span>
                 </div>
                 <div>
-                    <h3 className="title-section m-0">$ {data.price}</h3>
+                    <h3 className="title-section m-0" dangerouslySetInnerHTML={{__html:priceAbbr(false, data.price)}}></h3>
                 </div>
             </div>
         )
@@ -102,7 +103,7 @@ export default class extends React.Component {
                         </div>
                         <div>
                             {/* <h4 className="title-section m-0">{this.state.checkoutStatus.transactionCodeId}</h4> */}
-                            <h2 className="title-section m-0 text-primary">$ {totalPrice}</h2>
+                            <h2 className="title-section m-0 text-primary" dangerouslySetInnerHTML={{__html:priceAbbr(false, totalPrice)}}></h2>
                         </div>
                     </div>
                 </div>
@@ -191,7 +192,7 @@ export default class extends React.Component {
                                             <span style={{ fontSize: "80%" }} className="text-sm">{transaction.tripTitle}</span>
                                         </div>
                                         <div>
-                                            <h3 className="title-section m-0">$ {transaction.price[0]}</h3>
+                                            <h3 className="title-section m-0" dangerouslySetInnerHTML={{__html:priceAbbr(false, transaction.price[0])}}></h3>
                                         </div>
                                     </div>
                                     <div className="d-flex justify-content-between align-items-center pt-3 pb-3 border-softgray" style={{ borderBottom: "1px solid" }}>
@@ -200,7 +201,7 @@ export default class extends React.Component {
                                             <span style={{ fontSize: "80%" }} className="text-sm">{!transaction.bringOwnMotor ? transaction.motor.brand + transaction.motor.title : '-'}</span>
                                         </div>
                                         <div>
-                                            <h3 className="title-section m-0">$ {!transaction.bringOwnMotor ? transaction.motor.price : '0'}</h3>
+                                            <h3 className="title-section m-0" dangerouslySetInnerHTML={!transaction.bringOwnMotor ? {__html:priceAbbr(false, transaction.motor.price)} : '0'}></h3>
                                         </div>
                                     </div>
                                     {
@@ -228,7 +229,7 @@ export default class extends React.Component {
                         <div className="mb-4">
                             <div className="d-flex justify-content-between align-items-center">
                                 <div><h4 className="title-section">Total</h4></div>
-                                <div><h1 className="title-section text-primary">$ {this.state.transaction.price.reduce((total, amount) => total + amount)}</h1></div>
+                                <div><h1 className="title-section text-primary" dangerouslySetInnerHTML={{__html:priceAbbr(false, this.state.transaction.price.reduce((total, amount) => total + amount))}}></h1></div>
                             </div>
                         </div>
                     </div>

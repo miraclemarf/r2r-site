@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { priceAbbr } from '../../components/functions';
 // import Page from '../components/page'
 import { Container } from 'reactstrap';
 import { getLatestMotor, getDetailTrip } from '../../utils';
@@ -340,9 +341,11 @@ class TripDetail extends React.Component {
 									<div style={{ fontSize: '40%' }} className="font-weight-light">
 										Start From
 									</div>
-									<div style={{ fontSize: '70%' }} className="font-weight-bold">
-										${tripPrice}
-									</div>
+									<div
+										style={{ fontSize: '70%' }}
+										className="font-weight-bold"
+										dangerouslySetInnerHTML={{ __html: priceAbbr(true, tripPrice) }}
+									/>
 								</div>
 							</div>
 						</button>

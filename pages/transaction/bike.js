@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import StepTransaction from '../../components/stepTransaction'
 import { getLatestMotorNonRedux } from '../../utils/motor'
+import { priceAbbr } from '../../components/functions'
 
 export default class extends React.Component {
     static async getInitialProps({ req, query: { idTrip }, res }) {
@@ -89,7 +90,7 @@ export default class extends React.Component {
                 <div className="position-relative">
                     <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{data.title}</h4>
                     <div className="position-absolute p-1 text-sm bg-gray text-white" style={{ fontSize: "75%", right: "0", top: "0", borderRadius: "4px" }}>
-                        <span className="text-info">+ </span><strong>{'$' + data.price}</strong>
+                        <span className="text-info">+ </span><strong dangerouslySetInnerHTML={{__html:priceAbbr(false, data.price)}}></strong>
                     </div>
                 </div>
                 <div className="position-absolute" style={{ right: "0", zIndex: "1", bottom: "-30px" }}>

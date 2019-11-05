@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import StepTransaction from '../../components/stepTransaction'
 import { getHelmList } from '../../utils/accessories'
+import { priceAbbr } from '../../components/functions'
 
 export default class extends React.Component {
     static async getInitialProps({ req, query: { idTrip }, res }) {
@@ -73,7 +74,7 @@ export default class extends React.Component {
     selectedItem(e) {
         const { helm, transaction } = this.state
         const helmId = e.currentTarget.getAttribute('data-id');
-        const selectedHelm = helm.find((obj) => obj.id === parseInt(helmId))
+        const selectedHelm = helm.accessories.find((obj) => obj.id === parseInt(helmId))
         let accesories = [...transaction.accesories]
         accesories[0] = selectedHelm
         let price = [...transaction.price]
@@ -113,11 +114,11 @@ export default class extends React.Component {
                 <div className="position-relative">
                     <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{data.title}</h4>
                     <div className="position-absolute p-1 text-sm bg-gray text-white" style={{ fontSize: "75%", right: "0", top: "0", borderRadius: "4px", zIndex: "2" }}>
-                        <span className="text-info">+ </span><strong>{'$' + data.price}</strong>
+                        <span className="text-info">+ </span><strong dangerouslySetInnerHTML={{__html:priceAbbr(false, data.price)}}></strong>
                     </div>
                 </div>
                 <div className="position-absolute" style={{ right: "20px", zIndex: "1", bottom: "-40px" }}>
-                    <img src={process.env.HOST_URL + data.picture} height="130" />
+                    <img src={data.picture} height="130" />
                 </div>
                 <div style={{ bottom: "10px" }} className="position-absolute">
                     <div style={{ fontSize: "80%" }} className="text-sm text-gray80">Size</div>
@@ -132,10 +133,10 @@ export default class extends React.Component {
         return (
             <div>
                 <div className="p-3 bg-grayF2 position-relative text-center" style={{ borderRadius: "8px" }}>
-                    <img style={{ width: "80%" }} src={process.env.HOST_URL + data.picture} className="img-fluid my-3" />
+                    <img style={{ width: "80%" }} src={data.picture} className="img-fluid my-3" />
                     <h3 style={{ lineHeight: "normal" }} className="title-section">{data.title}</h3>
                     <div className="position-absolute p-1 text-sm bg-gray text-white" style={{ fontSize: "75%", right: "20px", top: "20px", borderRadius: "4px", zIndex: "2" }}>
-                        <span className="text-info">+ </span><strong>{'$' + data.price}</strong>
+                        <span className="text-info">+ </span><strong dangerouslySetInnerHTML={{__html:priceAbbr(false, data.price)}}></strong>
                     </div>
                 </div>
                 <div className="mt-3 text-center">
@@ -176,7 +177,7 @@ export default class extends React.Component {
                         <h2 className="title-section text-center">CHOOSE ACCESSORIES</h2>
                         <div className="mt-3">
                             {
-                                helm.map((item, index) => (
+                                helm.accessories.map((item, index) => (
                                     this.renderCardHelm(item, index)
                                 ))
                             }

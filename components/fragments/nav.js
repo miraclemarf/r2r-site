@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import MenuItem from './menuItem';
+import MenuItem from './menuItem'
+import {priceAbbr} from '../../components/functions'
 import { Collapse, Navbar, NavbarToggler } from 'reactstrap';
 import { logout } from '../../utils/user';
 import { Container } from 'reactstrap';
@@ -108,8 +109,7 @@ export default class extends React.Component {
 								<div style={{ fontSize: '70%' }} className="text-sm font-weight-light text-right">
 									TOTAL
 								</div>
-								<div className="h5 font-weight-bold">
-									${this.props.selectedPrice.reduce((total, amount) => total + amount)}
+								<div className="h5 font-weight-bold"  dangerouslySetInnerHTML={{__html:priceAbbr(true,this.props.selectedPrice.reduce((total, amount) => total + amount))}}>
 								</div>
 							</div>
 						) : (

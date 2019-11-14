@@ -81,57 +81,56 @@ export const register = async (data) => {
 };
 
 export const saveProfile = async (props) => {
+	console.log(props)
 
 	// const postData = {
-	// 	'email': user.email, 
-	// 	'fullName': user.fullName, 
-	// 	'userIdentity': user.userIdentity, 
-	// 	'userIdentityNumber': user.userIdentityNumber, 
-	// 	'driverLicenseNumber': user.driverLicenseNumber, 
-	// 	'bloodType': user.bloodType,
-	// 	'phoneNumber': user.phoneNumber,
-	// 	'userPicture': user.userPictureObj,
-	// 	'useridentityPicture': user.useridentityPictureObj,
-	// 	'driverlicensePicture': user.driverlicensePictureObj
+	// 	'email': props.formEmail, 
+	// 	'fullName': props.formFullname, 
+	// 	'userPicture': JSON.stringify(props.formUserpicture_files),
+	// 	'userIdentity': props.formIdtypes, 
+	// 	'userIdentitiyNumber': props.formIdnumber, 
+	// 	'useridentityPicture': JSON.stringify(props.formIdpicture_files),
+	// 	'driverLicenseNumber': props.formDriverlicensenumber, 
+	// 	'driverlicensePicture': JSON.stringify(props.formDriverlicensedpicture_files),
+	// 	'bloodType': props.formBloodtype,
+	// 	'phoneNumber': props.formPhoneNumber,
+	// 	'userBirthday': props.formBirthday
 	// }
-	console.log(props)
-	// const dataForm = new FormData()
+	let formData = new FormData()
+	formData.append("email", props.formEmail)
+	formData.append("fullName", props.formFullname)
+	formData.append("userPicture", props.formUserpicture_files)
+	formData.append("userIdentity", props.formIdtypes)
+	formData.append("userIdentitiyNumber", props.formIdnumber)
+	formData.append("useridentityPicture", props.formIdpicture_files)
+	formData.append("driverLicenseNumber", props.formDriverlicensenumber)
+	formData.append("driverlicensePicture", props.formDriverlicensedpicture_files)
+	formData.append("bloodType", props.formBloodtype)
+	formData.append("phoneNumber", props.formPhoneNumber)
+	formData.append("userBirthday", props.formBirthday)
+	console.log(formData)
 
-	// for (var key in postData) {
-	// 	dataForm.append(key, postData[key]);
-	// }
-
-/* 
-	console.log(user);
+	// console.log(dataForm)
+	const url = `${process.env.API_URL}/user/profile` 
+	const options = {
+		method: 'POST', 
+		headers: { 'Authorization': 'Bearer ' + props.token.access_token },
+		body: formData
+	}
+	const response = await fetch(url, options)
+	if (response.ok) {
+		return true
+	} else {
+		return false
+	}
 	
 	//dataForm = postData
-	for (var pair of dataForm.entries()) {
-		console.log(pair[0] + ', ' + pair[1]);
-	}
-
-	console.log(postData); */
-
-	// try {
-	// 	const response = await fetch(process.env.API_URL + '/user/profile', {
-	// 		method: 'POST', 
-	// 		headers: {
-	// 			'Authorization': 'Bearer ' + access_token,
-	// 		},
-	// 		body: dataForm
-	// 	});
-	// 	if (response.ok) {
-	// 		window.location.href = process.env.HOST_DOMAIN + '/user/profile';
-	// 	} else {
-	// 		console.log('Login failed.');
-	// 		// https://github.com/developit/unfetch#caveats
-	// 		let error = new Error(response.statusText);
-	// 		error.response = response;
-	// 		return Promise.reject(error);
-	// 	}
-	// } catch (error) {
-	// 	console.error('You have an error in your code or there are Network issues.', error);
-	// 	throw new Error(error);
+	// for (var pair of dataForm.entries()) {
+	// 	console.log(pair[0] + ', ' + pair[1]);
 	// }
+
+	// console.log(postData)''
+
 }
 
 export const getUser = () => {

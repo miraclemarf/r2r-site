@@ -93,6 +93,10 @@ class Profile extends React.Component {
 		if(id == "inputDriverlicensedpicture") { this.inputDriverlicensedpicture.click()}
 	}
 
+	clickCancel = () => {
+		window.location = process.env.HOST_DOMAIN
+	}
+
 	toogleAgreement = () => this.setState({formAgreementchecked: !this.state.formAgreementchecked})
 	
 	async handleSubmit(e) {
@@ -146,7 +150,6 @@ class Profile extends React.Component {
 			showLicenseWarningLabel, showIdCardWarningLabel, showBloodTypeWarningLabel, showUserPictureWarningLabel,
 			onSaveEditProfile
 		} = this.state
-		
 		return (
 			<div role="main" className="mt-4 pt-5">
 				<Container className="container-sm px-3" style={{maxWidth: "768px"}}>
@@ -281,14 +284,14 @@ class Profile extends React.Component {
 											minHeight: "216px", 
 											background: `#E6E6E6 url(${formIdpicture}) center/cover no-repeat`
 										}}
-										className="border border-softgray rounded-lg text-center d-flex cursor-pointer"
+										className="border border-softgray rounded-lg text-center position-relative d-inline-block w-100 cursor-pointer"
 										
 									>
-										<div className="align-self-center mx-auto w-100 py-5">
+										<div className="position-absolute w-100 h-100 py-5" style={{top: 0, left: 0}}>
 											<span 
 												id="inputIdpicture"
 												style={{fontSize: "5em"}}
-												className={`${formIdpicture ? "": "icon-icon_id_card"} d-block text-gray80 my-2`}
+												className={`${formIdpicture ? "": "icon-icon_id_card"} d-block w-100 h-100 text-gray80 my-2`}
 												onClick={this.clickUpload}
 											/>
 											<span className={`font-italic text-gray80 ${formIdpicture ? "d-none": ""}`}>Upload your ID</span>
@@ -322,14 +325,14 @@ class Profile extends React.Component {
 											minHeight: "216px", 
 											background: `#E6E6E6 url(${formDriverlicensedpicture}) center/cover no-repeat`
 										}}
-										className="border border-softgray rounded-lg text-center d-flex cursor-pointer"
+										className="border border-softgray rounded-lg text-center position-relative d-inline-block w-100 cursor-pointer"
 										
 									>
-										<div className="align-self-center mx-auto w-100 py-5">
+										<div className="position-absolute w-100 h-100 py-5" style={{top: 0, left: 0}}>
 											<span 
 												id="inputDriverlicensedpicture"
 												style={{fontSize: "5em"}}
-												className={`${formDriverlicensedpicture ? "": "icon-icon_id_card"} d-block text-gray80 my-2`}
+												className={`${formDriverlicensedpicture ? "": "icon-icon_id_card"} d-block w-100 h-100 text-gray80 my-2`}
 												onClick={this.clickUpload}
 											/>
 											<span className={`font-italic text-gray80 ${formDriverlicensedpicture ? "d-none": ""}`}>Upload your ID</span>
@@ -365,7 +368,7 @@ class Profile extends React.Component {
 							<Col xs="12" sm="6" className="my-1">
 								<button 
 									className="btn btn-light w-100 mb-3 text-primary rounded-lg"
-									onClick={() => console.log('Batal')}
+									onClick={this.clickCancel}
 								>CANCEL</button>
 							</Col>
 						</Row>

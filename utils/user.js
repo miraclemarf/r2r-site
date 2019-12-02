@@ -81,21 +81,6 @@ export const register = async (data) => {
 };
 
 export const saveProfile = async (props) => {
-	console.log(props)
-
-	// const postData = {
-	// 	'email': props.formEmail, 
-	// 	'fullName': props.formFullname, 
-	// 	'userPicture': JSON.stringify(props.formUserpicture_files),
-	// 	'userIdentity': props.formIdtypes, 
-	// 	'userIdentitiyNumber': props.formIdnumber, 
-	// 	'useridentityPicture': JSON.stringify(props.formIdpicture_files),
-	// 	'driverLicenseNumber': props.formDriverlicensenumber, 
-	// 	'driverlicensePicture': JSON.stringify(props.formDriverlicensedpicture_files),
-	// 	'bloodType': props.formBloodtype,
-	// 	'phoneNumber': props.formPhoneNumber,
-	// 	'userBirthday': props.formBirthday
-	// }
 	let formData = new FormData()
 	formData.append("email", props.formEmail)
 	formData.append("fullName", props.formFullname)
@@ -108,7 +93,6 @@ export const saveProfile = async (props) => {
 	formData.append("bloodType", props.formBloodtype)
 	formData.append("phoneNumber", props.formPhoneNumber)
 	formData.append("userBirthday", props.formBirthday)
-	console.log(formData)
 
 	// console.log(dataForm)
 	const url = `${process.env.API_URL}/user/profile` 
@@ -123,14 +107,6 @@ export const saveProfile = async (props) => {
 	} else {
 		return false
 	}
-	
-	//dataForm = postData
-	// for (var pair of dataForm.entries()) {
-	// 	console.log(pair[0] + ', ' + pair[1]);
-	// }
-
-	// console.log(postData)''
-
 }
 
 export const getUser = () => {

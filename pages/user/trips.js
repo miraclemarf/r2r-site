@@ -171,7 +171,6 @@ class UserTrip extends React.Component {
 	}
 	render() {
 		let { token, user } = this.props
-		console.log(user)
 		const { myTransactions, isViewConfirm, fetchStop, fetchHasMore } = this.state
 		// console.log(token);
 		const tabMenuData = {
@@ -194,7 +193,7 @@ class UserTrip extends React.Component {
 											className="rounded-circle border border-white"
 											width="40"
 											height="40"
-											src={user.userPicture ? userPicture : `http://kampus-stikespanakkukang.ac.id/assets/images/photo_empty.png`}
+											src={user && user.userPicture ? user.userPicture : `http://kampus-stikespanakkukang.ac.id/assets/images/photo_empty.png`}
 										/>
 									</div>
 

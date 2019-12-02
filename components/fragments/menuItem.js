@@ -49,7 +49,7 @@ export default (props) => {
                                         <img
                                             className="rounded-circle border border-white"
                                             src={
-                                                user.userPicture ? 
+                                                user ? 
                                                     user.userPicture 
                                                     : 
                                                     "https://www.ica.gov.sg/Cwp/assets/ica/images/font-awesome/fa-user-white.png"
@@ -59,24 +59,21 @@ export default (props) => {
                                 </Link>
                                 <div className="ml-3">
                                     {/* <a className="text-white" href={process.env.HOST_DOMAIN + '/user/profile'} > */}
-                                    <Link href="/user/profile">
+                                    <Link href={`${process.env.HOST_DOMAIN}/user/profile`}>
                                         <a className="d-block clearfix text-white text-decoration-none">
                                             <b className="h3">{
-                                                user.fullName ?
-                                                    user.fullName 
-                                                    : 
-                                                    user.email.substring(0, user.email.indexOf('@'))
+                                                user ? user.fullName : ""
                                             }</b>
                                         </a>
                                     </Link>
                                     <div className="d-inline-flex">
-                                        <Link href="/user/profile">
+                                        <Link href={`${process.env.HOST_DOMAIN}/user/profile`}>
                                             <a className="text-gray float-right cursor-pointer text-decoration-none" >Profile</a>
                                         </Link>
                                         <span className="text-gray float-right px-2">|</span>
                                         <div 
                                             className="text-gray float-right cursor-pointer" 
-                                            onClick={() => logout()}
+                                            onClick={props.onLogout}
                                         >Logout</div>
                                     </div>
                                 </div>
@@ -87,6 +84,7 @@ export default (props) => {
                             <NavItem>
                                 <NavLink className="h2 m-0" href={`${process.env.HOST_DOMAIN}/login`}>LOGIN</NavLink>
                             </NavItem>
+                            <div className="h2 mx-2">|</div>
                             <NavItem>
                                 <NavLink className="h2 m-0" href={`${process.env.HOST_DOMAIN}/register`}>REGISTER</NavLink>
                             </NavItem>

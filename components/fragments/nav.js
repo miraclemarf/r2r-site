@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
+import { connect } from 'react-redux';
 import MenuItem from './menuItem';
 import { Collapse, Navbar, NavbarToggler } from 'reactstrap';
 import { logout } from '../../utils/user';
 import { Container } from 'reactstrap';
 
-export default class extends React.Component {
+class Nav extends React.Component {
 	static async getInitialProps({ req }) {
 		let props = await super.getInitialProps({ req });
 		return props;
@@ -148,7 +149,7 @@ export default class extends React.Component {
 											</div>
 										</div> : ''
 								}
-								<MenuItem token={token} user={user} />
+								<MenuItem token={token} user={user} onLogout={this.props.logout} />
 								{
 									this.state.isMobile ? 
 										<div>
@@ -194,3 +195,5 @@ export default class extends React.Component {
 		);
 	}
 }
+
+export default connect(state => state, { logout })(Nav);

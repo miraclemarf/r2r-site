@@ -59,6 +59,7 @@ class Profile extends React.Component {
 			showLicenseWarningLabel: false,
 			onSaveEditProfile: false,
 			showModal: false,
+			modalHeadInfo: "",
 			modalMessage: ""
 		}
 		this.clickUpload = this.clickUpload.bind(this)
@@ -82,6 +83,7 @@ class Profile extends React.Component {
 		if(files.size > 512000) {
 			this.setState({
 				showModal: true,
+				modalHeadInfo: "File Upload Failed!",
 				modalMessage: "File image to big, file size maximum 512kb."
 			})
 		} else {
@@ -149,9 +151,14 @@ class Profile extends React.Component {
 
 			const submitProfle = await saveProfile({...this.state})
 			if(submitProfle.status) {
-				// window.location.reload()
+				window.location.reload()
 			} else {
-				this.setState({onSaveEditProfile: false})
+				this.setState({
+					onSaveEditProfile: false,
+					showModal: true,
+					modalHeadInfo: "Save Profile Failed!",
+					modalMessage: "Server busy, please try again later."
+				})
 			}
 		}
 	}
@@ -162,7 +169,7 @@ class Profile extends React.Component {
 			formIdnumber, formIdpicture, formDriverlicensenumber, formDriverlicensedpicture, formAgreementchecked, 
 			showFullNameWarningLabel, showAgreementWarningLabel, showPhoneWarningLabel, showBirthdayWarningLabel,
 			showLicenseWarningLabel, showIdCardWarningLabel, showBloodTypeWarningLabel, showUserPictureWarningLabel,
-			onSaveEditProfile, showModal, modalMessage
+			onSaveEditProfile, showModal, modalMessage, modalHeadInfo
 		} = this.state
 		return (
 			<div role="main" className="mt-4 pt-5">
@@ -390,7 +397,7 @@ class Profile extends React.Component {
 					</form>
 				</Container>
 				<Modal isOpen={showModal} toggle={this.closeModal} centered={true} size="sm">
-					<ModalHeader toggle={this.closeModal}>File Upload Failed!</ModalHeader>
+					<ModalHeader toggle={this.closeModal}>{modalHeadInfo}</ModalHeader>
 					<ModalBody>{modalMessage}</ModalBody>
 					<ModalFooter>
 						<Button className="rounded-lg" size="sm" color="secondary" onClick={this.closeModal}>Close</Button>

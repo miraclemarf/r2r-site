@@ -1,7 +1,7 @@
 import React from 'react'
 import Router from 'next/router'
 import { connect } from 'react-redux'
-import { Container, Row, Col, FormGroup, Input, Label } from 'reactstrap'
+import { Container, Row, Col, FormGroup, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 import DatePicker from 'react-datepicker'
 import { auth, saveProfile } from '../../utils/user'
 import { removeHtmlTag, addDays } from '../../components/functions'
@@ -57,7 +57,9 @@ class Profile extends React.Component {
 			showPhoneWarningLabel: false,
 			showBirthdayWarningLabel: false,
 			showLicenseWarningLabel: false,
-			onSaveEditProfile: false
+			onSaveEditProfile: false,
+			showModal: false,
+			modalMessage: ""
 		}
 		this.clickUpload = this.clickUpload.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
@@ -75,10 +77,18 @@ class Profile extends React.Component {
 	handleDatePickerChange = (dates) => this.setState({formBirthday: dates})
 
 	handleFileSelect = (e) => {
-		const name = e.target.name
 		const files = e.target.files[0]
-		const blobs = URL.createObjectURL(files)
-		this.setState({ [name]: blobs, [name + '_files']: files })
+
+		if(files.size > 512000) {
+			this.setState({
+				showModal: true,
+				modalMessage: "File image to big, file size maximum 512kb."
+			})
+		} else {
+			const name = e.target.name
+			const blobs = URL.createObjectURL(files)
+			this.setState({ [name]: blobs, [name + '_files']: files })
+		}
 
 		/* this.setState({
             logo: e.target.files[0],
@@ -98,6 +108,7 @@ class Profile extends React.Component {
 	}
 
 	toogleAgreement = () => this.setState({formAgreementchecked: !this.state.formAgreementchecked})
+	closeModal = () => this.setState({showModal: false});
 	
 	async handleSubmit(e) {
 		const { 
@@ -121,7 +132,7 @@ class Profile extends React.Component {
 		// Check Blood Type
 		if(!formBloodtype) {this.setState({showBloodTypeWarningLabel: true})} else {this.setState({showBloodTypeWarningLabel: false})}
 		// Check User Picture
-		if(!formUserpicture) {this.setState({showUserPictureWarningLabel: true})} else {this.setState({showUserPictureWarningLabel: false})}
+		if(formUserpicture) {this.setState({showUserPictureWarningLabel: true})} else {this.setState({showUserPictureWarningLabel: false})}
 
 		if(token && formAgreementchecked && formFullname && formEmail && formPhoneNumber && formBirthday && formDriverlicensenumber && formDriverlicensedpicture && formIdtypes && formIdnumber && formIdpicture && formBloodtype && formUserpicture) {
 			this.setState({
@@ -135,10 +146,13 @@ class Profile extends React.Component {
 				showUserPictureWarningLabel: false,
 				onSaveEditProfile: true
 			})
-		}
-		const submitProfle = await saveProfile({...this.state})
-		if(submitProfle) {
-			window.location.reload()
+
+			const submitProfle = await saveProfile({...this.state})
+			if(submitProfle.status) {
+				// window.location.reload()
+			} else {
+				this.setState({onSaveEditProfile: false})
+			}
 		}
 	}
 
@@ -148,7 +162,7 @@ class Profile extends React.Component {
 			formIdnumber, formIdpicture, formDriverlicensenumber, formDriverlicensedpicture, formAgreementchecked, 
 			showFullNameWarningLabel, showAgreementWarningLabel, showPhoneWarningLabel, showBirthdayWarningLabel,
 			showLicenseWarningLabel, showIdCardWarningLabel, showBloodTypeWarningLabel, showUserPictureWarningLabel,
-			onSaveEditProfile
+			onSaveEditProfile, showModal, modalMessage
 		} = this.state
 		return (
 			<div role="main" className="mt-4 pt-5">
@@ -216,7 +230,6 @@ class Profile extends React.Component {
 									<DatePicker
 										selected={formBirthday}
 										onChange={this.handleDatePickerChange}
-										maxDate={addDays(new Date(), -6205)}
 										dateFormat="dd/MM/yyyy"
 										className="form-control rounded-lg"
 										placeholderText="Your Birthday"
@@ -305,6 +318,7 @@ class Profile extends React.Component {
 											onChange={this.handleFileSelect}
 										/>
 									</div>
+									<Label className="text-gray80 text-sm mt-0 mb-0">Max. image size 512kb.</Label>
 									<Label className={`text-danger font-italic text-sm mt-1 mb-0 ${showIdCardWarningLabel ? '' : 'd-none'}`}>ID Card Cannot Be Empty.</Label>
 								</FormGroup>
 							</Col>
@@ -346,6 +360,7 @@ class Profile extends React.Component {
 											onChange={this.handleFileSelect}
 										/>
 									</div>
+									<Label className="text-gray80 text-sm mt-0 mb-0">Max. image size 512kb.</Label>
 									<Label className={`text-danger font-italic text-sm mt-1 mb-0 ${showLicenseWarningLabel ? '' : 'd-none'}`}>Driving License Cannot Be Empty.</Label>
 								</FormGroup>
 								<div className="form-check ml-2">
@@ -374,6 +389,13 @@ class Profile extends React.Component {
 						</Row>
 					</form>
 				</Container>
+				<Modal isOpen={showModal} toggle={this.closeModal} centered={true} size="sm">
+					<ModalHeader toggle={this.closeModal}>File Upload Failed!</ModalHeader>
+					<ModalBody>{modalMessage}</ModalBody>
+					<ModalFooter>
+						<Button className="rounded-lg" size="sm" color="secondary" onClick={this.closeModal}>Close</Button>
+					</ModalFooter>
+				</Modal>
 				{
 					onSaveEditProfile ? 
 					 	<LoaderCard

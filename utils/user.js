@@ -81,18 +81,25 @@ export const register = async (data) => {
 };
 
 export const saveProfile = async (props) => {
+	console.log(props)
 	let formData = new FormData()
 	formData.append("email", props.formEmail)
 	formData.append("fullName", props.formFullname)
-	formData.append("userPicture", props.formUserpicture_files)
+	if(props.formUserpicture_files) {
+		formData.append("userPicture", props.formUserpicture_files)
+	}
 	formData.append("userIdentity", props.formIdtypes)
 	formData.append("userIdentitiyNumber", props.formIdnumber)
-	formData.append("useridentityPicture", props.formIdpicture_files)
+	if(props.formIdpicture_files) {
+		formData.append("useridentityPicture", props.formIdpicture_files)
+	}
 	formData.append("driverLicenseNumber", props.formDriverlicensenumber)
-	formData.append("driverlicensePicture", props.formDriverlicensedpicture_files)
+	if(props.formDriverlicensedpicture_files) {
+		formData.append("driverlicensePicture", props.formDriverlicensedpicture_files)
+	}
 	formData.append("bloodType", props.formBloodtype)
 	formData.append("phoneNumber", props.formPhoneNumber)
-	formData.append("userBirthday", props.formBirthday)
+	formData.append("userBirthday", new Date(props.formBirthday).getTime())
 
 	// console.log(dataForm)
 	const url = `${process.env.API_URL}/user/profile` 
@@ -102,11 +109,10 @@ export const saveProfile = async (props) => {
 		body: formData
 	}
 	const response = await fetch(url, options)
-	if (response.ok) {
-		return true
-	} else {
-		return false
+	if (!response.ok) {
+		return { status: false, message: response.message }
 	}
+	return { status: true, message: 'Success!' }
 }
 
 export const getUser = () => {

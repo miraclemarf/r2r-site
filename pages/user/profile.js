@@ -1,10 +1,9 @@
 import React from 'react'
-import Router from 'next/router'
 import { connect } from 'react-redux'
 import { Container, Row, Col, FormGroup, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 import DatePicker from 'react-datepicker'
 import { auth, saveProfile } from '../../utils/user'
-import { removeHtmlTag, addDays } from '../../components/functions'
+import { removeHtmlTag } from '../../components/functions'
 import LoaderCard from '../../components/cards/LoaderCard'
 
 const bloodTypes = [
@@ -22,7 +21,9 @@ class Profile extends React.Component {
 	static async getInitialProps(req) {
 		// Inherit standard props from the Page (i.e. with session data)
 		auth(req)
-		let props = {}
+		let props = { 
+			maxSize: 100 // in KB
+		}
 		try {
 			props.nav = 'blue'
 			props.footer = 'transparent'
@@ -80,22 +81,17 @@ class Profile extends React.Component {
 	handleFileSelect = (e) => {
 		const files = e.target.files[0]
 
-		if(files.size > 512000) {
+		if(files.size > this.props.maxSize * 1000) {
 			this.setState({
 				showModal: true,
 				modalHeadInfo: "File Upload Failed!",
-				modalMessage: "File image to big, file size maximum 512kb."
+				modalMessage: `File image to big, file size maximum ${this.props.maxSize}kb.`
 			})
 		} else {
 			const name = e.target.name
 			const blobs = URL.createObjectURL(files)
 			this.setState({ [name]: blobs, [name + '_files']: files })
 		}
-
-		/* this.setState({
-            logo: e.target.files[0],
-            files: URL.createObjectURL(e.target.files[0])
-        }) */
 	}
 
 	clickUpload(e) {
@@ -325,7 +321,7 @@ class Profile extends React.Component {
 											onChange={this.handleFileSelect}
 										/>
 									</div>
-									<Label className="text-gray80 text-sm mt-0 mb-0">Max. image size 512kb.</Label>
+									<Label className="text-gray80 text-sm mt-0 mb-0">Max. image size {this.props.maxSize}kb.</Label>
 									<Label className={`text-danger font-italic text-sm mt-1 mb-0 ${showIdCardWarningLabel ? '' : 'd-none'}`}>ID Card Cannot Be Empty.</Label>
 								</FormGroup>
 							</Col>
@@ -367,7 +363,7 @@ class Profile extends React.Component {
 											onChange={this.handleFileSelect}
 										/>
 									</div>
-									<Label className="text-gray80 text-sm mt-0 mb-0">Max. image size 512kb.</Label>
+									<Label className="text-gray80 text-sm mt-0 mb-0">Max. image size {this.props.maxSize}kb.</Label>
 									<Label className={`text-danger font-italic text-sm mt-1 mb-0 ${showLicenseWarningLabel ? '' : 'd-none'}`}>Driving License Cannot Be Empty.</Label>
 								</FormGroup>
 								<div className="form-check ml-2">

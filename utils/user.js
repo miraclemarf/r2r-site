@@ -81,7 +81,6 @@ export const register = async (data) => {
 };
 
 export const saveProfile = async (props) => {
-	console.log(props)
 	let formData = new FormData()
 	formData.append("email", props.formEmail)
 	formData.append("fullName", props.formFullname)
@@ -101,7 +100,6 @@ export const saveProfile = async (props) => {
 	formData.append("phoneNumber", props.formPhoneNumber)
 	formData.append("userBirthday", new Date(props.formBirthday).getTime())
 
-	// console.log(dataForm)
 	const url = `${process.env.API_URL}/user/profile` 
 	const options = {
 		method: 'POST', 

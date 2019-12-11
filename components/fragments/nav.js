@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import MenuItem from './menuItem';
 import { bindActionCreators } from 'redux';
-import {priceAbbr} from '../../components/functions'
+import {priceAbbr, accTotalPrice} from '../../components/functions'
 import { connect } from 'react-redux';
 import { Collapse, Navbar, NavbarToggler } from 'reactstrap';
 import { logout } from '../../utils/user';
@@ -49,7 +49,8 @@ class Navigate extends React.Component {
 		if (TransactionData) {
 			const datePrice = TransactionData.price ? TransactionData.price.price : 0;
 			const motorPrice = TransactionData.motor ? !TransactionData.motor.bringOwnMotor  ? TransactionData.motor.price : 0 : 0;
-			totalPrice = [ datePrice, motorPrice ];
+			const accPrice = "accessories" in TransactionData ? accTotalPrice(TransactionData.accessories) : 0;
+			totalPrice = [ datePrice, motorPrice, accPrice ];
 		}
 
 		return (

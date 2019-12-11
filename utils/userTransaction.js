@@ -9,6 +9,10 @@ export const selectedMotor = (obj) => async (dispatch) =>{
     return dispatch({ type: actionTypes.TRANSACTION_DATA, payload: obj })
 }
 
+export const selectedAccessories = (obj) => async (dispatch) =>{
+    return dispatch({ type: actionTypes.TRANSACTION_DATA, payload: obj })
+}
+
 export const getDetailUserTransaction= async (accessToken, id) =>{
     console.log(id);
     

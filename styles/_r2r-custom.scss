@@ -29,6 +29,10 @@ $font-family-base: 'Open Sans', sans-serif;
 	font-size: $font-size-sm;
 }
 
+.text-xs {
+	font-size: $font-size-sm*.8;
+}
+
 .title-section {
 	font-family: 'Rheiborn_Sans_Clean';
 	&__with-border {

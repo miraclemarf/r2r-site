@@ -10,6 +10,8 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, { subcategory: action.payload });
 		case actionTypes.ACCESSORIES_DATA:
 			return Object.assign({}, state, { data: action.payload });
+		case actionTypes.ACCESSORIES_DETAIL:
+			return Object.assign({}, state, { detail: action.payload });
 		default:
 			return state;
 	}

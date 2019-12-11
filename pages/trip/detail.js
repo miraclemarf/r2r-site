@@ -7,6 +7,8 @@ import { priceAbbr } from '../../components/functions';
 import { Container } from 'reactstrap';
 import { getLatestMotor, getDetailTrip } from '../../utils';
 import SquareCover from '../../components/squareCover';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee, faStar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
 class TripDetail extends React.Component {
 	static async getInitialProps({ store, query: { id } }) {
@@ -58,8 +60,8 @@ class TripDetail extends React.Component {
 							{item.imageItinerary ? (
 								<img src={item.imageItinerary} className="img-fluid mb-2" />
 							) : (
-								''
-							)}
+									''
+								)}
 							<h3 className="title-section text-white m-0">{item.title}</h3>
 							{item.description ? (
 								<div
@@ -67,8 +69,8 @@ class TripDetail extends React.Component {
 									dangerouslySetInnerHTML={{ __html: item.description }}
 								/>
 							) : (
-								''
-							)}
+									''
+								)}
 						</div>
 						{index == data.details.length - 1 ? <div className="verticalLine bg-dark" /> : ''}
 					</div>
@@ -76,7 +78,30 @@ class TripDetail extends React.Component {
 			</div>
 		);
 	}
+	renderHotel() {
+		const dummyHotelData = ['Santika Residence', 'Sahid Inn', 'Holiday Inn', 'Hotel Indonesia']
 
+		return (
+			<div className="sliderMobile d-flex flex-nowrap flex-sm-wrap pb-4" style={{ marginRight: '-15px' }}>
+				{dummyHotelData.map((item, index) => (
+					<div style={{ "flex": "0 0 90%", "maxWidth": "90%" }} key={index} className="pr-3">
+						<div className="mb-3">
+							{<img className="img-fluid rounded" src={process.env.DUMMY + '/hotel-r2r-' + index + '.jpg'} />}
+						</div>
+						<div className="mb-1">
+							<FontAwesomeIcon style={{ "color": "#FBB040" }} icon={faStar} />
+							<FontAwesomeIcon style={{ "color": "#FBB040" }} icon={faStar} />
+							<FontAwesomeIcon style={{ "color": "#FBB040" }} icon={faStar} />
+						</div>
+						<div><strong>{item}</strong></div>
+						<div>
+							<span className="text-sm">Jl. Ipda Tut Harsono No.11, Muja Muju, Kec. Umbulharjo, Kota Yogyakarta</span>
+						</div>
+					</div>
+				))}
+			</div>
+		)
+	}
 	renderFaciltyInclude(data, key) {
 		return (
 			<div key={key} className="d-flex justify-content-start align-items-center pb-3">
@@ -118,7 +143,8 @@ class TripDetail extends React.Component {
 				<div className="container">
 					<div className="py-3">
 						<span className="text-primary text-sm">
-							<b>{location}</b>
+							<FontAwesomeIcon className="text-gray80" icon={faMapMarkerAlt} width="10.5" />
+							<b className="pl-2">{location}</b>
 						</span>
 					</div>
 					<div className="mb-4 pb-2">
@@ -180,13 +206,13 @@ class TripDetail extends React.Component {
 								<div />
 							</div>
 						) : (
-							''
-						)}
+								''
+							)}
 					</div>
 				</div>
 				<div className="container my-4">
 					<h2 className="title-section mb-2">THE ROUTE</h2>
-					<div className="embed-responsive embed-responsive-4by3" dangerouslySetInnerHTML={{__html:map}}>
+					<div className="embed-responsive embed-responsive-4by3" dangerouslySetInnerHTML={{ __html: map }}>
 					</div>
 				</div>
 				<div className="container mb-4 pb-4">
@@ -198,12 +224,16 @@ class TripDetail extends React.Component {
 					<div className="sliderMobile d-flex align-items-stretch" style={{ marginRight: '-15px' }}>
 						{motor.map((item, key) => (
 							<div key={key} className="mr-3">
-								<img src={item.picture} height="110" />
+								{/*<img src={item.picture} height="110" />*/}
+								{<img height="110" src={process.env.DUMMY + '/motor-r2r-' + key + '.png'} />}
 							</div>
 						))}
 					</div>
 				</div>
-
+				<div className="container">
+					<h2 className="title-section mb-3">WHERE TO STAY</h2>
+					{this.renderHotel()}
+				</div>
 				<div className="container">
 					<h2 className="title-section">INCLUDED</h2>
 					<div className="py-2">{facilities.map((item, key) => this.renderFaciltyInclude(item, key))}</div>

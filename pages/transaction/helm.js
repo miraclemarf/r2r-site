@@ -117,7 +117,7 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <div className="position-absolute" style={{ right: "20px", zIndex: "1", bottom: "-40px" }}>
-                    <img src={process.env.HOST_URL + data.picture} height="130" />
+                    <img src={data.picture} height="130" />
                 </div>
                 <div style={{ bottom: "10px" }} className="position-absolute">
                     <div style={{ fontSize: "80%" }} className="text-sm text-gray80">Size</div>
@@ -132,7 +132,7 @@ export default class extends React.Component {
         return (
             <div>
                 <div className="p-3 bg-grayF2 position-relative text-center" style={{ borderRadius: "8px" }}>
-                    <img style={{ width: "80%" }} src={process.env.HOST_URL + data.picture} className="img-fluid my-3" />
+                    <img style={{ width: "80%" }} src={data.picture} className="img-fluid my-3" />
                     <h3 style={{ lineHeight: "normal" }} className="title-section">{data.title}</h3>
                     <div className="position-absolute p-1 text-sm bg-gray text-white" style={{ fontSize: "75%", right: "20px", top: "20px", borderRadius: "4px", zIndex: "2" }}>
                         <span className="text-info">+ </span><strong>{'$' + data.price}</strong>

@@ -76,21 +76,21 @@ class TripBike extends React.Component {
 						{data.title}
 					</h4>
 					<div
-						className={"position-absolute p-1 text-sm " + (isSelectedMotor ? "text-white":"text-primary")}
+						className={"position-absolute p-1 text-sm " + (isSelectedMotor ? "text-white" : "text-primary")}
 						style={{ fontSize: '75%', left: '6px', bottom: '5px', borderRadius: '4px' }}
 					>
-						<strong dangerouslySetInnerHTML={{__html:priceAbbr(false, data.price)}}></strong>
+						<strong dangerouslySetInnerHTML={{ __html: priceAbbr(false, data.price) }}></strong>
 					</div>
 				</div>
-				<div className="position-absolute" style={{ maxWidth:'60%', right: '0', zIndex: '1', bottom: '-30px' }}>
-					<img style={{width:"100%"}} src={process.env.DUMMY + '/motor-r2r-'+index+'.png'} />
+				<div className="position-absolute" style={{ maxWidth: '60%', right: '0', zIndex: '1', bottom: '-30px' }}>
+					<img style={{ width: "100%" }} src={process.env.DUMMY + '/motor-r2r-' + index + '.png'} />
 				</div>
 			</div>
 		);
 	}
 	render() {
 		const { idTrip, selectedMotorId, TripData } = this.state;
-        let isBringOwnMotor = false;
+		let isBringOwnMotor = false;
 		if (this.state.TransactionData) {
 			if (this.state.TransactionData.motor) {
 				if (this.state.TransactionData.motor.bringOwnMotor) {

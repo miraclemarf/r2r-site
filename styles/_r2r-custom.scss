@@ -72,6 +72,20 @@ $navbar-dark-disabled-color: $white;
 $navbar-dark-toggler-icon-bg: str-replace(url($iconmenu), "#", "%23");
 $navbar-dark-toggler-border-color: rgba($white, 0);
 
+.r2r-custom .navWrapper {
+	padding-top: 80px;
+
+	.navUser {
+		position: absolute;
+		top: 10px;
+		left: 0;
+
+		a > img {
+			width: 50px;
+			height: 50px;
+		}
+	}
+}
 .r2r-custom .navbar-brand {
 	margin-left: 0;
 }
@@ -90,6 +104,25 @@ $navbar-dark-toggler-border-color: rgba($white, 0);
 	background-color: black;
 }
 @media only screen and (min-width: 768px) {
+	.isMobile {
+		display: none !important;
+	}
+
+	.r2r-custom .navWrapper {
+		padding-top: 0;
+
+		.navUser {
+			position: relative;
+			top: auto;
+			left: auto;
+			margin-left: 10px;
+
+			a > img {
+				width: 30px;
+				height: 30px;
+			}
+		}
+	}
 	.r2r-custom .navbar {
 		display: block;
 		margin: 0 auto;
@@ -120,6 +153,36 @@ $navbar-dark-toggler-border-color: rgba($white, 0);
 
 		&>img {
 			padding: 0 15px;
+		}
+	}
+}
+
+// R2R MY TRIP
+.tripCard > hr {
+	display: none;
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		min-width: 100%;
+	}
+	.isDesktop { display: none !important; }
+	.tripCard:not(:first-child) > hr {
+		display: block;
+	}
+}
+
+// R2R Trip Gallery
+@media screen and (max-width: 768px) {
+	.galleryLists.row > div {
+		padding: 0 !important;
+
+		&>div {
+			border-radius: 0 !important;
+			margin-bottom: 5px !important;
+		}
+		&:last-child {
+			margin-bottom: 20px !important;
 		}
 	}
 }
@@ -233,4 +296,8 @@ $form-group-margin-bottom: 1.5rem;
 
 .r2r-custom .profile {
 	font-family: 'Rheiborn_Sans_Clean';
+}
+
+.r2r-custom .cursor-pointer {
+	cursor: pointer !important
 }

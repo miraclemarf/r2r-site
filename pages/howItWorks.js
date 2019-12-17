@@ -9,7 +9,7 @@ import { getLatestGallery } from '../utils';
 
 class HowItWorks extends React.Component {
 	static async getInitialProps({ store }) {
-		let props = { nav: 'blue' };
+		let props = { nav: 'blue', scrollHeader: false };
 		try {
 			// Gallery Scope
 			let GalleryList = await store.getState().GalleryData;
@@ -34,7 +34,7 @@ class HowItWorks extends React.Component {
 	render() {
 		return (
 			<div role="main">
-				<Container className="container-sm">
+				<Container className="container-sm" style={{paddingTop: "60px"}}>
 					<Row>
 						<Col xs="12" lg="12" className="mainBanner-lg p-0 w-100">
 							<img

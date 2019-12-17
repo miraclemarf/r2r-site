@@ -17,11 +17,12 @@ class UserRequest extends React.Component {
                 
                 const tripData = await getDetailTrip(id);
                 
-                props.idTrip = id;
-                props.trip = tripData;
-                props.nav = 'blue';
-                props.reqSent = false;
-                props.footer = 'transparent';
+                props.idTrip = id
+                props.trip = tripData
+                props.nav = 'blue'
+                props.reqSent = false
+                props.footer = 'transparent'
+                props.scrollHeader = false
             } catch (e) {
                 props.error = 'Unable to fetch AsyncData on server';
             }

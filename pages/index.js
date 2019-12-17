@@ -26,6 +26,7 @@ class Home extends React.Component {
 			await store.dispatch(getLatestTestimonial(0, 5)) 
 			// Gallery Scope
 			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 6))
+			props.scrollHeader = true
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}
@@ -87,7 +88,9 @@ class Home extends React.Component {
 						<Col xs="12" lg="12">
 							<h1 className="h2 title-section mb-3">Next Trips</h1>
 						</Col>
-						{trips.map((item, key) => <TripCard key={key} {...item} />)}
+						<Row className="m-auto w-100">
+							{trips.map((item, key) => <TripCard key={key} {...item} />)}
+						</Row>
 						<Col xs="12" lg="12">
 							<Link href="/trips" as={`${process.env.HOST_DOMAIN}/trips`}>
 								<a className="btn btn-primary d-block rounded-lg">SEE ALL TRIP</a>
@@ -117,7 +120,7 @@ class Home extends React.Component {
 							</Link>
 						</div>
 						<Row>
-							<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
+							<Col xs="12" lg="12" className="mb-0 px-2 overflow-hidden">
 								<GallerySliderCard sliderData={gallery.slice(0, 6)} />
 							</Col>
 						</Row>

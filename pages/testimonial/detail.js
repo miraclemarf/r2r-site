@@ -10,7 +10,7 @@ import { getLatestTrips, getLatestGallery, getDetailTestimonial } from "../../ut
 class TestimonialDetail extends React.Component {
 	static async getInitialProps({ store, query: { id } }) {
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = { footer: 'transparent' }
+		let props = { footer: 'transparent', scrollHeader: true }
 		let stores = await store.getState()
 		try {
 			// Detail Scope
@@ -27,7 +27,7 @@ class TestimonialDetail extends React.Component {
 	}
 
 	constructor(props) {
-		super(props);
+		super(props)
 		this.state = {
 			trips: props.TripData,
 			testimonial: props.testimonialDetail,
@@ -53,14 +53,14 @@ class TestimonialDetail extends React.Component {
 						<img
 							className="rounded-circle border border-white"
 							width="80" height="80"
-							src={process.env.HOST_URL + testimonial.captainPicture}
+							src={testimonial.captainPicture}
 						/>
 						<div className="pt-2">
 							<strong>{testimonial.captainName}</strong>
 							<span>on</span>
 						</div>
 						<div className="pt-3">
-							<img height="120" src={process.env.HOST_URL + testimonial.iconCover} />
+							<img height="120" src={testimonial.iconCover} />
 						</div>
 						<div className="pt-3 d-flex justify-content-center">
 							<div className="text-center mr-3">
@@ -101,7 +101,7 @@ class TestimonialDetail extends React.Component {
 							{gallery.slice(0, 2).map((item, key) => (
 								<div key={key} className={key == 2 ? 'col-12' : 'col-6'}>
 									<img 
-										src={process.env.HOST_URL+item.coverLandscape} 
+										src={item.coverLandscape} 
 										className="img-fluid"
 										style={{
 											borderRadius: "10px",

@@ -2,22 +2,23 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Container, Row, Col } from 'reactstrap'
-// import TextImgCard from '../../components/textImgCard'
 import GalleryCard from '../../components/galleryCard'
 import Pagination from '../../components/pagination'
-// import LandscapeCard from '../../components/cards/landscapeCard'
 import { getLatestGallery, getLatestTrips } from '../../utils'
 
 class Gallery extends React.Component {
 	static async getInitialProps({ store }) {
 		// Inherit standard props from the Page (i.e. with session data)
-		let props = { nav: 'blue', footer: 'transparent' }
+		let props = { 
+			nav: 'blue', footer: 'transparent', scrollHeader: false,
+			page: 0, max: 6
+		}
 		let stores = await store.getState()
 		try {
 			// Gallery Scope
-			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 6))
+			if (!stores.GalleryData) await store.dispatch(getLatestGallery(props.page, props.max))
 			// Trip Scope
-			if (!stores.TripData) await store.dispatch(getLatestTrips(0, 6))
+			if (!stores.TripData) await store.dispatch(getLatestTrips(props.page, props.max))
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}
@@ -27,33 +28,58 @@ class Gallery extends React.Component {
 		super(props)
 		this.state = {
 			trips: props.TripData,
-			gallery: props.GalleryData
-		};
+			gallery: props.GalleryData,
+			galleryTotal: props.GalleryTotal,
+			galleryPage: props.page,
+			galleryMax: props.max
+		}
 	}
 	
 	componentWillReceiveProps(nextProps) {
 		this.setState({
 			trips: nextProps.TripData,
-			gallery: nextProps.GalleryData
+			gallery: nextProps.GalleryData,
+			galleryTotal: nextProps.GalleryTotal
 		})
 	}
 
-	render() {   
-		const { gallery } = this.state     
-		console.log(gallery)
+	onPaginationClick = (page) => {
+		this.props.getLatestGallery(page, this.state.galleryMax)
+		this.setState({galleryPage: page})
+	}
+
+	render() {
+		const { gallery, galleryTotal, galleryPage } = this.state
 		return (
 			<div role="main">
 				<Container className="container-sm">
-					<Row>
+					<Row className="pt-5">
 						<Col lg="12">
-							<h1 className="h2 title-section my-3">TRIPS GALLERY</h1>
+							<h1 className="h2 title-section my-3 pt-3">TRIPS GALLERY</h1>
 						</Col>
-						{gallery.map((data, key) => (
-							<Col key={key} sm="12" md="6" lg="4">
-								<GalleryCard data={data} pathname={"gallery"} />
-							</Col> 
-						))}
 					</Row>
+					<Row className="galleryLists">
+						{
+							gallery.map((data, key) => (
+								<GalleryCard 
+									key={key} 
+									data={data} 
+									pathname={"gallery"} 
+									withDate={true}
+								/>
+							))
+						}
+					</Row>
+					{
+						gallery.length > 0 ? 
+							<Pagination 
+								totalPage={galleryTotal} 
+								currentPage={galleryPage}
+								onClick={this.onPaginationClick}
+							/>
+							:
+							<div className="text-secondary font-14 w-100 text-center py-5 my-5">No Result Found!</div> 
+					}
 				</Container>
 			</div>
 		)

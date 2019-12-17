@@ -80,125 +80,91 @@ export const register = async (data) => {
 	}
 };
 
-export const saveProfile = async (user, access_token) => {
-
-	const postData = {
-		'email': user.email, 'fullName': user.fullName, 'userIdentity': user.userIdentity, 'userIdentityNumber': user.userIdentityNumber, 'driverLicenseNumber': user.driverLicenseNumber, 'bloodType': user.bloodType,
-		'phoneNumber': user.phoneNumber,
-		'userPicture': user.userPictureObj,
-		'useridentityPicture': user.useridentityPictureObj,
-		'driverlicensePicture': user.driverlicensePictureObj
+export const saveProfile = async (props) => {
+	let formData = new FormData()
+	formData.append("email", props.formEmail)
+	formData.append("fullName", props.formFullname)
+	if(props.formUserpicture_files) {
+		formData.append("userPicture", props.formUserpicture_files)
 	}
-
-	const dataForm = new FormData()
-
-	for (var key in postData) {
-		dataForm.append(key, postData[key]);
+	formData.append("userIdentity", props.formIdtypes)
+	formData.append("userIdentitiyNumber", props.formIdnumber)
+	if(props.formIdpicture_files) {
+		formData.append("useridentityPicture", props.formIdpicture_files)
 	}
-
-/* 
-	console.log(user);
-	
-	//dataForm = postData
-	for (var pair of dataForm.entries()) {
-		console.log(pair[0] + ', ' + pair[1]);
+	formData.append("driverLicenseNumber", props.formDriverlicensenumber)
+	if(props.formDriverlicensedpicture_files) {
+		formData.append("driverlicensePicture", props.formDriverlicensedpicture_files)
 	}
+	formData.append("bloodType", props.formBloodtype)
+	formData.append("phoneNumber", props.formPhoneNumber)
+	formData.append("userBirthday", new Date(props.formBirthday).getTime())
 
-	console.log(postData); */
-
-	try {
-		const response = await fetch(process.env.API_URL + '/user/profile', {
-			method: 'POST', 
-			headers: {
-				'Authorization': 'Bearer ' + access_token,
-			},
-			body: dataForm
-		});
-		if (response.ok) {
-			window.location.href = process.env.HOST_DOMAIN + '/user/profile';
-		} else {
-			console.log('Login failed.');
-			// https://github.com/developit/unfetch#caveats
-			let error = new Error(response.statusText);
-			error.response = response;
-			return Promise.reject(error);
-		}
-	} catch (error) {
-		console.error('You have an error in your code or there are Network issues.', error);
-		throw new Error(error);
+	const url = `${process.env.API_URL}/user/profile` 
+	const options = {
+		method: 'POST', 
+		headers: { 'Authorization': 'Bearer ' + props.token.access_token },
+		body: formData
 	}
-	
-
-
-
-
-};
+	const response = await fetch(url, options)
+	if (!response.ok) {
+		return { status: false, message: response.message }
+	}
+	return { status: true, message: 'Success!' }
+}
 
 export const getUser = () => {
-	const token = cookie.get('token');
-	console.log(token);
-
+	const token = cookie.get('token')
+	console.log(token)
 }
 
 export const logout = () => {
-	cookie.remove('token');
-	window.localStorage.setItem('logout', Date.now());
-	Router.push(process.env.HOST_DOMAIN + '/login');
-};
+	cookie.remove('token')
+	window.localStorage.setItem('logout', Date.now())
+	Router.push(process.env.HOST_DOMAIN + '/login')
+}
 
-export const withAuthSync = (WrappedComponent) =>
-	class extends Component {
-		//static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
-		static async getInitialProps(ctx) {
-			const token = auth(ctx);
+export const withAuthSync = (WrappedComponent) => class extends Component {
+	//static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
+	static async getInitialProps(ctx) {
+		const token = auth(ctx)
+		const componentProps = WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx))
+		return { ...componentProps, token }
+	}
 
+	constructor(props) {
+		super(props)
+		this.syncLogout = this.syncLogout.bind(this)
+	}
 
-			const componentProps = WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx));
+	componentDidMount() {
+		window.addEventListener('storage', this.syncLogout)
+	}
 
-			return { ...componentProps, token };
+	componentWillUnmount() {
+		window.removeEventListener('storage', this.syncLogout)
+		window.localStorage.removeItem('logout')
+	}
+
+	syncLogout(event) {
+		if (event.key === 'logout') {
+			// console.log('logged out from storage!')
+			Router.push('/login')
 		}
+	}
 
-		constructor(props) {
-			super(props);
-
-			this.syncLogout = this.syncLogout.bind(this);
-		}
-
-		componentDidMount() {
-			window.addEventListener('storage', this.syncLogout);
-		}
-
-		componentWillUnmount() {
-			window.removeEventListener('storage', this.syncLogout);
-			window.localStorage.removeItem('logout');
-		}
-
-		syncLogout(event) {
-			if (event.key === 'logout') {
-				console.log('logged out from storage!');
-				Router.push('/login');
-			}
-		}
-
-		render() {
-			return <WrappedComponent {...this.props} />;
-		}
-	};
+	render() {
+		return <WrappedComponent {...this.props} />;
+	}
+}
 
 export const auth = (ctx) => {
-
-	const { token } = nextCookie(ctx);
-
-
+	const { token } = nextCookie(ctx)
 	if (ctx.req && !token) {
-		ctx.res.writeHead(302, { Location: process.env.HOST_DOMAIN + '/login' });
-		ctx.res.end();
-		return;
+		ctx.res.writeHead(302, { Location: process.env.HOST_DOMAIN + '/login' })
+		ctx.res.end()
+		return
 	}
-
-	if (!token) {
-		Router.push(process.env.HOST_DOMAIN + '/login');
-	}
-
-	return token;
-};
+	if (!token) Router.push(process.env.HOST_DOMAIN + '/login')
+	return token
+}

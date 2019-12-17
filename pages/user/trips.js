@@ -1,56 +1,78 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import cookies from 'next-cookies'
-import TabMenu from '../../components/tabMenu';
-import TripCard from '../../components/tripCard';
-import { withAuthSync } from "../../utils/user"
-import { getUserTransaction, postConfirmTransaction } from "../../utils/userTransaction";
+import { Container, Row } from 'reactstrap'
+import TabNavigation from '../../components/tabNavigation'
+import InfiniteScroll from 'react-infinite-scroller'
+import TripCard from '../../components/tripCard'
+import LoaderCard from '../../components/cards/LoaderCard'
+import { withAuthSync, getUserTransaction, postConfirmTransaction } from "../../utils";
+// import { throws } from 'assert';
 
 class UserTrip extends React.Component {
-	static async getInitialProps({ req }) {
+	static async getInitialProps({ store, req }) {
 		// Inherit standard props from the Page (i.e. with session data)
-
-		let props = {}
+		let props = { 
+			nav: 'blue', 
+			footer: 'transparent', 
+			scrollHeader: false,
+			fetchLimit: 5
+		}
 		let { token } = cookies({ req })
 		let objToken = JSON.parse(token)
-
-		if (typeof window === 'undefined') {
-			try {
-
-				const userTransactionData = await getUserTransaction(objToken.access_token)
-
-				props.trips = userTransactionData.object;
-				props.nav = 'blue';
-				props.footer = 'transparent';
-			} catch (e) {
-				props.error = 'Unable to fetch AsyncData on server';
-			}
+		let stores = await store.getState()
+		try {
+			if(!stores.MyTransactions) await store.dispatch(getUserTransaction(objToken.access_token, 0, props.fetchLimit))
+		} catch (e) {
+			props.error = 'Unable to fetch AsyncData on server'
 		}
-		return props;
+		return props
 	}
 	constructor(props) {
-		super(props);
-
+		super(props)
 		this.state = {
-			...props,
-			pictureConfirm: '', isViewConfirm: false, selectedTransactionCode: '',
-
-			file: {},
-		};
-
-		this.handleFileSelect = this.handleFileSelect.bind(this);
-		this.clickUpload = this.clickUpload.bind(this);
-		this.form = React.createRef();
-		this.handleChange = this.handleChange.bind(this)
-		this.handleSubmit = this.handleSubmit.bind(this)
+			fetchPage: 1, 
+			fetchLimit: props.fetchLimit,
+			fetchHasMore: props.MyTransactions && props.MyTransactions.length >= props.fetchLimit,
+			fetchStop: props.StopFetchMyTransanctions,
+			myTransactions: props.MyTransactions,
+			pictureConfirm: '', 
+			isViewConfirm: false, 
+			selectedTransactionCode: '',
+			file: {}
+		}
+		this.form = React.createRef()
 	}
-	clickUpload(e) {
+
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		const { MyTransactions, StopFetchMyTransanctions } = nextProps
+		const { fetchLimit } = this.state
+		const pages = Math.ceil(MyTransactions.length / fetchLimit)
+		this.setState({
+			myTransactions: MyTransactions,
+			fetchHasMore: MyTransactions.length / fetchLimit >= pages,
+			fetchStop: StopFetchMyTransanctions,
+			fetchPage: pages
+		})
+	}
+
+	loadMoreMyTransaction = () => {
+		const { fetchPage, fetchLimit, fetchStop, fetchHasMore } = this.state
+		const { token } = this.props
+		if(!fetchStop && fetchHasMore) {
+			this.props.getUserTransaction(token.access_token, fetchPage, fetchLimit, true)
+		}
+	}
+
+	clickUpload = (e) => {
 		let id = e.target.id
 		//this.id.click();
 		if (id == "pictureConfirm") {
 			this.pictureConfirm.click();
 		}
 	}
-	handleFileSelect(event) {
+	handleFileSelect = (event) => {
 		let name = event.target.name;
 		let value = URL.createObjectURL(event.target.files[0])
 		this.setState({
@@ -62,23 +84,27 @@ class UserTrip extends React.Component {
             logo: event.target.files[0],
             files: URL.createObjectURL(event.target.files[0])
 		}) */
-
 	}
 
-	handleChange(e) {
-		const target = e.target, value = target.value, name = target.name;
-		this.setState({ [name]: value });
+	handleChange = (e) => {
+		const target = e.target, value = target.value, name = target.name
+		this.setState({ [name]: value })
 	}
-	async handleSubmit(e) {
-		e.preventDefault();
-
-		const postData = { 'codeTransaction': this.state.selectedTransactionCode, 'bank': this.state.bank, 'accountNumber': this.state.accountNumber, 'accountName': this.state.accountName, 'file': this.state.file }
-		await postConfirmTransaction(postData, this.state.token.access_token)
-
+	handleSubmit = async (e) => {
+		e.preventDefault()
+		const { selectedTransactionCode, bank, accountNumber, accountName, file, token } = this.state
+		const postData = { 
+			codeTransaction: selectedTransactionCode, 
+			bank: bank, 
+			accountNumber: accountNumber, 
+			accountName: accountName, 
+			file: file 
+		}
+		await postConfirmTransaction(postData, token.access_token)
 	}
 	renderDetailConfirm() {
 		return (
-			<div className="container">
+			<Container>
 				<div className="position-absolute">
 					<span className="pt-2 d-block text-dark h4 title-section" onClick={() => this.handleViewConfirm(false)} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</span>
 				</div>
@@ -134,7 +160,7 @@ class UserTrip extends React.Component {
 						</button>
 					</div>
 				</form>
-			</div>
+			</Container>
 		)
 	}
 	handleViewConfirm(toogle, transCode, e) {
@@ -144,59 +170,96 @@ class UserTrip extends React.Component {
 		}
 	}
 	render() {
-		let { token, user } = this.props;
-		console.log(token);
-		
+		let { token, user } = this.props
+		const { myTransactions, isViewConfirm, fetchStop, fetchHasMore } = this.state
+		// console.log(token);
 		const tabMenuData = {
-			menu: [{ name: 'Gallery', url: process.env.HOST_DOMAIN + '/user/gallery', active: false }, { divider: true }, { name: 'Next Trips', url: process.env.HOST_DOMAIN + '/user/trips', active: true }]
-		};
+			menu: [
+				{ name: 'Gallery', url: `${process.env.HOST_DOMAIN}/user/gallery`, path: '/user/gallery', active: false }, 
+				{ divider: true }, 
+				{ name: 'Next Trips', url: `${process.env.HOST_DOMAIN}/user/trips`, path: '/user/trips', active: true }
+			]
+		}
 
 		return (
-			<div className="py-4">
-				<div className={this.state.isViewConfirm ? "collapse" : ""}>
-					<div className="container">
-						<div className="d-flex justify-content-between mb-4 pb-2">
-							<div className="d-flex justify-content-start">
-								<div className="">
-									<img
-										className="rounded-circle border border-white"
-										width="40"
-										height="40"
-										src="http://kampus-stikespanakkukang.ac.id/assets/images/photo_empty.png"
-									/>
-								</div>
+			<div role="main" className="mt-4 pt-5">
+				<Container className="container-sm px-0">
+					<div className={isViewConfirm ? "collapse" : ""}>
+						<div className="container p-0">
+							<div className="d-flex justify-content-between my-1 px-3">
+								<div className="d-flex justify-content-start">
+									<div className="mt-1">
+										<img
+											className="rounded-circle border border-white"
+											width="40"
+											height="40"
+											src={user && user.userPicture ? user.userPicture : `http://kampus-stikespanakkukang.ac.id/assets/images/photo_empty.png`}
+										/>
+									</div>
 
-								<div className="ml-3" style={{ lineHeight: "2px" }}>
-									{/* <b className="h3 ml-4">{user.fullName ? user.fullName : user.email.substring(0, user.email.indexOf("@"))}</b> */}
+									<div className="ml-2" style={{ lineHeight: "2px" }}>
+										{/* <b className="h3 ml-4">{user.fullName ? user.fullName : user.email.substring(0, user.email.indexOf("@"))}</b> */}
 
-									<b className="h3 title-section">{user.fullName ? user.fullName : user.email.substring(0, user.email.indexOf("@"))}</b><br />
-									<span className="text-sm">{user.email}</span>
+										<b className="h3 title-section">{user.fullName ? user.fullName : user.email.substring(0, user.email.indexOf("@"))}</b><br />
+										<span className="text-sm">{user.email}</span>
+									</div>
 								</div>
+								<div>{/* <a href={process.env.HOST_DOMAIN + '/user/profile'} className="text-primary text-sm"><b>EDIT</b></a> */}</div>
 							</div>
-							<div>{/* <a href={process.env.HOST_DOMAIN + '/user/profile'} className="text-primary text-sm"><b>EDIT</b></a> */}</div>
+							<div 
+								className="position-sticky py-3 mb-1 px-1 bg-white"
+								style={{top: "64px", zIndex: 9}}
+							>
+								<TabNavigation {...tabMenuData} />
+							</div>
+							{
+								myTransactions ?
+									<InfiniteScroll
+										pageStart={0}
+										loadMore={this.loadMoreMyTransaction}
+										hasMore={!fetchStop && fetchHasMore}
+										loader={
+											<LoaderCard 
+												key={0}
+												loaderColor="primary"
+												loaderSize="md"
+												loaderType="spinner"
+											/>
+										}
+									>
+										{
+											<Row className="px-3">{
+												myTransactions.map((item, key) => (
+													<TripCard 
+														key={key}  
+														{...item} 
+														isTransaction={true} 
+														index={key} 
+														clickConfirm={(e) => this.handleViewConfirm(true, item.code, e)} 
+													/>
+												))
+											}</Row>
+										} 
+									</InfiniteScroll>
+									:
+									<div className="pt-4" style={{ minHeight: "50vh" }}>
+										<div className="alert alert-danger" role="alert">
+											<h5 className="text-center font-italic title-section m-0">Sorry, You don't Have Any Trips!</h5>
+										</div>
+									</div>
+							}
 						</div>
-						<div className="mb-4">
-							<TabMenu {...tabMenuData} />
-						</div>
-						{this.props.trips ?
-							<div>
-								{this.props.trips.map((item, key) => <TripCard key={key}  {...item} isTransaction={true} index={key} clickConfirm={(e) => this.handleViewConfirm(true, item.code, e)} />)}
-							</div>
-							:
-							<div className="pt-4" style={{ minHeight: "50vh" }}>
-								<div className="alert alert-danger" role="alert">
-									<h5 className="text-center font-italic title-section m-0">Sorry, You don't Have Any Trips!</h5>
-								</div>
-							</div>
-						}
 					</div>
-				</div>
-				<div>
-					{this.state.isViewConfirm ? this.renderDetailConfirm() : ""}
-				</div>
+					<div>{ isViewConfirm ? this.renderDetailConfirm() : "" }</div>
+				</Container>
 			</div>
 		)
 	}
 }
 
-export default withAuthSync(UserTrip)
+const mapDispatchToProps = dispatch => {
+	return {
+		getUserTransaction: bindActionCreators(getUserTransaction, dispatch)
+	}
+}
+export default connect(state => state, mapDispatchToProps)(withAuthSync(UserTrip))

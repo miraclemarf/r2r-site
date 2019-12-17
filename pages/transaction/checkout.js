@@ -26,7 +26,7 @@ class Checkout extends React.Component {
     constructor(props) {
         super(props);
         this.state = { ...props };
-        this.handleChange = this.handleChange.bind(this)        
+        this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     async componentDidMount() {
@@ -43,7 +43,7 @@ class Checkout extends React.Component {
             this.setState({ kursUsd: Math.round(usdPrice) })
         }
     }
-    handleSubmit(e){
+    handleSubmit(e) {
 
     }
     handleChange(e) {

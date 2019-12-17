@@ -13,6 +13,14 @@ export const selectedAccessories = (obj) => async (dispatch) =>{
     return dispatch({ type: actionTypes.TRANSACTION_DATA, payload: obj })
 }
 
+export const getKursUsd = async () =>{
+    
+    const response = await fetch('https://kurs.web.id/api/v1/bca')
+    const data = await response.json();
+    
+    return data;
+}
+
 export const getDetailUserTransaction= async (accessToken, id) =>{
     console.log(id);
     

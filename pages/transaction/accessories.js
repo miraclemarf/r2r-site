@@ -86,7 +86,7 @@ class Accessories extends React.Component {
         if (counter == "minus") {
             arrItem.find(obj => obj.id == id).quantity--;
         }
-        else{
+        else {
             arrItem.find(obj => obj.id == id).quantity++;
         }
 
@@ -193,7 +193,10 @@ class Accessories extends React.Component {
                         "subcategory" in AccessoriesData ? this.renderSubAccessories() : ''
                     }
                     <div className="fixed-bottom">
-                        <Link href={'/transaction/checkout?page=checkout&idTrip=' + idTrip} as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/checkout'} >
+                        <Link
+                            href={'/transaction/checkout?page=checkout&id=' + idTrip}
+                            as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/checkout'}
+                        >
                             <button className="btn btn-primary w-100">
                                 NEXT : CHECK OUT
                         </button>

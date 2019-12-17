@@ -1,7 +1,7 @@
 export default ({ ...props }) => (
     <div style={ !props.isLandscape ? {"minWidth":"180px"} : {"minWidth":"250px"}} className="card overlay--img__black border-0 text-white w-100">
     <a href={props.id ? process.env.HOST_DOMAIN+"/trip/"+props.id : "#"} className="text-white">
-        <img className="card-img rounded-0" src={process.env.HOST_URL + props.coverPortrait}  />
+        <img className="card-img rounded-0" src={props.coverPortrait}  />
         <div className={"card-img-overlay d-flex "+ props.iconTextPostion}>
             {!props.isLandscape ? 
             <div className="position-absolute align-self-start">

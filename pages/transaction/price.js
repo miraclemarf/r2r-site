@@ -42,9 +42,10 @@ class TripPrice extends React.Component {
 		const { TripData } = this.state;
 		const priceId = e.currentTarget.getAttribute('data-id');
 		const priceObj = TripData.price.find((obj) => obj.id === parseInt(priceId));
+		const meetingPoint = TripData.detail.meetingPoint;
 		//let price = [...transaction.price]
 		//price = [priceObj.price]
-		await this.props.selectedPrice({price:priceObj, totalPrice:priceObj.price});
+		await this.props.selectedPrice({price:priceObj, totalPrice:priceObj.price, meetingPoint:meetingPoint});
 
 		this.setState({ ...this.props });
 	}

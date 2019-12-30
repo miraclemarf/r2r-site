@@ -40,6 +40,11 @@ class MyApp extends App {
 			pageProps.token = JSON.parse(token)
 			pageProps.user = await myProfile(pageProps.token.access_token)
 		}
+		pageProps.isMobileUa = Boolean((ctx.req
+			? ctx.req.headers['user-agent']
+			: navigator.userAgent).match(
+				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+			))
 
 		return { pageProps, token, user }
 	}
@@ -68,7 +73,7 @@ class MyApp extends App {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps);
+		//console.log(nextProps);
 
 		/*    this.setState({
 			   trip: nextProps.tripDetail,
@@ -78,7 +83,8 @@ class MyApp extends App {
 
 	render() {
 		const { Component, pageProps, store } = this.props
-		const { checkoutStatus, transaction, trip } = this.state
+		const { checkoutStatus, transaction, trip, isMobile } = this.state
+		
 		return (
 			<div>
 				<Head>
@@ -99,6 +105,7 @@ class MyApp extends App {
 						checkoutStatusState={this.checkoutStatusState}
 						trip={trip}
 						transaction={transaction}
+						isMobile={isMobile}
 					/>
 					<Footer {...pageProps} />
 				</Provider>

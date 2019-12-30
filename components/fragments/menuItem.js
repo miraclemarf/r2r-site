@@ -2,10 +2,10 @@ import Link from 'next/link'
 import { Nav, NavItem, NavLink } from 'reactstrap'
 
 export default (props) => {
-    const { token, user, isMobile } = props
+    const { token, user, isMobile, navDesktopdark, headerBg } = props
     return (
         <div className="px-0 py-0 m-0">
-            <Nav className="navWrapper position-relative text-white" navbar>
+            <Nav className={"navWrapper position-relative " + (headerBg == 'bg-transparent' && navDesktopdark && !isMobile  ? 'text-dark':'text-white')} navbar>
                 <NavItem>
                     <NavLink className="h2 m-0" href={`${process.env.HOST_DOMAIN}/`}>Home</NavLink>
                 </NavItem>
@@ -95,10 +95,14 @@ export default (props) => {
                     }
                 </div>
             </Nav>
-            <style jsx>{`
+            <style jsx global>{`
                 .move-up-mobile{
                     position:absolute;
                     top:.8em;
+                }
+
+                .text-dark .nav-link{
+                    color #333333 !important;
                 }
                
             `}</style>

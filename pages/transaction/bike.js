@@ -23,7 +23,9 @@ class TripBike extends React.Component {
 		props.idTrip = id;
 		props.bringOwnMotor = false;
 		props.scrollHeader = false;
-		await store.dispatch(getMotorTrip(id));
+
+		const idSelectedPrice = store.getState().TransactionData.price.id;
+		await store.dispatch(getMotorTrip(idSelectedPrice));
 
 		return props;
 	}
@@ -91,6 +93,8 @@ class TripBike extends React.Component {
 	}
 	render() {
 		const { idTrip, selectedMotorId, TripData } = this.state;
+		console.log(this.state);
+		
 		let isBringOwnMotor = false;
 		if (this.state.TransactionData) {
 			if (this.state.TransactionData.motor) {

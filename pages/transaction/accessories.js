@@ -24,6 +24,7 @@ class Accessories extends React.Component {
         props.navTrans = { step: 2 }
         props.footer = 'transparent';
         props.idTrip = id;
+        props.scrollHeader = false;
         props.categoryData = null;
         props.selectedSubCategoryId = 0;
         props.isSubAcc = false;
@@ -151,7 +152,7 @@ class Accessories extends React.Component {
 
         return (
             <div>
-                <div className="py-2"></div>
+                <div style={{padding:"40px"}} />
                 {isViewHelm ? this.renderDetailAccessories() : ''}
                 <div className={isViewHelm ? 'collapse' : ''}>
                     <div className="container">
@@ -192,7 +193,7 @@ class Accessories extends React.Component {
                     {
                         "subcategory" in AccessoriesData ? this.renderSubAccessories() : ''
                     }
-                    <div className="fixed-bottom">
+                    <div style={{zIndex:"15"}} className="fixed-bottom">
                         <Link
                             href={'/transaction/checkout?page=checkout&id=' + idTrip}
                             as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/checkout'}

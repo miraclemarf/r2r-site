@@ -57,6 +57,7 @@ export const checkout = async (data) => {
     if (!data.bringOwnHelm) {
         data.accessories.map((item, key) => {
             dataForm.append('accessories[' + key + '].id', item.id);
+            dataForm.append('accessories[' + key + '].quantity', item.quantity);
             dataForm.append('accessories[' + key + '].size', item.size);
         })
     }

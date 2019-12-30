@@ -1,17 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import { Container, Label } from 'reactstrap'
 import TabNavigation from '../components/tabNavigation'
 // import Page from '../components/page'
 import { login } from '../utils/user'
 import { validateEmailAddress } from '../components/functions'
 
-export default class extends React.Component {
-	static async getInitialProps({ req }) {
+class Login extends React.Component {
+	static async getInitialProps({ store, req }) {
 
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = {
 			nav: 'blue',
-			transaction: {},
 			scrollHeader: false
 		}
 		return props;
@@ -40,10 +40,10 @@ export default class extends React.Component {
 		this.setState({ [name]: value });
 	}
 	async handleSubmit(e) {
-		const { transaction, email, password } = this.state
+		const { TransactionData, TripData, email, password } = this.state
 		e.preventDefault();
-		let isHasTransaction = Object.keys(transaction).length === 0 ? false : true
-		let idTrip = isHasTransaction ? transaction.idTrip : ""
+		let isHasTransaction = Object.keys(TransactionData).length === 0 ? false : true
+		let idTrip = isHasTransaction ? TripData.detail.id : ""
 		if(validateEmailAddress(email)) {
 			this.setState({invalidEmail: false})
 			const postData = { 'email': email, 'password': password, 'isHasTransaction': isHasTransaction, 'idTrip': idTrip }
@@ -53,6 +53,8 @@ export default class extends React.Component {
 		}
 	}
 	render() {
+		console.log(this.state);
+		
 		const tabMenuData = {
 			menu: [
 				{ name: 'Login', url: `${process.env.HOST_DOMAIN}/login`, path: '/login', active: true }, 
@@ -142,3 +144,4 @@ export default class extends React.Component {
 		);
 	}
 }
+export default connect((state) => state)(Login);

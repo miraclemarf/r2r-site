@@ -22,6 +22,7 @@ class TripBike extends React.Component {
 		props.footer = 'transparent';
 		props.idTrip = id;
 		props.bringOwnMotor = false;
+		props.scrollHeader = false;
 		await store.dispatch(getMotorTrip(id));
 
 		return props;
@@ -100,7 +101,7 @@ class TripBike extends React.Component {
 		}
 		return (
 			<div>
-				<div className="py-2" />
+			<div style={{padding:"40px"}} />
 				<div className="container">
 					<div className="mb-4 position-relative">
 						<a
@@ -141,7 +142,7 @@ class TripBike extends React.Component {
 					</div>
 				</div>
 
-				<div className="fixed-bottom">
+				<div className="fixed-bottom" style={{zIndex:"15"}}>
 					<Link
 						href={'/transaction/accessories?page=accessories&id=' + idTrip}
 						as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/accessories'}

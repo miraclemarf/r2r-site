@@ -1,6 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import App, { Container } from 'next/app'
+import App from 'next/app'
 import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 import { makeStore } from '../components/store'
@@ -19,20 +19,20 @@ import NProgress from 'nprogress'
 Router.onRouteChangeStart = () => NProgress.start()
 
 Router.onRouteChangeComplete = () => {
-  // console.log('onRouteChnageComplete triggered');
-  NProgress.done()
+	// console.log('onRouteChnageComplete triggered');
+	NProgress.done()
 }
 
 Router.onRouteChangeError = () => {
-  // console.log('onRouteChnageError triggered');
-  NProgress.done()
+	// console.log('onRouteChnageError triggered');
+	NProgress.done()
 }
 
 class MyApp extends App {
 	static async getInitialProps({ Component, ctx }) {
 		let pageProps = {}
 		let user = null
-		let {token} = cookies(ctx)
+		let { token } = cookies(ctx)
 		if (Component.getInitialProps) {
 			pageProps = await Component.getInitialProps(ctx)
 		}
@@ -40,12 +40,12 @@ class MyApp extends App {
 			pageProps.token = JSON.parse(token)
 			pageProps.user = await myProfile(pageProps.token.access_token)
 		}
-	
+
 		return { pageProps, token, user }
-	  }
+	}
 	constructor(props) {
 		super(props)
-		this.state = {...props.pageProps}
+		this.state = { ...props.pageProps }
 		/* this.changePrice = this.changePrice.bind(this) */
 		this.transactionState = this.transactionState.bind(this)
 		this.tripState = this.tripState.bind(this)
@@ -56,53 +56,53 @@ class MyApp extends App {
 		this.setState({ selectedPrice: val })
 	} */
 	transactionState(data) {
-		this.setState({ transaction: {...data} })
+		this.setState({ transaction: { ...data } })
 	}
 
-	checkoutStatusState(data){
+	checkoutStatusState(data) {
 		this.setState({ checkoutStatus: data })
 	}
 
-	tripState(data){
-		this.setState({trip: {...data}})
+	tripState(data) {
+		this.setState({ trip: { ...data } })
 	}
 
 	componentWillReceiveProps(nextProps) {
 		console.log(nextProps);
-		
-     /*    this.setState({
-            trip: nextProps.tripDetail,
-            motor: nextProps.MotorData,
-        }) */
+
+		/*    this.setState({
+			   trip: nextProps.tripDetail,
+			   motor: nextProps.MotorData,
+		   }) */
 	}
 
 	render() {
 		const { Component, pageProps, store } = this.props
 		const { checkoutStatus, transaction, trip } = this.state
 		return (
-			<Container>
+			<div>
 				<Head>
 					<title>Road 2 Ring</title>
 				</Head>
 				<Provider store={store}>
 					{/* <FloatNotif message="Thank you for your registration, Please check your email to verify account" /> */}
-					<Navigate 
-						{...pageProps} 
-						checkoutStatus={checkoutStatus} 
-						//selectedPrice={pageProps.navTrans ? transaction.price ? transaction.price : "" : ""} 
-						//selectedPrice={store.getState().TransactionData} 
+					<Navigate
+						{...pageProps}
+						checkoutStatus={checkoutStatus}
+					//selectedPrice={pageProps.navTrans ? transaction.price ? transaction.price : "" : ""} 
+					//selectedPrice={store.getState().TransactionData} 
 					/>
-					<Component 
-						{...pageProps} 
-						transactionState={this.transactionState} 
+					<Component
+						{...pageProps}
+						transactionState={this.transactionState}
 						tripState={this.tripState}
-						checkoutStatusState={this.checkoutStatusState} 
-						trip={trip} 
-						transaction={transaction} 
+						checkoutStatusState={this.checkoutStatusState}
+						trip={trip}
+						transaction={transaction}
 					/>
 					<Footer {...pageProps} />
 				</Provider>
-			</Container>
+			</div>
 		)
 	}
 }

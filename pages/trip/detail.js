@@ -15,6 +15,7 @@ class TripDetail extends React.Component {
 		let props = {};
 		props.idTrip = id;
 		props.footer = 'collapse';
+		props.scrollHeader = true;
 
 		await store.dispatch(getLatestMotor());
 		await store.dispatch(getDetailTrip(id));
@@ -277,7 +278,7 @@ class TripDetail extends React.Component {
 						<p>{roadCaptainDescription}</p>
 					</div>
 				</div>
-				<div className="fixed-bottom">
+				<div className="fixed-bottom" style={{zIndex:"15"}}>
 					<Link
 						href={'/transaction/price?page=price&id=' + id}
 						as={process.env.HOST_DOMAIN + '/trip/' + id + '/price'}

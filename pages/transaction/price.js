@@ -18,6 +18,8 @@ class TripPrice extends React.Component {
 		}
 
 		let props = {};
+		
+		props.scrollHeader = false;
 		props.nav = 'blue';
 		props.navTrans = { step: 1 };
 		props.footer = 'transparent';
@@ -129,7 +131,7 @@ class TripPrice extends React.Component {
 		const { idTrip, selectedPriceId, TripData } = this.state;
 		return (
 			<div>
-				<div className="py-2" />
+				<div style={{padding:"40px"}} />
 
 				<div className="container">
 					<div className="mb-3">
@@ -162,7 +164,7 @@ class TripPrice extends React.Component {
 						</a>
 					</div>
 				</div>
-				<div className="fixed-bottom">
+				<div style={{zIndex:"15"}} className="fixed-bottom">
 					<Link
 						href={'/transaction/bike?page=bike&id=' + idTrip}
 						as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/bike'}

@@ -118,10 +118,10 @@ export const getUser = () => {
 	console.log(token)
 }
 
-export const logout = () => {
+export const logout = async () => {
 	cookie.remove('token')
 	window.localStorage.setItem('logout', Date.now())
-	Router.push(process.env.HOST_DOMAIN + '/login')
+	Router.push('/login')
 }
 
 export const withAuthSync = (WrappedComponent) => class extends Component {

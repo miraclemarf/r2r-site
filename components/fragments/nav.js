@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import MenuItem from './menuItem';
 import { bindActionCreators } from 'redux';
 import { priceAbbr, accTotalPrice } from '../../components/functions'
-import { connect } from 'react-redux';
 import { Collapse, Navbar, NavbarToggler } from 'reactstrap';
 import { logout } from '../../utils/user';
 import { Container } from 'reactstrap';
@@ -18,10 +17,16 @@ class Navigate extends React.Component {
 	constructor(props) {
 		super(props);
 		this.toggle = this.toggle.bind(this);
+		this.logout = this.logout.bind(this);
 		this.state = {
 			isOpen: false,
 			isMobile: false,
 			headerBg: props.nav != 'blue' ? 'bg-transparent' : 'bg-primary'
+		}
+	}
+	componentWillReceiveProps(nextProps) {
+		if (this.props !== nextProps) {
+			this.setState({ headerBg: nextProps.nav != 'blue' ? 'bg-transparent' : 'bg-primary' })
 		}
 	}
 	async componentDidMount() {
@@ -38,7 +43,7 @@ class Navigate extends React.Component {
 		window.addEventListener('resize', e => {
 			this.setState({ isMobile: window.innerWidth < 768 })
 			if (this.props.scrollHeader) {
-				if (e.target.scrollingElement.scrollTop > 50) {
+				if (e.target.scrollY > 50) {
 					this.setState({ headerBg: 'bg-primary' })
 				} else {
 					this.setState({ headerBg: this.props.nav != 'blue' ? 'bg-transparent' : 'bg-primary' })
@@ -58,6 +63,9 @@ class Navigate extends React.Component {
 	toggle() {
 		this.setState({ isOpen: !this.state.isOpen })
 	}
+	async logout(){
+		await logout();
+	}
 	render() {
 		let { token, user, TransactionData } = this.props;
 		let isCheckoutSuccess = false;
@@ -75,7 +83,7 @@ class Navigate extends React.Component {
 		return (
 			<div
 				className={`position-fixed w-100 ${this.state.headerBg} ${this.props.nav != 'blue' ? '' : ''}`}
-				style={{ zIndex: 10, top: 0 }}
+				style={{ zIndex: 30, top: 0 }}
 			>
 				<Navbar className="position-relative" dark expand="md">
 					<Container className="container-nav position-relative d-flex align-items-center m-auto">
@@ -161,10 +169,10 @@ class Navigate extends React.Component {
 											</div>
 										</div> : ''
 								}
-								<MenuItem token={token} user={user} onLogout={this.props.logout} />
+								<MenuItem token={token} user={user} isMobile={this.state.isMobile} onLogout={this.logout} />
 								{
 									this.state.isMobile ?
-										<div>
+										<div className="fixed-bottom mx-3">
 											<div className="d-flex justify-content-between my-4">
 												<div className="d-block w-50">
 													<h2 className="nav-link m-0 p-0 text-gray">Language</h2>
@@ -208,4 +216,4 @@ class Navigate extends React.Component {
 	}
 }
 
-export default connect(state => state, { logout })(Navigate);
+export default connect(state => state, { })(Navigate);

@@ -37,7 +37,7 @@ module.exports = withCss(withSass(
           includeDirectory: true,
           icons: [
             {
-              src: path.resolve('static/slicing/icon/icon_r2r.png'),
+              src: path.resolve('public/static/slicing/icon/icon_r2r.png'),
               sizes: [16, 32, 48, 57, 60, 72, 76, 96, 114, 120, 144, 152, 180, 192],
               type: 'image\/png',
               destination: path.join('static/icons', '')

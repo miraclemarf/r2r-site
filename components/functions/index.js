@@ -1,5 +1,7 @@
 export * from './slugifyUrl'
 export * from './removeHtmlTag'
+export * from './priceAbbr'
+export * from './accTotalPrice'
 export * from './timestampToDate'
 export * from './validateEmailAddress'
 export * from './addDays'

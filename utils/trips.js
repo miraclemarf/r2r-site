@@ -10,21 +10,30 @@ export const getLatestTrips = (page, total) => async (dispatch) => {
     return dispatch({ type: actionTypes.TRIP_LIST, payload: data.object })
 }
 
-export const getDetailTrip = async (id) => {
+export const getDetailTrip = (id)  => async (dispatch) =>  {
     const url = `${API_URL}/trip/${id}`
     const res = await fetch(url)
     const data = await res.json()
-    return data.object
+    
+    return dispatch({ type: actionTypes.TRIP_DETAIL, payload: data.object })
 }
 
-// bellow not yet changed into dispatch redux
-export const getPriceTrip = async (id) => {
+export const getPriceTrip  = (id)  => async (dispatch) => {
 
-    const result = await fetch(process.env.API_URL + '/trip/' + id + '/price')
+    const result = await fetch(API_URL + '/trip/' + id + '/price')
     const data = await result.json()
 
-    return data;
+    return dispatch({ type: actionTypes.TRIP_PRICE, payload: data.object })
 }
+
+export const getMotorTrip = (id) => async(dispatch)=>{
+    const result = await fetch(API_URL + '/trip/motor/' + id )
+    const data = await result.json()
+
+    return dispatch({ type: actionTypes.TRIP_MOTOR, payload: data.object })
+
+}
+// bellow not yet changed into dispatch redux
 
 export const confirmOrder = async (data) => {
     console.log(data);
@@ -48,6 +57,7 @@ export const checkout = async (data) => {
     if (!data.bringOwnHelm) {
         data.accessories.map((item, key) => {
             dataForm.append('accessories[' + key + '].id', item.id);
+            dataForm.append('accessories[' + key + '].quantity', item.quantity);
             dataForm.append('accessories[' + key + '].size', item.size);
         })
     }

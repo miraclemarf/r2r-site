@@ -87,12 +87,12 @@ app.prepare().then(() => {
 
   server.get('/trip/:id', (req, res) => {
     const actualPage = '/trip/detail'
-    const queryParams = { idTrip: req.params.id }
+    const queryParams = { id: req.params.id }
     return app.render(req, res, actualPage, queryParams)
   })
 
   server.get('/trip/:id/:page', (req, res) => {
-    const queryParams = {  idTrip: req.params.id, page: req.params.page }
+    const queryParams = {  id: req.params.id, page: req.params.page }
     const actualPage = '/transaction/'+queryParams.page
     return app.render(req, res, actualPage, queryParams)
   })

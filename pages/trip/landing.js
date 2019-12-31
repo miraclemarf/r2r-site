@@ -49,7 +49,7 @@ class Trips extends React.Component {
 						<Col xs="12" lg="12">
 							<h1 className="h2 title-section my-3">Trips Package</h1>
 						</Col>
-						{this.state.trips.map((item, key) => <TripCard key={key} {...item} />)}
+						{this.state.trips.list.map((item, key) => <TripCard key={key} {...item} />)}
 					</Row>
 				</Container>
 				<div className="bg-dark pt-4">

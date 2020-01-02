@@ -86,14 +86,14 @@ class Navigate extends React.Component {
 					className={`position-fixed w-100 ${this.state.headerBg} ${this.props.nav != 'blue' ? '' : ''}`}
 					style={{ zIndex: 30, top: 0 }}
 				>
-					<Navbar className={`position-relative ${this.state.navDesktopdark ? 'navbar-light' : 'navbar-dark'}`} expand="md">
+					<Navbar className={`position-relative ${this.state.headerBg == 'bg-transparent' && this.state.navDesktopdark && !this.state.isMobile ? 'navbar-light' : 'navbar-dark'}`} expand="md">
 						<Container className="container-nav position-relative d-flex align-items-center m-auto">
 							<Link href="/index" as={process.env.HOST_DOMAIN}>
 								<div className="navbar-brand py-1 px-0" style={{ zIndex: 1 }}>
 									{this.props.navTrans ? isMobileUa ? (
 										<span className="h2 icon-logogram_r2r" />
 									) : (<span className={`h2 icon-logo_ring2ring_full ${this.state.txtColor}`} />) : (
-											<span className={"h2 icon-logo_ring2ring_full "+ (this.state.headerBg == 'bg-transparent' && this.state.navDesktopdark ? 'text-dark' : 'text-white')} />
+											<span className={"h2 icon-logo_ring2ring_full "+ (this.state.headerBg == 'bg-transparent' && this.state.navDesktopdark && !this.state.isMobile ? 'text-dark' : 'text-white')} />
 										)}
 								</div>
 							</Link>

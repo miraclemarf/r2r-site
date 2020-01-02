@@ -7,7 +7,16 @@ export const getLatestTrips = (page, total) => async (dispatch) => {
     const url = `${API_URL}/trips/${page}/${total}`
     const res = await fetch(url)
     const data = await res.json()
+    dispatch({ type: actionTypes.TRIPS_TOTAL, payload: data.totalPage })
     return dispatch({ type: actionTypes.TRIP_LIST, payload: data.object })
+}
+
+export const getFeaturedTrip = () => async (dispatch) => {
+    const url = `${API_URL}/trips/feature`
+    const res = await fetch(url)
+    const data = await res.json()
+    
+    return dispatch({ type: actionTypes.TRIP_FEATURED, payload: data.object })
 }
 
 export const getDetailTrip = (id)  => async (dispatch) =>  {

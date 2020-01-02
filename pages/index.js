@@ -64,7 +64,7 @@ class Home extends React.Component {
 		const { 
 			pageTitle, pageDescription, pageAuthor, pageKeywords, trips, headline, testimonials, gallery 
 		} = this.state
-		console.log(testimonials)
+		// console.log(gallery)
 		return (
 			<div role="main">
 				<Helmet>

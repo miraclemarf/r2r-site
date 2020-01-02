@@ -15,3 +15,10 @@ export const getDetailTestimonial = async (id) => {
     const data = await res.json()
     return data.object
 }
+
+export const getDetailTestimonialAlbum = async (id) => {
+    const url = `${API_URL}/album/detail-album/${id}`
+    const res = await fetch(url)
+    const data = await res.json()
+    return data.object
+}

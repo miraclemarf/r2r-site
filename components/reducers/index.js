@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux'
 import TripDataReducer from './tripDataReducers'
+import TripsTotalReducer from './tripsTotalReducers'
+import TripFeaturedReducer from './tripFeaturedReducers'
 import TransactionDataReducer from './transactionDataReducers'
 import HeadlineDataReducer from './headlineDataReducers'
 import TestimonialsDataReducer from './testimonialsDataReducers'
@@ -14,6 +16,8 @@ import MyGalleriesFetchedReducer from './myGalleriesFetchedReducers'
 
 export default combineReducers({
     TripData: TripDataReducer,
+    TripsTotal: TripsTotalReducer,
+    TripFeatured: TripFeaturedReducer,
     TransactionData: TransactionDataReducer,
     HeadlineData: HeadlineDataReducer,
     TestimonialsData: TestimonialsDataReducer,

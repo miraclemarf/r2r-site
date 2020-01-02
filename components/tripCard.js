@@ -14,7 +14,7 @@ export default ({ ...props }) => (
 				<img className="img-fluid" src={props.coverLandscape} />
 				<div className="trip-info-center text-center d-inline-block position-absolute">
 					{/* <img className="invisible" src={props.iconCover} /> */}
-					<img src={props.iconPublisher} />
+					{/* <img src={props.iconPublisher} /> */}
 					<h4 className="mt-2 mb-0 title-section substr text-white">{props.title}</h4>
 					<h1 className="m-0 title-section substr text-white">{props.location}</h1>
 				</div>

@@ -50,10 +50,10 @@ export default (props) => {
                 }
                 <img style={Styles.SliderImage} className="position-absolute" src={props.slides.coverLandscape} />
                 <div style={Styles.infoWrapper} className="position-absolute d-inline-block w-100 text-white">
-                    {
+                    {/* {
                         !props.iconPlay ?
-                        <img src={props.slides.iconCover} style={Styles.SliderItemsIcon} className="d-block m-auto pb-2 invisible" alt={props.slides.title}/> : ""
-                    }
+                        <img src={props.slides.iconCover} style={Styles.SliderItemsIcon} className="d-block m-auto pb-2" alt={props.slides.title}/> : ""
+                    } */}
                     {
                         props.withTitle ?
                         <h3 style={{lineHeight: "normal"}} className="title-section text-center text-break m-0">{props.slides.title}</h3> : ""

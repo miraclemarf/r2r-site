@@ -17,7 +17,6 @@ class Navigate extends React.Component {
 	constructor(props) {
 		super(props);
 		this.toggle = this.toggle.bind(this);
-		this.logout = this.logout.bind(this);
 		this.state = {
 			isOpen: false,
 			isMobile: false,
@@ -64,9 +63,8 @@ class Navigate extends React.Component {
 	toggle() {
 		this.setState({ isOpen: !this.state.isOpen })
 	}
-	async logout() {
-		await logout();
-	}
+	logoutUser = () => logout()
+
 	render() {
 		let { token, user, TransactionData, isMobileUa } = this.props;
 		let isCheckoutSuccess = false;
@@ -172,7 +170,7 @@ class Navigate extends React.Component {
 												</div>
 											</div> : ''
 									}
-									<MenuItem token={token} user={user} isMobile={this.state.isMobile} onLogout={this.logout} navDesktopdark={this.state.navDesktopdark} headerBg={this.state.headerBg} />
+									<MenuItem token={token} user={user} isMobile={this.state.isMobile} onClickLogout={this.logoutUser} navDesktopdark={this.state.navDesktopdark} headerBg={this.state.headerBg} />
 									{
 										this.state.isMobile ?
 											<div className="fixed-bottom mx-3">

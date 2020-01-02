@@ -232,7 +232,7 @@ class TripDetail extends React.Component {
 												href={'/transaction/price?page=price&id=' + id}
 												as={process.env.HOST_DOMAIN + '/trip/' + id + '/price'}
 											>
-												<button className="btn btn-primary w-100 rounded">
+												<button className="btn btn-sm btn-primary w-100 rounded">
 													<div className="text-center">
 														<div>Check Date</div>
 													</div>

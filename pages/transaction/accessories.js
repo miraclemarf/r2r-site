@@ -96,7 +96,7 @@ class Accessories extends React.Component {
     }
 
     renderDetailAccessories() {
-        const { AccessoriesData } = this.state
+        const { AccessoriesData, isMobileUa } = this.state
         const accItem = "detail" in AccessoriesData ? AccessoriesData.detail : null;
         console.log(AccessoriesData);
 
@@ -106,7 +106,7 @@ class Accessories extends React.Component {
                     <div className="mb-4 position-relative">
                         <span style={{ zIndex: "10" }} className="pt-2 d-block text-dark h4 title-section position-relative" onClick={() => this.setState({ isViewHelm: false })} ><span style={{ top: "-1px", zIndex: "10" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</span>
                     </div>
-                    <AccDetail {...accItem} addAccessoriesCart={this.addAccessoriesCart} />
+                    <AccDetail {...accItem} isMobileUa={isMobileUa} addAccessoriesCart={this.addAccessoriesCart} />
                 </div>
                 <div className="py-2"></div>
             </div>
@@ -114,22 +114,28 @@ class Accessories extends React.Component {
     }
 
     renderSubAccessories() {
-        const { AccessoriesData, isSubAcc, selectedSubCategoryId } = this.state;
+        const { AccessoriesData, isSubAcc, selectedSubCategoryId, isMobileUa } = this.state;
         //const arrItem = ['Simpson M93 8all', 'Arai JL99 Shark', 'AGV The Doctor 46']
         //"subcategory" in AccessoriesData ? this.renderSubAccessories() : ''
         const arrItem = "data" in AccessoriesData ? AccessoriesData.data.accessories : [];
         return (
-            <div className={!isSubAcc ? 'collapse' : 'mb-4'}>
-                <h2 className="title-section text-center mb-4">{AccessoriesData.subcategory.categoryName}</h2>
-                <AccSliderSubCategory handleClick={this.selectedSubCategory} {...this.state} />
-                <div className="container">
-                    {
-                        arrItem.map((item, index) => (
-                            <div key={index}>
-                                <AccCardList selectedAccessories={this.selectedAccessories} item={item} index={index} />
-                            </div>
-                        ))
-                    }
+            <div className={!isMobileUa ? "sidebar-container position-relative" : ""}>
+                <div className={!isSubAcc ? 'collapse' : 'mb-4'}>
+                    <h2 className="title-section text-center mb-4">{AccessoriesData.subcategory.categoryName}</h2>
+                    <AccSliderSubCategory handleClick={this.selectedSubCategory} {...this.state} />
+                    <div className="container">
+                        <div className={!isMobileUa ?  "d-flex flex-wrap" : ""}>
+                        {
+                            arrItem.map((item, index) => (
+                                <div className={!isMobileUa ? "w-50" : ""} key={index}>
+                                    <div className="mr-3">
+                                    <AccCardList selectedAccessories={this.selectedAccessories} item={item} index={index} />
+                                    </div>
+                                </div>
+                            ))
+                        }
+                        </div>
+                    </div>
                 </div>
                 <style jsx>{`
                      .overlay-black::before {
@@ -146,65 +152,93 @@ class Accessories extends React.Component {
     }
 
     render() {
-        const { idTrip, isSubAcc, AccessoriesData, isViewHelm, TransactionData } = this.state
-        //accTotalPrice(TransactionData.accessories)
-        console.log(TransactionData)
+        const { idTrip, isSubAcc, AccessoriesData, isViewHelm, TransactionData, isMobileUa } = this.state
+
 
         return (
             <div>
-                <div style={{padding:"40px"}} />
+                <div style={{ padding: isMobileUa ? "40px" : "55px" }} />
                 {isViewHelm ? this.renderDetailAccessories() : ''}
                 <div className={isViewHelm ? 'collapse' : ''}>
-                    <div className="container">
-                        <div className="mb-4 position-relative">
-                            {
-                                isSubAcc ?
-                                    <span style={{ zIndex: "10" }} className="pt-2 d-block text-dark h4 title-section position-relative" onClick={() => this.setState({ isSubAcc: false })} ><span style={{ top: "-1px", zIndex: "10" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</span> :
-                                    <a className="d-block pt-2 text-dark h4 title-section position-relative" href={process.env.HOST_DOMAIN + "/trip/" + idTrip} style={{ "zIndex": "10" }} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
-                            }
-
-                            <StepTransaction step="3" />
-                        </div>
-                    </div>
-                    <div className={isSubAcc ? 'collapse' : ''}>
-                        <h2 className="title-section text-center mb-4">ACCESSORIES</h2>
-                        <div className="container">
-                            <div className="mb-4">
-                                <span className="text-sm">Buy your accessories or you can just skip to <b>check out</b></span>
-                            </div>
-                            <div>
-                                <div className="row no-gutters">
-                                    {
-                                        AccessoriesData.category.map((item, index) => (
-                                            <div key={index} className="col-6">
-                                                <div onClick={(e) => this.selectedCategory(item)} style={{ "backgroundImage": 'url(' + process.env.DUMMY + '/acc-' + index + '.jpg)' }} className="bg-radius position-relative inner-border d-flex m-1">
-                                                    <h3 style={{ 'left': '0', 'right': '0' }} className="position-absolute text-white text-center align-self-center title-section">{item.title}</h3>
-                                                </div>
-                                            </div>
-                                        ))
-                                    }
+                    <div className={!isMobileUa ? "container position-relative" : ""}>
+                        {!isMobileUa ?
+                            <div className="cover-scroll position-sticky float-right" style={{ top: "7em", minHeight: '25vw' }}>
+                                <div className="border border-grey rounded p-3 h-100">
+                                    <Cart data={TransactionData} updateAccessoriesCart={this.updateAccessoriesCart} deleteAccessoriesCart={this.deleteAccessoriesCart} />
+                                </div>
+                                <div className="position-relative mt-4">
+                                    <div style={{ right: "0", width: "60%" }} className="position-absolute">
+                                        <Link
+                                            href={'/transaction/checkout?page=checkout&id=' + idTrip}
+                                            as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/checkout'}
+                                        >
+                                            <button className="btn btn-sm rounded btn-primary w-100">NEXT : CHECK OUT</button>
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
+
+                            : ''
+                        }
+                        <div className={!isMobileUa ? "sidebar-container position-relative" : ""}>
+                            <div className="container">
+                                <div className="mb-4 position-relative">
+                                    {
+                                        isSubAcc ?
+                                            <span style={{ zIndex: "10" }} className="pt-2 d-block text-dark h4 title-section position-relative" onClick={() => this.setState({ isSubAcc: false })} ><span style={{ top: "-1px", zIndex: "10" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</span> :
+                                            <a className="d-block pt-2 text-dark h4 title-section position-relative" href={process.env.HOST_DOMAIN + "/trip/" + idTrip} style={{ "zIndex": "10" }} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
+                                    }
+
+                                    <StepTransaction step="3" />
+                                </div>
+                            </div>
+                            <div className={isSubAcc ? 'collapse' : ''}>
+                                <h2 className="title-section text-center mb-4">ACCESSORIES</h2>
+                                <div className="container" style={{ maxWidth: "450px" }}>
+                                    <div className="mb-4">
+                                        <span className="text-sm">Buy your accessories or you can just skip to <b>check out</b></span>
+                                    </div>
+                                    <div>
+                                        <div className="row no-gutters">
+                                            {
+                                                AccessoriesData.category.map((item, index) => (
+                                                    <div key={index} className="col-6">
+                                                        <div onClick={(e) => this.selectedCategory(item)} style={{ "backgroundImage": 'url(' + process.env.DUMMY + '/acc-' + index + '.jpg)' }} className="bg-radius position-relative inner-border d-flex m-1">
+                                                            <h3 style={{ 'left': '0', 'right': '0' }} className="position-absolute text-white text-center align-self-center title-section">{item.title}</h3>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                {isMobileUa ?
+                                    <div className="container bg-grayF2 py-3 position-relative" style={{ "top": "8px" }}>
+                                        <Cart data={TransactionData} updateAccessoriesCart={this.updateAccessoriesCart} deleteAccessoriesCart={this.deleteAccessoriesCart} />
+                                    </div> : ''
+                                }
+                            </div>
                         </div>
-                        <div className="container bg-grayF2 py-3 position-relative" style={{ "top": "8px" }}>
-                            <Cart data={TransactionData} updateAccessoriesCart={this.updateAccessoriesCart} deleteAccessoriesCart={this.deleteAccessoriesCart} />
-                        </div>
+                        {
+                            "subcategory" in AccessoriesData ? this.renderSubAccessories() : ''
+                        }
+
                     </div>
                     {
-                        "subcategory" in AccessoriesData ? this.renderSubAccessories() : ''
-                    }
-                    <div style={{zIndex:"15"}} className="fixed-bottom">
-                        <Link
-                            href={'/transaction/checkout?page=checkout&id=' + idTrip}
-                            as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/checkout'}
-                        >
-                            <button className="btn btn-primary w-100">
-                                NEXT : CHECK OUT
+                        isMobileUa ?
+                            <div style={{ zIndex: "15" }} className="fixed-bottom">
+                                <Link
+                                    href={'/transaction/checkout?page=checkout&id=' + idTrip}
+                                    as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/checkout'}
+                                >
+                                    <button className="btn btn-primary w-100">
+                                        NEXT : CHECK OUT
                         </button>
-                        </Link>
-                    </div>
+                                </Link>
+                            </div> : ''
+                    }
                 </div>
-                <style jsx>{`
+                <style jsx global>{`
                     .bg-radius{
                         border-radius:10px;
                         background-size:cover;
@@ -222,6 +256,15 @@ class Accessories extends React.Component {
                         display:block;
                         padding-bottom:100%;
                         content:'';
+                    }
+                    .sidebar-container{
+                        max-width:60%;
+                        margin-right:auto;
+                        position:relative;
+                    }
+                    .cover-scroll{
+                        width:37%;
+                        z-index:100;
                     }
                 `}</style>
             </div>

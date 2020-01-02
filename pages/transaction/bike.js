@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import StepTransaction from '../../components/stepTransaction';
+import SquareCover from '../../components/squareCover';
 import { getLatestMotorNonRedux } from '../../utils/motor';
 import { getMotorTrip } from '../../utils/trips';
 import { selectedMotor } from '../../utils/userTransaction';
@@ -63,6 +64,7 @@ class TripBike extends React.Component {
 				}
 			}
 		}
+		const { isMobileUa } = this.state
 		return (
 			<div
 				onClick={this.selectedItem}
@@ -80,21 +82,25 @@ class TripBike extends React.Component {
 					</h4>
 					<div
 						className={"position-absolute p-1 text-sm " + (isSelectedMotor ? "text-white" : "text-primary")}
-						style={{ fontSize: '75%', left: '6px', bottom: '5px', borderRadius: '4px' }}
+						style={{ fontSize: !isMobileUa ? '' : '75%', left: '6px', bottom: '5px', borderRadius: '4px' }}
 					>
 						<strong dangerouslySetInnerHTML={{ __html: priceAbbr(false, data.price) }}></strong>
 					</div>
 				</div>
-				<div className="position-absolute" style={{ maxWidth: '60%', right: '0', zIndex: '1', bottom: '-30px' }}>
+				<div className="position-absolute" style={{ maxWidth: !isMobileUa ? "40%" : '60%', right: !isMobileUa ? '3em' : '0', zIndex: '1', bottom: '-30px' }}>
 					<img style={{ width: "100%" }} src={process.env.DUMMY + '/motor-r2r-' + index + '.png'} />
 				</div>
 			</div>
 		);
 	}
 	render() {
-		const { idTrip, selectedMotorId, TripData } = this.state;
-		console.log(this.state);
-		
+		const { idTrip, selectedMotorId, TripData, isMobileUa } = this.state;
+		const {
+			coverLandscape,
+			title,
+			iconCover
+		} = TripData.detail;
+
 		let isBringOwnMotor = false;
 		if (this.state.TransactionData) {
 			if (this.state.TransactionData.motor) {
@@ -105,66 +111,114 @@ class TripBike extends React.Component {
 		}
 		return (
 			<div>
-			<div style={{padding:"40px"}} />
+				<div style={{ padding: isMobileUa ? "40px" : "60px" }} />
 				<div className="container">
-					<div className="mb-4 position-relative">
-						<a
-							className="pt-2 d-block text-dark h4 title-section position-relative"
-							href={process.env.HOST_DOMAIN + '/trip/' + idTrip}
-							style={{ zIndex: '10' }}
-						>
-							<span
-								style={{ top: '-1px' }}
-								className="icon-left-arrow text-sm text-primary position-relative"
-							/>{' '}
-							Back
+					{
+						!isMobileUa ?
+							<div className={"position-fixed cover-scroll"}>
+								<SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
+							</div>
+							: ''
+					}
+					<div className={!isMobileUa ? "sidebar-container position-relative" : ""}>
+						<div className="mb-4 position-relative">
+							<a
+								className="pt-2 d-block text-dark h4 title-section position-relative"
+								href={process.env.HOST_DOMAIN + '/trip/' + idTrip}
+								style={{ zIndex: '10' }}
+							>
+								<span
+									style={{ top: '-1px' }}
+									className="icon-left-arrow text-sm text-primary position-relative"
+								/>{' '}
+								Back
 						</a>
-						<StepTransaction step="1" />
-					</div>
-					<div>
-						<h2 className="title-section text-center">CHOOSE YOUR BIKE</h2>
-						<div className="mt-3">
-							{TripData.motor.map((item, index) => this.renderCardMotor(item, index))}
+							<StepTransaction step="1" />
 						</div>
+						<div>
+							<h2 className="title-section text-center">CHOOSE YOUR BIKE</h2>
+							<div className="mt-3">
+								{TripData.motor.map((item, index) => this.renderCardMotor(item, index))}
+							</div>
 
-						<button
-							onClick={this.selectedBringOwnBike}
-							className={
-								(isBringOwnMotor
-									? 'bg-primary border-primary text-white'
-									: 'btn-outline-softgray text-dark') + ' btn mt-2 w-100'
-							}
-							style={{ borderRadius: '8px' }}
-						>
-							I BRING MY OWN BIKE
-						</button>
-						<div className="mt-2" style={{ lineHeight: '16px' }}>
-							<span style={{ fontSize: '80%' }} className="text-sm text-gray80">
-								You need to send your bike to our office, if you want to bring your own bike
-							</span>
-						</div>
-					</div>
-				</div>
-
-				<div className="fixed-bottom" style={{zIndex:"15"}}>
-					<Link
-						href={'/transaction/accessories?page=accessories&id=' + idTrip}
-						as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/accessories'}
-					>
-						<button
-							onClick={(e) => {
-								if (!this.state.TransactionData.motor) {
-									alert('Please Choose an Option');
-									e.preventDefault();
+							<button
+								onClick={this.selectedBringOwnBike}
+								className={
+									(isBringOwnMotor
+										? 'bg-primary border-primary text-white'
+										: 'btn-outline-softgray text-dark') + ' btn mt-2 w-100'
 								}
-							}}
-							className="btn btn-primary w-100"
-						>
-							NEXT : ACCESSORIES
+								style={{ borderRadius: '8px' }}
+							>
+								I BRING MY OWN BIKE
 						</button>
-					</Link>
+							<div className="mt-2" style={{ lineHeight: '16px' }}>
+								<span style={{ fontSize: '80%' }} className="text-sm text-gray80">
+									You need to send your bike to our office, if you want to bring your own bike
+							</span>
+							</div>
+						</div>
+						{!isMobileUa ?
+							<div>
+								<div style={{ height: "7em" }} />
+								<div className="position-absolute py-4" style={{ bottom: "0", right: "0", width: "35%" }}>
+									<Link
+										href={'/transaction/accessories?page=accessories&id=' + idTrip}
+										as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/accessories'}
+									>
+										<button
+											onClick={(e) => {
+												if (!this.state.TransactionData.motor) {
+													alert('Please Choose an Option');
+													e.preventDefault();
+												}
+											}}
+											className="btn btn-sm btn-primary w-100 rounded"
+										>NEXT : ACCESSORIES</button>
+									</Link>
+								</div>
+							</div> : ""}
+					</div>
+					{isMobileUa ?
+						<div className="fixed-bottom" style={{ zIndex: "15" }}>
+							<Link
+								href={'/transaction/accessories?page=accessories&id=' + idTrip}
+								as={process.env.HOST_DOMAIN + '/trip/' + idTrip + '/accessories'}
+							>
+								<button
+									onClick={(e) => {
+										if (!this.state.TransactionData.motor) {
+											alert('Please Choose an Option');
+											e.preventDefault();
+										}
+									}}
+									className="btn btn-primary w-100"
+								>
+									NEXT : ACCESSORIES
+						</button>
+							</Link>
+						</div> : ""}
+					<div className="py-2" />
 				</div>
-				<div className="py-2" />
+				<style jsx global>{`
+				.cover-scroll{
+					width:27%;
+					z-index:100;
+				}
+				.cover-scroll .squareCover > div.overlay--img__blue{
+					padding-top:125%;
+					border-radius:6px;
+				}
+				.cover-scroll .squareCover > div.overlay--img__blue::before{
+					border-radius:6px;
+				}
+				.sidebar-container{
+					max-width:65%;
+					margin-left:auto;
+					position:relative;
+				}
+               
+            `}</style>
 			</div>
 		);
 	}

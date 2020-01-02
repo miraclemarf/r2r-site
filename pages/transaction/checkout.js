@@ -42,6 +42,7 @@ class Checkout extends React.Component {
         this.state = { ...props };
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleMidtrans = this.handleMidtrans.bind(this)
     }
     async componentDidMount() {
         const { grandTotal } = this.state
@@ -73,14 +74,21 @@ class Checkout extends React.Component {
             this.setState({ 'checkoutStatus': { ...trans.object } })
         }
     }
+    handleMidtrans(e){
+        const { midtransToken } = this.state.checkoutStatus;
+
+        snap.pay(midtransToken);
+    }
     handleChange(e) {
         const target = e.target, value = target.value, name = target.name;
         this.setState({ notes: value });
     }
     renderCheckoutSuccess() {
 
-        //const { totalPrice, lastPayment, transactionCodeId } = this.state.checkoutStatus
+        const { totalPrice, lastPayment, transactionCodeId } = this.state.checkoutStatus
         const { kursUsd, isMobileUa } = this.state
+        console.log(this.state.checkoutStatus);
+        
         return (
             <div className="container">
                 <div className="py-3"></div>
@@ -98,7 +106,7 @@ class Checkout extends React.Component {
                                 </div>
                                 <div>
                                     {/* <h4 className="title-section m-0">{this.state.checkoutStatus.transactionCodeId}</h4> */}
-                                    <h6 className="text-uppercase m-0 text-primary font-weight-bold">{"transactionCodeId"}</h6>
+                                    <h6 className="text-uppercase m-0 text-primary font-weight-bold">{transactionCodeId}</h6>
                                 </div>
                             </div>
                             <div className="d-flex justify-content-between align-items-center pt-2 pb-3">
@@ -107,14 +115,14 @@ class Checkout extends React.Component {
                                 </div>
                                 <div>
                                     {/* <h4 className="title-section m-0">{this.state.checkoutStatus.transactionCodeId}</h4> */}
-                                    <h4 className="m-0 text-primary font-weight-bold" dangerouslySetInnerHTML={{ __html: priceAbbr(false, "102320000") }}></h4>
+                                    <h4 className="m-0 text-primary font-weight-bold" dangerouslySetInnerHTML={{ __html: priceAbbr(false, totalPrice) }}></h4>
                                     <i className="text-sm text-primary float-right">approximate <b>${kursUsd}</b></i>
                                 </div>
                             </div>
                         </div>
                         <div className="mt-3 mb-4">
                             <div className="p-4 text-sm rounded" style={{ backgroundColor: "#FFF3D9" }}>
-                                <p className="m-0">Make sure you make your payment before <b><Moment unix format="DD MMM YYYY, HH:mm">{1608397200000 / 1000}</Moment></b>, or your booking will be canceled</p>
+                                <p className="m-0">Make sure you make your payment before <b><Moment unix format="DD MMM YYYY, HH:mm">{lastPayment / 1000}</Moment></b>, or your booking will be canceled</p>
                             </div>
                         </div>
                         <div className="mb-3">
@@ -127,7 +135,7 @@ class Checkout extends React.Component {
 
                         <div className="mb-3">
                             {/* <a href={process.env.HOST_DOMAIN + "/user/profile"} className="d-block w-100 mb-3  btn btn-primary ">COMPLETE PROFILE</a> */}
-                            <a href={process.env.HOST_DOMAIN + "/user/trips"} className="d-block w-100 btn btn-outline-dark rounded">Complete Profile</a>
+                            <a href={process.env.HOST_DOMAIN + "/user/profile"} className="d-block w-100 btn btn-outline-dark rounded">Complete Profile</a>
                         </div>
                         <div className="mb-4">
                             <p className="mb-0 text-sm">
@@ -139,7 +147,7 @@ class Checkout extends React.Component {
                         <div>
                             <div><span className="text-sm">Choose your payment Method</span></div>
                             <div className="mt-2">
-                                <div className="d-flex justify-content-between align-items-center px-3 border rounded mb-3" style={{ height: "45px" }}>
+                                <div className="d-flex justify-content-between align-items-center px-3 border rounded mb-3" style={{ height: "45px" }} onClick={this.handleMidtrans}>
                                     <div>
                                         <img src={process.env.HOST_DOMAIN + "/static/slicing/img/bca.png"} height="25" alt="BCA" />
                                     </div>
@@ -147,7 +155,7 @@ class Checkout extends React.Component {
                                         <span className="text-sm">Virtual Account </span> <span className="text-sm icon-right-arrow text-primary position-relative" style={{ top: "1px", left: "5px" }} />
                                     </div>
                                 </div>
-                                <div className="d-flex justify-content-between align-items-center px-3 border rounded" style={{ height: "45px" }}>
+                                <div className="d-flex justify-content-between align-items-center px-3 border rounded" style={{ height: "45px" }} onClick={this.handleMidtrans}>
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="mr-3"><img src={process.env.HOST_DOMAIN + "/static/slicing/img/visa.png"} alt="Visa" height="20" /></div>
                                         <div><img src={process.env.HOST_DOMAIN + "/static/slicing/img/mc.png"} alt="Master Card" height="25" /></div>
@@ -173,7 +181,7 @@ class Checkout extends React.Component {
             <div>
                 <div style={{ padding: isMobileUa ? "40px" : "50px" }} />
 
-                <div className={checkoutStatus == null ? "collapse" : ""}>
+                <div className={checkoutStatus != null ? "collapse" : ""}>
                     <div className="container position-relative">
                         {
                             !isMobileUa ?
@@ -334,7 +342,7 @@ class Checkout extends React.Component {
                         </div>
                     </div>
                 </div>
-                {checkoutStatus == null ? this.renderCheckoutSuccess() : ""}
+                {checkoutStatus != null ? this.renderCheckoutSuccess() : ""}
                 <style jsx global>{`
                     .rm-p p{
                         margin:0;

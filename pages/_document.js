@@ -26,6 +26,7 @@ class MyDocument extends Document {
 					<link href={`${process.env.HOST_DOMAIN}/static/r2r-icomoon-010819/style.css`} rel="stylesheet" />
 					<link href={`${process.env.HOST_DOMAIN}/static/font/font.css`} rel="stylesheet" />
 					<script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
+					<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"data-client-key="SB-Mid-client-doGu2SsjTXESbTS5"></script>
 					
 				</Head>
 				<body className="r2r-custom position-relative">

@@ -42,7 +42,11 @@ class Login extends React.Component {
 	async handleSubmit(e) {
 		const { TransactionData, TripData, email, password } = this.state
 		e.preventDefault();
-		let isHasTransaction = Object.keys(TransactionData).length === 0 ? false : true
+		let isHasTransaction = false
+		if(TransactionData){
+			
+			isHasTransaction = Object.keys(TransactionData).length === 0 ? false : true
+		}
 		let idTrip = isHasTransaction ? TripData.detail.id : ""
 		if(validateEmailAddress(email)) {
 			this.setState({invalidEmail: false})

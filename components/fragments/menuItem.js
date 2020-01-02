@@ -35,9 +35,9 @@ export default (props) => {
                 }
                 {
                     token ?
-                        <NavItem className="isDesktop cursor-pointer bg-white rounded-lg">
-                            <div className="h2 m-0 nav-link text-primary" href={`${process.env.HOST_DOMAIN}/logout`}>Logout</div>
-                        </NavItem> : ""
+                        <div className="isDesktop cursor-pointer bg-white rounded-lg" onClick={props.onClickLogout}>
+                            <div className="h2 m-0 nav-link text-primary">Logout</div>
+                        </div> : ""
                 }
 
 
@@ -76,7 +76,7 @@ export default (props) => {
                                             <span className="text-gray float-right px-2">|</span>
                                             <div
                                                 className="text-gray float-right cursor-pointer"
-                                                onClick={props.onLogout}
+                                                onClick={props.onClickLogout}
                                             >Logout</div>
                                         </div>
                                     </div>

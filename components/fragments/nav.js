@@ -17,11 +17,11 @@ class Navigate extends React.Component {
 	constructor(props) {
 		super(props);
 		this.toggle = this.toggle.bind(this);
-		this.logout = this.logout.bind(this);
 		this.state = {
 			isOpen: false,
 			isMobile: false,
 			navDesktopdark: props.navDesktopdark,
+			txtColor: props.navDesktopdark ? 'text-dark' : 'text-white',
 			headerBg: props.nav != 'blue' ? 'bg-transparent' : 'bg-primary'
 		}
 	}
@@ -30,7 +30,7 @@ class Navigate extends React.Component {
 			this.setState({ navDesktopdark: nextProps.navDesktopdark, headerBg: nextProps.nav != 'blue' ? 'bg-transparent' : 'bg-primary' })
 		}
 	}
-	async componentDidMount() {
+	componentDidMount() {
 		window.addEventListener('load', e => {
 			this.setState({ isMobile: window.innerWidth < 768 })
 			if (this.props.scrollHeader) {
@@ -45,18 +45,18 @@ class Navigate extends React.Component {
 			this.setState({ isMobile: window.innerWidth < 768 })
 			if (this.props.scrollHeader) {
 				if (e.target.scrollY > 50) {
-					this.setState({ headerBg: 'bg-primary' })
+					this.setState({ headerBg: 'bg-primary', navDesktopdark: false })
 				} else {
-					this.setState({ headerBg: this.props.nav != 'blue' ? 'bg-transparent' : 'bg-primary' })
+					this.setState({ headerBg: this.props.nav != 'blue' ? 'bg-transparent' : 'bg-primary', navDesktopdark: this.props.navDesktopdark})
 				}
 			}
 		})
 		window.addEventListener('scroll', e => {
 			if (this.props.scrollHeader) {
 				if (e.target.scrollingElement.scrollTop > 50) {
-					this.setState({ headerBg: 'bg-primary' })
+					this.setState({ headerBg: 'bg-primary', navDesktopdark: false })
 				} else {
-					this.setState({ headerBg: this.props.nav != 'blue' ? 'bg-transparent' : 'bg-primary' })
+					this.setState({ headerBg: this.props.nav != 'blue' ? 'bg-transparent' : 'bg-primary', navDesktopdark: this.props.navDesktopdark })
 				}
 			}
 		})
@@ -64,9 +64,8 @@ class Navigate extends React.Component {
 	toggle() {
 		this.setState({ isOpen: !this.state.isOpen })
 	}
-	async logout() {
-		await logout();
-	}
+	logoutUser = () => logout()
+
 	render() {
 		let { token, user, TransactionData, isMobileUa } = this.props;
 		let isCheckoutSuccess = false;
@@ -87,14 +86,14 @@ class Navigate extends React.Component {
 					className={`position-fixed w-100 ${this.state.headerBg} ${this.props.nav != 'blue' ? '' : ''}`}
 					style={{ zIndex: 30, top: 0 }}
 				>
-					<Navbar className="position-relative" dark expand="md">
+					<Navbar className={`position-relative ${this.state.navDesktopdark ? 'navbar-light' : 'navbar-dark'}`} expand="md">
 						<Container className="container-nav position-relative d-flex align-items-center m-auto">
 							<Link href="/index" as={process.env.HOST_DOMAIN}>
 								<div className="navbar-brand py-1 px-0" style={{ zIndex: 1 }}>
 									{this.props.navTrans ? isMobileUa ? (
 										<span className="h2 icon-logogram_r2r" />
-									) : (<span className={"h2 icon-logo_ring2ring_full text-white"} />) : (
-											<span className={"h2 icon-logo_ring2ring_full "+ (this.state.headerBg == 'bg-transparent' && this.state.navDesktopdark && !this.state.isMobile  ? 'text-dark':'text-white')} />
+									) : (<span className={`h2 icon-logo_ring2ring_full ${this.state.txtColor}`} />) : (
+											<span className={"h2 icon-logo_ring2ring_full "+ (this.state.headerBg == 'bg-transparent' && this.state.navDesktopdark ? 'text-dark' : 'text-white')} />
 										)}
 								</div>
 							</Link>
@@ -172,7 +171,7 @@ class Navigate extends React.Component {
 												</div>
 											</div> : ''
 									}
-									<MenuItem token={token} user={user} isMobile={this.state.isMobile} onLogout={this.logout} navDesktopdark={this.state.navDesktopdark} headerBg={this.state.headerBg} />
+									<MenuItem token={token} user={user} isMobile={this.state.isMobile} onClickLogout={this.logoutUser} navDesktopdark={this.state.navDesktopdark} headerBg={this.state.headerBg} />
 									{
 										this.state.isMobile ?
 											<div className="fixed-bottom mx-3">

@@ -1,6 +1,6 @@
 .container-sm {
 	width: 100%;
-	max-width: 900px !important;
+	max-width: 1024px !important;
 }
 .container-nav {
 	width: 100%;
@@ -96,22 +96,48 @@
 	transform: translate(-50%,-50%);
 	-webkit-transform: translate(-50%, -50%);
 
-	&>h1 {
-		font-size: 2.4vw;
+	&>h4 {
+		font-size: 1.8vw;
 		line-height: .8em;
+	}
+
+	&>h1 {
+		font-size: 2.7vw;
+		line-height: .8em;
+	}
+
+	&>.substr {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100%;
+		display: inline-block;
 	}
 
 	&>img {
 		width: auto;
-		max-height: 30px;
+		max-height: 40px;
 		height: 20%;
 	}
 }
 
-@media screen and (max-width: 480px) {
+@media only screen and (max-width: 900px) {
+	.trip-info-center {
+		&>h4 {
+			font-size: 2.4vw;
+		}
+		&>h1 {
+			font-size: 4vw;
+		}
+	}
+}
+@media only screen and (max-width: 575px) {
 	.trip-info-center {
 		width: 70%;
 
+		&>h4 {
+			font-size: 7vw;
+		}
 		&>h1 {
 			font-size: 12vw;
 		}
@@ -183,8 +209,8 @@
 		left: 0;
 	
 		.objectItem {
-			width: 256px;
-			height: 166px;
+			width: 236px;
+			height: 155px;
 		}
 	}
 }
@@ -192,6 +218,11 @@
 .sliderPortraitWrapper {
 	height: 250px;
 	padding-bottom: 15px;
+
+	&.withInfo {
+		height: 310px;
+		overflow-y: hidden !important;
+	}
 
 	.mobileSlider {
 		position: absolute;
@@ -207,21 +238,21 @@
 }
 
 @media screen and (min-width: 900px) {
-	.sliderLandscapeWrapper {
-		height: auto;
-		padding-bottom: 0;
+	// .sliderLandscapeWrapper {
+	// 	height: auto;
+	// 	padding-bottom: 0;
 
-		.mobileSlider {
-			position: relative;
-			display: block;
+	// 	.mobileSlider {
+	// 		position: relative;
+	// 		display: block;
 
-			.objectItem {
-				width: 278px;
-				height: 174px;
-				margin-bottom: 15px;
-			}
-		}
-	}
+	// 		.objectItem {
+	// 			width: 278px;
+	// 			height: 174px;
+	// 			margin-bottom: 15px;
+	// 		}
+	// 	}
+	// }
 
 	.sliderPortraitWrapper {
 		height: auto;
@@ -232,8 +263,8 @@
 			display: block;
 	
 			.objectItem {
-				width: 160px;
-    			height: 222px;
+				width: 185px;
+    			height: 255px;
 				margin-bottom: 15px;
 			}
 		}
@@ -310,7 +341,7 @@
 	height: calc(100% - 60px);
 	position: absolute;
 	left: 5px;
-	z-index: 1;
+	z-index: 3;
 }
 .verticalLine.bg-dark {
 	height: 100%;

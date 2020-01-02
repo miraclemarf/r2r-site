@@ -7,7 +7,8 @@ export default (props) => (
                 <PortraitCard 
                     key={key}
                     slides={data}
-                    pathname={"testimonial"}
+                    textPosition="bottom"
+                    pathname="testimonial"
                     iconPlay={true}
                     overlay={true}
                     withTitle={true}

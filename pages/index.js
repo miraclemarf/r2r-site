@@ -62,9 +62,9 @@ class Home extends React.Component {
 
 	render() {
 		const { 
-			pageTitle, pageDescription, pageAuthor, pageKeywords, 
-			trips, headline, testimonials, gallery 
+			pageTitle, pageDescription, pageAuthor, pageKeywords, trips, headline, testimonials, gallery 
 		} = this.state
+		// console.log(gallery)
 		return (
 			<div role="main">
 				<Helmet>

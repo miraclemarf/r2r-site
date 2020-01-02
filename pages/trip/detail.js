@@ -13,11 +13,12 @@ import { faCoffee, faStar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-ic
 
 class TripDetail extends React.Component {
 	static async getInitialProps({ res, store, query: { id } }) {
-		let props = {}
-		props.idTrip = id;
-		props.footer = 'collapse';
-		props.scrollHeader = true;
-		props.navDesktopdark = true;
+		let props = {
+			idTrip: id,
+			footer: 'collapse',
+			scrollHeader: true,
+			navDesktopdark: true
+		}
 
 		await store.dispatch(getLatestMotor());
 		await store.dispatch(getDetailTrip(id));
@@ -52,19 +53,19 @@ class TripDetail extends React.Component {
 		return (
 			<div key={key} className="mb-2 position-relative list-element">
 				<h2 className="title-section text-white mb-3">{data.groupTitle}</h2>
-				<div className="verticalLine bg-gray80 collapse" />
+				<div className="verticalLine bg-gray80 collapse show" />
 				{data.details.map((item, index) => (
 					<div key={index} className="mb-4 position-relative" style={{ paddingLeft: '2.3em' }}>
 						<div
-							className="rounded-circle bg-secondary position-absolute collapse"
+							className="rounded-circle bg-secondary position-absolute collapse show"
 							style={{ width: '11px', height: '11px', left: '0', zIndex: '4' }}
 						/>
 						<div>
-							{item.imageItinerary ? (
+							{
+								item.imageItinerary ? 
 								<img src={item.imageItinerary} className="img-fluid mb-2" />
-							) : (
-									''
-								)}
+								: ''
+							}
 							<h3 className="title-section text-white m-0">{item.title}</h3>
 							{item.description ? (
 								<div
@@ -168,9 +169,8 @@ class TripDetail extends React.Component {
 			tripPrice
 		} = this.state.TripData.detail;
 		const { isMobileUa } = this.state
-
 		return (
-			<div style={{ paddingBottom: '4em', paddingTop: !isMobileUa ? '6em' : '' }}>
+			<div role="main" style={{ paddingBottom: '4em', paddingTop: !isMobileUa ? '6em' : '' }}>
 				<div className={!isMobileUa ? "container" : ""}>
 					<div className={!isMobileUa ? "position-fixed cover-scroll" : ""}>
 						<SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
@@ -346,12 +346,13 @@ class TripDetail extends React.Component {
 							<h2 className="title-section  mb-3 pt-3">MEET THE RC</h2>
 							<div className="text-center">
 								<img
-									className="rounded-circle border border-white"
+									className="rounded-circle border border-white float-left"
+									style={{marginRight: 20}}
 									width="80"
 									height="80"
 									src={imageRoadCaptain}
 								/>
-								<div className="pt-3">
+								<div className="pt-2 float-left text-left" style={{width: 'calc(100% - 100px)'}}>
 									<h3 className="title-section">{roadCaptainName} </h3>
 								</div>
 							</div>
@@ -405,7 +406,7 @@ class TripDetail extends React.Component {
 				</div>
 				<style jsx global>{`
 				.cover-scroll{
-					width:27%;
+					width:20%;
 					z-index:100;
 				}
 				.cover-scroll .squareCover > div.overlay--img__blue{
@@ -416,7 +417,7 @@ class TripDetail extends React.Component {
 					border-radius:6px;
 				}
 				.sidebar-container{
-					max-width:65%;
+					max-width:63%;
 					margin-left:auto;
 					position:relative;
 					top:-1em;
@@ -424,11 +425,11 @@ class TripDetail extends React.Component {
 				.sidebar-container #itinerary .inner{
 					max-width:52%;
 					margin-left:auto;
-					margin-right:10%;
+					margin-right:5%;
 				}
 				.sidebar-container #itinerary{
 					width: 100vw;
-					left: calc(-50vw + 24%);
+					left: calc(-50vw + 20.8%);
 					overflow-x:hidden
 				}
 				.sidebar-container #itinerary #collapseTransparent{

@@ -42,18 +42,14 @@ const TripMainCover = (props) => {
     }
 
     const slides = props.datas.map((item) => {
-        console.log(item)
         return (
             <CarouselItem
-                className="position-relative custom-height rounded-lg"
+                className={`position-relative custom-height ${props.isMobile ?  '' : 'rounded-lg'}`}
                 tag="div"
                 key={item.id}
                 onExiting={() => setAnimating(true)}
                 onExited={() => setAnimating(false)}
             >
-                <Link href={`/trip/detail?id=${item.id}`} as={`${process.env.HOST_DOMAIN}/trip/${item.id}`} >
-                    <a title={item.title} style={{zIndex: 3}} className="position-absolute w-100 h-100" />
-                </Link>
                 <div className="position-relative w-100 h-100">
                     <div className="position-absolute w-100 h-100 overlay--img__black" style={{top: 0, left: 0, zIndex: 2}} />
                     <img style={Styles.imagesCarousel} src={item.src} alt={item.altText} />

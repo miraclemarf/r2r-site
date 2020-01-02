@@ -177,23 +177,30 @@ class TestimonialDetail extends React.Component {
 													albums.map((data, key) => (
 														<div 
 															key={key}
-															className="m-2"
+															className="d-block px-2"
 															onClick={() => this.zoomAlbumImage(data.picture)}
 															style={{
-																width: "45%", 
-																float: "left",
-																paddingBottom: "30%",
-																backgroundImage: `url(${data.picture})`,
-																backgroundSize: "cover"
+																width: "50%", 
+																float: "left"
 															}}
-														/>
+														>
+															<div 
+																className="m-2"
+																style={{
+																	width: "100%", 
+																	paddingBottom: "60%",
+																	backgroundImage: `url(${data.picture})`,
+																	backgroundSize: "cover"
+																}}
+															/>
+														</div>
 													))
 												}
 												</div>
 											</Col>
 											{
 												albums && albums.length > 4 ?
-													<Col xs="12" style={{paddingTop: "5px"}}>
+													<Col xs="12" className="mb-3 pt-0">
 														<div className="btn btn-primary d-block rounded-lg" onClick={() => this.setState({showFullAlbums: true})}>SEE ALL</div>
 													</Col> : ""
 											}

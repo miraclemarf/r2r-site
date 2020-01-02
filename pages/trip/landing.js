@@ -14,8 +14,7 @@ class Trips extends React.Component {
 	static async getInitialProps({ store }) {
 		// Inherit standard props from the Page (i.e. with session data)
 		let props = {
-			scrollHeader: true, navDesktopdark: true,
-			page: 0, max: 6
+			scrollHeader: true, navDesktopdark: true, page: 0, max: 6
 		}
 		let stores = await store.getState()
 		try {
@@ -38,7 +37,8 @@ class Trips extends React.Component {
 			tripsPage: props.page,
 			tripsMax: props.max,
 			featured: props.TripFeatured.map(({ id, title, icon, cover }) => ({ id: id, src: cover, icon: icon, caption: title, header: title })),
-			gallery: props.GalleryData
+			gallery: props.GalleryData,
+			...props
 		}
 	}
 
@@ -57,14 +57,16 @@ class Trips extends React.Component {
 	}
 
 	render() {
-		const { trips, tripsTotal, tripsPage, gallery, featured } = this.state
+		const { trips, tripsTotal, tripsPage, gallery, featured, isMobileUa } = this.state
 		return (
 			<div role="main">
 				<Container className="container-sm mb-5">
-					<Row className="pt-5 mb-3">
-						<Col xs="12" lg="12" className="pt-5">
-							<TripMainCover datas={featured} />
-							<h1 className="h2 title-section my-3">Trips Package</h1>
+					<Row className={`${!isMobileUa ? 'pt-5' : ''} mb-3`}>
+						<Col xs="12" lg="12" className={isMobileUa ? 'p-0' : 'pt-5'}>
+							<TripMainCover datas={featured} isMobile={isMobileUa} />
+						</Col>
+						<Col xs="12" lg="12">
+							<h1 className="h2 title-section mb-3">Trips Package</h1>
 						</Col>
 						{trips.list.map((item, key) => <TripCard key={key} {...item} />)}
 					</Row>

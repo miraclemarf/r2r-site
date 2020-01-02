@@ -92,7 +92,7 @@ class Navigate extends React.Component {
 								<div className="navbar-brand py-1 px-0" style={{ zIndex: 1 }}>
 									{this.props.navTrans ? isMobileUa ? (
 										<span className="h2 icon-logogram_r2r" />
-									) : (<span className={`h2 icon-logo_ring2ring_full ${this.state.txtColor}`} />) : (
+									) : (<span className={`h2 icon-logo_ring2ring_full`} />) : (
 											<span className={"h2 icon-logo_ring2ring_full "+ (this.state.headerBg == 'bg-transparent' && this.state.navDesktopdark && !this.state.isMobile ? 'text-dark' : 'text-white')} />
 										)}
 								</div>

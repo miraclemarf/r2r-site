@@ -46,9 +46,14 @@ export default class extends React.Component {
 		}
 	}
 	async handleSubmit(e) {
+		const { TransactionData, TripData, email, password } = this.state
 		e.preventDefault();
-		let isHasTransaction = Object.keys(this.state.transaction).length === 0 ? false : true
-		let idTrip = isHasTransaction ? this.state.transaction.idTrip : ""
+		let isHasTransaction = false
+		if(TransactionData){
+			
+			isHasTransaction = Object.keys(TransactionData).length === 0 ? false : true
+		}
+		let idTrip = isHasTransaction ? TripData.detail.id : ""
 		let userBirthday = 0
 		if (this.state.hari && this.state.bulan && this.state.tahun) {
 			let dateuser = this.state.tahun + '-' + this.state.bulan + '-' + this.state.hari

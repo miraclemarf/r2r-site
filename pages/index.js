@@ -19,18 +19,18 @@ class Home extends React.Component {
 		try {
 			let stores = await store.getState()
 			// Headline Scope
-			await store.dispatch(getHeadline()) 
+			await store.dispatch(getHeadline())
 			// Trips Scope
 			await store.dispatch(getLatestTrips(0, 10))
 			// Testimonial Scope
-			await store.dispatch(getLatestTestimonial(0, 5)) 
+			await store.dispatch(getLatestTestimonial(0, 5))
 			// Gallery Scope
 			if (!stores.GalleryData) await store.dispatch(getLatestGallery(0, 6))
 			props.scrollHeader = true
 		} catch (e) {
 			props.error = 'Unable to fetch AsyncData on server'
 		}
-		
+
 
 		return props
 	}
@@ -47,7 +47,8 @@ class Home extends React.Component {
 			trips: props.TripData.list,
 			headline: props.HeadlineData,
 			testimonials: props.TestimonialsData,
-			gallery: props.GalleryData
+			gallery: props.GalleryData,
+			...props.isMobileUa
 		}
 	}
 
@@ -61,19 +62,19 @@ class Home extends React.Component {
 	}
 
 	render() {
-		const { 
-			pageTitle, pageDescription, pageAuthor, pageKeywords, trips, headline, testimonials, gallery 
+		const {
+			pageTitle, pageDescription, pageAuthor, pageKeywords, trips, headline, testimonials, gallery, isMobileUa
 		} = this.state
 		// console.log(gallery)
 		return (
 			<div role="main">
 				<Helmet>
-                    <title>{pageTitle}</title>
-                    <meta name="description" content={pageDescription}/>
-                    <meta name="keywords" content={pageKeywords}/>
-                    <link rel="canonical" href={process.env.HOST_DOMAIN} />
+					<title>{pageTitle}</title>
+					<meta name="description" content={pageDescription} />
+					<meta name="keywords" content={pageKeywords} />
+					<link rel="canonical" href={process.env.HOST_DOMAIN} />
 					<script type="application/ld+json">
-					{`{
+						{`{
 						"@context": "http://schema.org",
 						"@type": "WebPage",
 						"name": "${pageTitle}",
@@ -81,7 +82,7 @@ class Home extends React.Component {
 						"description": "${pageDescription}"
                     }`}
 					</script>
-                </Helmet>
+				</Helmet>
 				<MainCover {...headline} />
 				<Container className="container-sm">
 					<Row>
@@ -95,13 +96,13 @@ class Home extends React.Component {
 							<Link href="/trips" as={`${process.env.HOST_DOMAIN}/trips`}>
 								<a className="btn btn-primary d-block rounded-lg">SEE ALL TRIP</a>
 							</Link>
-							<hr/>
+							<hr />
 						</Col>
 						<Col xs="12" lg="12">
 							<h1 className="h2 title-section mb-3">Testimonial</h1>
 						</Col>
 						<Col xs="12" lg="12" className="mb-2 px-2 overflow-hidden">
-							<TestimonialSliderCard sliderData={testimonials.slice(0, 5)} />
+							<TestimonialSliderCard  {...isMobileUa} sliderData={testimonials.slice(0, 5)} />
 						</Col>
 						<Col sm="12" md="6" className="px-0">
 							<BannerHowItWorks />
@@ -116,12 +117,12 @@ class Home extends React.Component {
 						<div className=" d-flex justify-content-between mb-3">
 							<h1 className="h2 title-section text-white m-0">Gallery</h1>
 							<Link href="/gallery" as={`${process.env.HOST_DOMAIN}/gallery`}>
-								<a style={{top: "8px"}} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
+								<a style={{ top: "8px" }} className="text-sm position-relative text-white d-block font-weight-bold">View All</a>
 							</Link>
 						</div>
 						<Row>
 							<Col xs="12" lg="12" className="mb-0 px-2 overflow-hidden">
-								<GallerySliderCard sliderData={gallery.slice(0, 6)} />
+									<GallerySliderCard {...isMobileUa} sliderData={gallery.slice(0, 6)} />
 							</Col>
 						</Row>
 					</Container>

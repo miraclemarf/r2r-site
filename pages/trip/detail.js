@@ -10,14 +10,18 @@ import { getLatestMotor, getDetailTrip } from '../../utils';
 import SquareCover from '../../components/squareCover';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faStar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+	FacebookShareButton, FacebookIcon, WhatsappShareButton, WhatsappIcon
+} from 'react-share';
 
 class TripDetail extends React.Component {
-	static async getInitialProps({ res, store, query: { id } }) {
+	static async getInitialProps({ req, store, query: { id } }) {
 		let props = {
 			idTrip: id,
 			footer: 'collapse',
 			scrollHeader: true,
-			navDesktopdark: true
+			navDesktopdark: true,
+			shareUrl: req.headers ? req.headers.host : location.host
 		}
 
 		await store.dispatch(getLatestMotor());
@@ -62,9 +66,9 @@ class TripDetail extends React.Component {
 						/>
 						<div>
 							{
-								item.imageItinerary ? 
-								<img src={item.imageItinerary} className="img-fluid mb-2" />
-								: ''
+								item.imageItinerary ?
+									<img src={item.imageItinerary} className="img-fluid mb-2" />
+									: ''
 							}
 							<h3 className="title-section text-white m-0">{item.title}</h3>
 							{item.description ? (
@@ -168,7 +172,7 @@ class TripDetail extends React.Component {
 			itineraries,
 			tripPrice
 		} = this.state.TripData.detail;
-		const { isMobileUa } = this.state
+		const { isMobileUa, shareUrl } = this.state
 		return (
 			<div role="main" style={{ paddingBottom: '4em', paddingTop: !isMobileUa ? '6em' : '' }}>
 				<div className={!isMobileUa ? "container" : ""}>
@@ -216,10 +220,30 @@ class TripDetail extends React.Component {
 									</div>
 								</div>
 								<div dangerouslySetInnerHTML={{ __html: description }} />
+								<div className={isMobileUa ? "d-flex justify-content-between align-items-center pt-3" : ""}>
+									<div><h4 className={"title-section "+(isMobileUa?"m-0":"")}>Share to</h4></div>
+									
+									<div className="d-flex justify-content-start socshare">
+										<FacebookShareButton
+											url={shareUrl}
+											quote={title}>
+											<FacebookIcon
+												size={40}
+												round={false} />
+										</FacebookShareButton>
+										<div className="px-1"></div>
+										<WhatsappShareButton
+											url={shareUrl}
+											title={title}>
+											<WhatsappIcon
+												size={40}
+												round={false} />
+										</WhatsappShareButton>
+									</div>
+								</div>
 								{!isMobileUa ?
 									<div>
-										<div style={{ height: "6em" }} />
-										<div className="position-absolute py-4" style={{ bottom: "0", right: "0", width: "35%" }}>
+										<div className="position-absolute" style={{ bottom: "0", right: "0", width: "35%" }}>
 											<div className="d-flex align-items-center justify-content-between pb-2">
 												<div style={{ fontSize: '80%' }} className="font-weight-light">
 													Start From</div>
@@ -347,12 +371,12 @@ class TripDetail extends React.Component {
 							<div className="text-center">
 								<img
 									className="rounded-circle border border-white float-left"
-									style={{marginRight: 20}}
+									style={{ marginRight: 20 }}
 									width="80"
 									height="80"
 									src={imageRoadCaptain}
 								/>
-								<div className="pt-2 float-left text-left" style={{width: 'calc(100% - 100px)'}}>
+								<div className="pt-2 float-left text-left" style={{ width: 'calc(100% - 100px)' }}>
 									<h3 className="title-section">{roadCaptainName} </h3>
 								</div>
 							</div>
@@ -406,7 +430,7 @@ class TripDetail extends React.Component {
 				</div>
 				<style jsx global>{`
 				.cover-scroll{
-					width:20%;
+					width:27%;
 					z-index:100;
 				}
 				.cover-scroll .squareCover > div.overlay--img__blue{
@@ -438,6 +462,9 @@ class TripDetail extends React.Component {
 				}
 				.sidebar-container #itinerary #collapseTransparent h3{
 					left:8.5em;
+				}
+				.socshare .social-icon{
+					border-radius:4px;
 				}
                
             `}</style>

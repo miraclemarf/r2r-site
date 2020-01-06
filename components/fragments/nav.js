@@ -84,7 +84,7 @@ class Navigate extends React.Component {
 			<div>
 				<div
 					className={`position-fixed w-100 ${this.state.headerBg} ${this.props.nav != 'blue' ? '' : ''}`}
-					style={{ zIndex: 30, top: 0 }}
+					style={{ zIndex: 150, top: 0 }}
 				>
 					<Navbar className={`position-relative ${this.state.headerBg == 'bg-transparent' && this.state.navDesktopdark && !this.state.isMobile ? 'navbar-light' : 'navbar-dark'}`} expand="md">
 						<Container className="container-nav position-relative d-flex align-items-center m-auto">

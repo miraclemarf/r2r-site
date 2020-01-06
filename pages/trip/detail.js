@@ -16,12 +16,13 @@ import {
 
 class TripDetail extends React.Component {
 	static async getInitialProps({ req, store, query: { id } }) {
+
 		let props = {
 			idTrip: id,
 			footer: 'collapse',
 			scrollHeader: true,
 			navDesktopdark: true,
-			shareUrl: req.headers ? req.headers.host : location.host
+			shareUrl: req ? req.headers ? req.headers.host : location.host : location.host
 		}
 
 		await store.dispatch(getLatestMotor());
@@ -38,12 +39,14 @@ class TripDetail extends React.Component {
 	async componentDidMount() {
 		var itinerariesListEl = document.querySelectorAll('#itinerary .list-element');
 		var itinerariesEl = document.querySelector('#itinerary');
+		if (itinerariesListEl.length > 1) {
 
-		var collapseHight = itinerariesListEl[0].clientHeight + 225;
-		itinerariesEl.setAttribute(
-			'style',
-			itinerariesEl.getAttribute('style') + '; max-height:' + collapseHight + 'px'
-		);
+			var collapseHight = itinerariesListEl[0].clientHeight + 225;
+			itinerariesEl.setAttribute(
+				'style',
+				itinerariesEl.getAttribute('style') + '; max-height:' + collapseHight + 'px'
+			);
+		}
 	}
 	toggleItinerary(e) {
 		var itinerariesEl = document.querySelector('#itinerary');
@@ -221,8 +224,8 @@ class TripDetail extends React.Component {
 								</div>
 								<div dangerouslySetInnerHTML={{ __html: description }} />
 								<div className={isMobileUa ? "d-flex justify-content-between align-items-center pt-3" : ""}>
-									<div><h4 className={"title-section "+(isMobileUa?"m-0":"")}>Share to</h4></div>
-									
+									<div><h4 className={"title-section " + (isMobileUa ? "m-0" : "")}>Share to</h4></div>
+
 									<div className="d-flex justify-content-start socshare">
 										<FacebookShareButton
 											url={shareUrl}

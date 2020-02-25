@@ -38,8 +38,43 @@ export const login = async (data) => {
 	}
 };
 
+export const loginSocial = async (token) => {
+	var dataForm = new FormData();
+	dataForm.append('socialToken', token);
+	try {
+		const response = await fetch(process.env.API_URL + '/user/auth/social', {
+			method: 'POST',
+			body: dataForm
+		});
+		if (response.ok) {
+			const token = await response.json();
+			if (token.object) {
+				cookie.set('token', token.object, { expires: token.object.expires_in });
+				/*if (data.isHasTransaction) {
+					Router.push('/transaction/checkout?page=checkout&idTrip=' + data.idTrip, process.env.HOST_DOMAIN + '/trip/' + data.idTrip + '/checkout');
+				}*/
+				//else {
+					window.location.href = process.env.HOST_DOMAIN + '/';
+					//Router.push('/',  process.env.HOST_DOMAIN+'/')
+				//}
+			}
+		} else {
+			console.log('Login failed.');
+			// https://github.com/developit/unfetch#caveats
+			let error = new Error(response.statusText);
+			error.response = response;
+			return Promise.reject(error);
+		}
+	} catch (error) {
+		console.error('You have an error in your code or there are Network issues.', error);
+		throw new Error(error);
+	}
+}
+
 export const myProfile = async (access_token) => {
 	//static async myProfile(access_token) {
+		//console.log(access_token);
+		
 	const url = process.env.API_URL + '/user/profile'
 	const res = await fetch(url,
 		{
@@ -48,6 +83,8 @@ export const myProfile = async (access_token) => {
 			}
 		})
 	const data = await res.json()
+	console.log(data);
+	
 	return data.object
 }
 

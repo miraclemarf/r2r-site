@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { priceAbbr } from '../../components/functions';
 import TripSliderCard from '../../components/tripSlider'
 import SimpleBar from 'simplebar-react';
-import { Container, Row, Col} from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'
 import 'simplebar/dist/simplebar.min.css';
 import { getLatestMotor, getDetailTrip, getLatestTrips } from '../../utils';
 import SquareCover from '../../components/squareCover';
@@ -182,7 +182,7 @@ class TripDetail extends React.Component {
 		const { isMobileUa, shareUrl } = this.state
 		const otherTrips = this.state.TripData.list
 		return (
-			<div role="main" style={{paddingTop: !isMobileUa ? '6em' : '0' }}>
+			<div role="main" style={{ paddingTop: !isMobileUa ? '6em' : '0' }}>
 				<div className={!isMobileUa ? "container" : ""}>
 					<div className={!isMobileUa ? "position-fixed cover-scroll" : ""}>
 						<SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
@@ -394,7 +394,7 @@ class TripDetail extends React.Component {
 						</div>
 						{
 							otherTrips ?
-								<Container className="container-sm pt-2 pb-4 bg-grayF2" style={{marginBottom:"-1em"}}>
+								<Container className="container-sm pt-2 pb-4 bg-grayF2" style={{ marginBottom: "-1em" }}>
 									<h1 className="h2 title-section text-primary my-3">Other Trips</h1>
 									<Row>
 										<Col xs="12" lg="12" className="px-2 overflow-hidden">

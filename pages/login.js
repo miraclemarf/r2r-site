@@ -4,6 +4,7 @@ import { Container, Label } from 'reactstrap'
 import TabNavigation from '../components/tabNavigation'
 // import Page from '../components/page'
 import { login } from '../utils/user'
+import { signGoogle, signFacebook } from '../utils/firebase'
 import { validateEmailAddress } from '../components/functions'
 
 class Login extends React.Component {
@@ -30,11 +31,19 @@ class Login extends React.Component {
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.validate = this.validate.bind(this)
+		this.clickSignGoogle = this.clickSignGoogle.bind(this)
+		this.clickSignFacebook = this.clickSignFacebook.bind(this)
 	}
-	
+	clickSignFacebook() {
+		signFacebook()
+	}
+	clickSignGoogle() {
+		signGoogle()
+		
+	}
 	validate() {
 		this.form.current.reportValidity();
-	  }
+	}
 	handleChange(e) {
 		const target = e.target, value = target.value, name = target.name;
 		this.setState({ [name]: value });
@@ -43,91 +52,93 @@ class Login extends React.Component {
 		const { TransactionData, TripData, email, password } = this.state
 		e.preventDefault();
 		let isHasTransaction = false
-		if(TransactionData){
-			
+		if (TransactionData) {
+
 			isHasTransaction = Object.keys(TransactionData).length === 0 ? false : true
 		}
 		let idTrip = isHasTransaction ? TripData.detail.id : ""
-		if(validateEmailAddress(email)) {
-			this.setState({invalidEmail: false})
+		if (validateEmailAddress(email)) {
+			this.setState({ invalidEmail: false })
 			const postData = { 'email': email, 'password': password, 'isHasTransaction': isHasTransaction, 'idTrip': idTrip }
 			login(postData)
 		} else {
-			this.setState({invalidEmail: true})
+			this.setState({ invalidEmail: true })
 		}
 	}
 	render() {
 		console.log(this.state);
-		
+
 		const tabMenuData = {
 			menu: [
-				{ name: 'Login', url: `${process.env.HOST_DOMAIN}/login`, path: '/login', active: true }, 
-				{ divider: true }, 
+				{ name: 'Login', url: `${process.env.HOST_DOMAIN}/login`, path: '/login', active: true },
+				{ divider: true },
 				{ name: 'Register', url: `${process.env.HOST_DOMAIN}/register`, path: '/register', active: false }
 			]
 		}
 		return (
 			<div role="main" className="mt-4 pt-5">
-                <Container className="container-sm px-0">
-					<div 
+				<Container className="container-sm px-0">
+					<div
 						className="position-sticky py-3 mb-1 px-1 bg-white"
-						style={{top: "64px", zIndex: 9}}
+						style={{ top: "64px", zIndex: 9 }}
 					>
 						<TabNavigation {...tabMenuData} />
 					</div>
-					{/* <div className="mb-3">
-						<a href="#" className="title-section btn btn-sm btn-primary d-block text-white mb-2">
-							<div className="d-flex justify-content-center py-2">
-								<span className="icon-facebook" /> <h4 className="mb-0 ml-3">LOG IN WITH FACEBOOK</h4>
-							</div>
-						</a>
-						<a href="#" className="title-section btn btn-sm btn-white d-block text-dark border-dark">
-							<div className="d-flex justify-content-center py-2">
-								<span
-									style={{
-										background: 'url(/preview/static/slicing/icon/Google__G__Logo.svg) no-repeat',
-										width: '25px',
-										height: '25px'
-									}}
-								/>{' '}
-								<h4 className="mb-0 ml-3">LOG IN WITH Google</h4>
-							</div>
-						</a>
-					</div>
-					<div className="mb-3">
-						<div className="separatorLine position-relative text-center">
-							<span className="position-relative d-block bg-white mx-auto" style={{ width: '10%' }}>
-								OR
-							</span>
-						</div>
-					</div> */}
-					<Container style={{maxWidth:"480px", padding: "20px"}}>
+					<Container style={{ maxWidth: "480px", padding: "20px" }}>
 						{/* <h2 className="title-section text-center">LOG IN WITH EMAIL</h2> */}
+						<div>
+							<div className="mb-3">
+								<a href="#" onClick={this.clickSignFacebook} className="title-section btn btn-sm btn-primary d-block rounded-lg text-white mb-2">
+									<div className="d-flex justify-content-center py-2">
+										<span className="icon-facebook" /> <h4 className="mb-0 ml-3">LOG IN WITH FACEBOOK</h4>
+									</div>
+								</a>
+								<a href="#" onClick={this.clickSignGoogle} className="title-section btn btn-sm btn-white d-block rounded-lg text-dark border-dark">
+									<div className="d-flex justify-content-center py-2">
+										<span
+											style={{
+												background: 'url(/static/slicing/icon/Google__G__Logo.svg) no-repeat',
+												width: '25px',
+												height: '25px'
+											}}
+										/>{' '}
+										<h4 className="mb-0 ml-3">LOG IN WITH Google</h4>
+									</div>
+								</a>
+							</div>
+							<div className="mb-3">
+								<div className="separatorLine position-relative text-center">
+									<span className="position-relative d-block bg-white mx-auto" style={{ width: '10%' }}>
+										OR
+							</span>
+								</div>
+							</div>
+						</div>
 						<form ref={this.form} onSubmit={this.handleSubmit}>
 							<div className={`form-group ${this.state.invalidEmail ? 'mb-1' : 'mb-3'}`}>
 								<label className="text-black text-sm">Email</label>
-								<input 
-									type="email" 
-									name="email" 
-									className="form-control rounded-lg" 
-									placeholder="Your Email" 
+								<input
+									type="email"
+									name="email"
+									className="form-control rounded-lg"
+									placeholder="Your Email"
 									autoComplete="off"
-									onChange={this.handleChange} 
-									required 
+									onChange={this.handleChange}
+									required
 								/>
 							</div>
 							{this.state.invalidEmail ? <Label className="text-sm text-danger mb-3">Invalid Email Address</Label> : ""}
 							<div className="form-group mb-2">
 								<label className="text-black text-sm">Password</label>
-								<input 
-									type="password" 
-									name="password" 
-									className="form-control rounded-lg" 
-									placeholder="Your Password" 
-									minLength={6} 
+								<input
+									type="password"
+									name="password"
+									className="form-control rounded-lg"
+									placeholder="Your Password"
+									minLength={6}
 									autoComplete="off"
-									onChange={this.handleChange} 
-									required 
+									onChange={this.handleChange}
+									required
 								/>
 							</div>
 							{/* <div className="py-3 mx-3 text-center">
@@ -137,8 +148,8 @@ class Login extends React.Component {
 									</a>
 								</p>
 							</div> */}
-							<button 
-								className="btn btn-info w-100 my-3 rounded-lg" 
+							<button
+								className="btn btn-info w-100 my-3 rounded-lg"
 								onClick={this.validate}
 							>LOGIN</button>
 						</form>

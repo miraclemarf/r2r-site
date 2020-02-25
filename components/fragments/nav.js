@@ -68,6 +68,7 @@ class Navigate extends React.Component {
 
 	render() {
 		let { token, user, TransactionData, isMobileUa } = this.props;
+		
 		let isCheckoutSuccess = false;
 		let totalPrice = [];
 		if (this.props.checkoutStatus) {

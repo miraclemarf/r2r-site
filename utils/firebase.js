@@ -40,7 +40,7 @@ const signGoogle = () => {
         console.log(result);
         
         // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.idToken;
+        var token = result.user.ma;
         // The signed-in user info.
         console.log(token);
 
@@ -60,6 +60,8 @@ const signGoogle = () => {
         var credential = error.credential;
         // ...
     });
+
+    
 }
 
 const signFacebook = () => {

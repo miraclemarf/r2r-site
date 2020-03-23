@@ -88,7 +88,7 @@ class TripBike extends React.Component {
 					</div>
 				</div>
 				<div className="position-absolute" style={{ maxWidth: !isMobileUa ? "40%" : '60%', right: !isMobileUa ? '3em' : '0', zIndex: '1', bottom: '-30px' }}>
-					<img style={{ width: "100%" }} src={process.env.DUMMY + '/motor-r2r-' + index + '.png'} />
+					<img style={{ width: "100%" }} src={data.picture} />
 				</div>
 			</div>
 		);
@@ -100,6 +100,8 @@ class TripBike extends React.Component {
 			title,
 			iconCover
 		} = TripData.detail;
+		console.log(TripData);
+		
 
 		let isBringOwnMotor = false;
 		if (this.state.TransactionData) {

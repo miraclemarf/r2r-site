@@ -10,7 +10,7 @@ import 'simplebar/dist/simplebar.min.css';
 import { getLatestMotor, getDetailTrip, getLatestTrips } from '../../utils';
 import SquareCover from '../../components/squareCover';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faStar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faStar, faMapMarkerAlt, faUserAlt } from '@fortawesome/free-solid-svg-icons'
 import {
 	FacebookShareButton, FacebookIcon, WhatsappShareButton, WhatsappIcon
 } from 'react-share';
@@ -159,6 +159,8 @@ class TripDetail extends React.Component {
 
 
 		const motor = this.state.MotorData;
+		console.log(motor);
+
 		const {
 			id,
 			coverLandscape,
@@ -277,7 +279,7 @@ class TripDetail extends React.Component {
 						</div>
 						<div
 							id="itinerary"
-							style={{ overflowY: 'hidden' }}
+							style={{ overflowY: 'hidden', marginBottom: '3em' }}
 							className="bg-dark py-4 position-relative"
 						>
 							<div className="inner">
@@ -308,11 +310,14 @@ class TripDetail extends React.Component {
 								</div>
 							</div>
 						</div>
-						<div className="container my-4">
-							<h2 className="title-section mb-2">THE ROUTE</h2>
-							<div className="embed-responsive embed-responsive-4by3" dangerouslySetInnerHTML={{ __html: map }}>
-							</div>
-						</div>
+						{
+							map ?
+								<div className="container my-4">
+									<h2 className="title-section mb-2">THE ROUTE</h2>
+									<div className="embed-responsive embed-responsive-4by3" dangerouslySetInnerHTML={{ __html: map }}>
+									</div>
+								</div> : ''
+						}
 						<div id="bikeslide" className="container mb-4 pb-4">
 							<div className=" d-flex justify-content-between mb-3">
 								<h2 className="title-section">MOTORCYCLE CHOICES</h2>
@@ -325,8 +330,8 @@ class TripDetail extends React.Component {
 										<div className={"sliderMobile d-flex align-items-stretch"} style={{ marginRight: '-15px' }}>
 											{motor.map((item, key) => (
 												<div key={key} className="mr-3">
-													{/*<img src={item.picture} height="110" />*/}
-													{<img height="110" src={process.env.DUMMY + '/motor-r2r-' + key + '.png'} />}
+													<img src={item.picture} height="110" />
+
 												</div>
 											))}
 										</div>
@@ -335,8 +340,7 @@ class TripDetail extends React.Component {
 									<div className={"sliderMobile d-flex align-items-stretch"} style={{ marginRight: '-15px' }}>
 										{motor.map((item, key) => (
 											<div key={key} className="mr-3">
-												{/*<img src={item.picture} height="110" />*/}
-												{<img height="110" src={process.env.DUMMY + '/motor-r2r-' + key + '.png'} />}
+												<img src={item.picture} height="110" />
 											</div>
 										))}
 									</div>
@@ -344,10 +348,10 @@ class TripDetail extends React.Component {
 							}
 
 						</div>
-						<div className="container">
+						{/*<div className="container">
 							<h2 className="title-section mb-3">WHERE TO STAY</h2>
-							{this.renderHotel()}
-						</div>
+							{//this.renderHotel()}
+						</div>*/}
 						<div className="container">
 							<h2 className="title-section">INCLUDED</h2>
 							<div className="py-2">{facilities.map((item, key) => this.renderFaciltyInclude(item, key))}</div>
@@ -376,17 +380,22 @@ class TripDetail extends React.Component {
 						</div>
 						<div className="container">
 							<h2 className="title-section  mb-3 pt-3">MEET THE RC</h2>
-							<div className="text-center">
-								<img
-									className="rounded-circle border border-white float-left"
-									style={{ marginRight: 20 }}
-									width="80"
-									height="80"
-									src={imageRoadCaptain}
-								/>
+							<div className="text-center d-flex align-items-center">
+								{imageRoadCaptain ?
+									<img
+										className="rounded-circle border border-white"
+										style={{ marginRight: 20 }}
+										width="80"
+										height="80"
+										src={imageRoadCaptain}
+									/> :
+									<div className="rounded-circle border d-flex justify-content-center align-items-center" style={{ width: "80px", height: "80px", marginRight:"20px" }}>
+										<FontAwesomeIcon className="rounded-circle" size="3x" icon={faUserAlt} /></div>
+								}
 								<div className="pt-2 float-left text-left" style={{ width: 'calc(100% - 100px)' }}>
 									<h3 className="title-section">{roadCaptainName} </h3>
 								</div>
+								<div className="clearfix"></div>
 							</div>
 							<div>
 								<p>{roadCaptainDescription}</p>

@@ -5,11 +5,10 @@ import { priceAbbr } from './functions';
 
 export default ({ ...props }) => (
 	<Col xs="12" sm="4" className="tripCard mb-4">
-		{/* <Link
-			href={!props.isTransaction ? `/trip/detail?idTrip=${props.id}` : `/user/trip?id=${props.id}`}
+		 <Link
+			href={!props.isTransaction ? `/trip/detail?page=detail&id=${props.id}` : `/trip/detailTrip?page=detailTrip&id=${props.id}`}
 			as={!props.isTransaction ? `${process.env.HOST_DOMAIN}/trip/${props.id}` : `${process.env.HOST_DOMAIN}/user/trip/${props.id}`}
-		> */}
-		<Link href={'/trip/detail?page=detail&id=' + props.id} as={process.env.HOST_DOMAIN + '/trip/' + props.id}>
+		> 
 			<a>
 				<div className="overlay--img__black mb-2 d-flex align-items-center position-relative rounded-lg overflow-hidden">
 					<img className="img-fluid" src={props.coverLandscape} />
@@ -71,12 +70,5 @@ export default ({ ...props }) => (
 				</div>
 			</a>
 		</Link>
-		{/* </Link> */}
-		{
-			props.isTransaction && props.paymentStatus == 'WAITING' ?
-				<div className="mt-3">
-					<a onClick={props.clickConfirm} className="btn btn-primary d-block rounded-lg text-white">Confirm Payment</a>
-				</div> : ''
-		}
 	</Col>
 );

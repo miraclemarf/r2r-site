@@ -1,6 +1,8 @@
 import React from 'react'
 import cookies from 'next-cookies'
 import { withAuthSync } from "../../utils/user"
+import { priceAbbr, accTotalPrice } from '../../components/functions'
+import { getKursUsd } from '../../utils/userTransaction'
 import Moment from 'react-moment'
 import { getDetailUserTransaction, postConfirmTransaction } from "../../utils/userTransaction"
 
@@ -15,6 +17,7 @@ class UserDetailTrip extends React.Component {
                 props.nav = 'blue'
                 props.footer = 'transparent'
                 props.scrollHeader = false
+                props.kursUsd = ''
                 const userTransaction = await getDetailUserTransaction(objToken.access_token, id);
 
                 props.userTransaction = userTransaction.object
@@ -35,6 +38,15 @@ class UserDetailTrip extends React.Component {
 		this.form = React.createRef();
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+    }
+    async componentDidMount() {
+        const { userTransaction } = this.state
+
+        if (!this.state.kursUsd) {
+            const kursData = await getKursUsd()
+            const usdPrice = userTransaction.price / kursData.jual
+            this.setState({ kursUsd: Math.round(usdPrice) })
+        }
     }
     clickUpload(e) {
         let id = e.target.id
@@ -197,8 +209,7 @@ class UserDetailTrip extends React.Component {
 		}
     }
     render() {
-        const { userTransaction } = this.state
-
+        const { userTransaction, isMobileUa, kursUsd } = this.state
         return (
             <div>
                 <div className={this.state.isViewConfirm ? "collapse" : ""}>
@@ -220,76 +231,97 @@ class UserDetailTrip extends React.Component {
 
                             </div>
                         </div>
-                        {
-                            userTransaction.motor.title != "Bring Own Motor" ?
-                                <div className="mb-4">
-                                    <h4 className="title-section">Gear</h4>
-                                    <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px", minHeight: "150px" }}>
-                                        <h4 style={{ lineHeight: "normal" }} className="title-section w-75">{userTransaction.motor.brand} {userTransaction.motor.title}</h4>
-                                        <div className="position-absolute" style={{ right: "0", zIndex: "1", bottom: "-30px" }}>
-                                            <img src={userTransaction.motor.picture} height="120" />
-                                        </div>
-                                    </div>
-                                    <div className="py-3"></div>
-                                </div>
-
-                                : ''
-                        }
                         <div className="mb-4">
-                            <div className="bg-grayF2 p-3 position-relative" style={{ borderRadius: "8px" }}>
-                                <div>
-                                    <div className="d-flex justify-content-between align-items-center pb-3 border-softgray" style={{ borderBottom: "1px solid" }}>
-                                        <div style={{ lineHeight: "14px" }}>
-                                            <h5 className="title-section m-0">EXPLORING </h5>
-                                            <span style={{ fontSize: "80%" }} className="text-sm">{userTransaction.title}</span>
-                                        </div>
-                                        <div>
-                                            <h3 className="title-section m-0">$ {userTransaction.tripPrice}</h3>
+                                <h4 className="title-section">DETAIL COST</h4>
+                                <div className="bg-grayF2 p-3 rm-p" style={{ borderRadius: "8px" }}>
+                                    <div className="border-bottom pb-4 mb-3 border-softgray">
+                                        <div className={"d-flex justify-content-between " + (isMobileUa ? "align-items-center" : "")}>
+                                            <div style={{ lineHeight: "16px" }}>
+                                                <h3 style={{ lineHeight: "normal" }} className="title-section m-0">{userTransaction.title}</h3>
+                                                <div className="text-sm text-gray80">
+                                                    <Moment unix format="DD MMM YY">{userTransaction.startDate / 1000}</Moment> - <Moment unix format="DD MMM YY">{userTransaction.finishDate / 1000}</Moment>
+                                                </div>
+                                            </div>
+                                            <div style={{ lineHeight: "16px" }}>
+                                                <span className="text-xs text-gray80">Price</span><br />
+                                                <span className="align-self-center m-auto text-sm text-primary">
+                                                    <strong dangerouslySetInnerHTML={{ __html: priceAbbr(false, userTransaction.tripPrice) }}></strong>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="d-flex justify-content-between align-items-center pt-3 pb-3 border-softgray" style={{ borderBottom: "1px solid" }}>
-                                        <div style={{ lineHeight: "14px" }}>
-                                            <h5 className="title-section m-0">BIKE</h5>
-                                            <span style={{ fontSize: "80%" }} className="text-sm">{userTransaction.motor.title != "Bring Own Motor" ? userTransaction.motor.brand + userTransaction.motor.title : '-'}</span>
+                                    <div className="border-bottom pb-4 mb-3 border-softgray">
+                                        <div className={"d-flex justify-content-between " + (isMobileUa ? "align-items-center" : "")}>
+                                            <div style={{ lineHeight: "16px" }}>
+                                                <h3 style={{ lineHeight: "normal" }} className="title-section m-0">{userTransaction.motor.title}</h3>
+                                            </div>
+                                            <div style={{ width: !isMobileUa ? "15%" : "30%" }}>
+                                                <img src={userTransaction.motor.picture} className="img-fluid my-1" />
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h3 className="title-section m-0">$ {userTransaction.motor.title != "Bring Own Motor" ? userTransaction.motor.price : '0'}</h3>
+                                        <div className={"d-flex justify-content-between " + (isMobileUa ? "align-items-center" : "")}>
+                                            <div />
+                                            <div style={{ lineHeight: "16px" }}>
+                                                <span className="text-xs text-gray80">Price</span><br />
+                                                <span className="align-self-center m-auto text-sm text-primary">
+                                                    <strong dangerouslySetInnerHTML={{ __html: priceAbbr(false, userTransaction.motor.price) }}></strong>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     {
-                                        userTransaction.accessories[0].title != "Bring Own Helm" ?
-                                            userTransaction.accessories.map((item, index) => (
-                                                this.renderPrice(item, index)
-                                            ))
-
-                                            :
-                                            <div className="d-flex justify-content-between align-items-center pt-3">
-                                                <div style={{ lineHeight: "14px" }}>
-                                                    <h5 className="title-section m-0">ADDITIONAL COST</h5>
-                                                    <span style={{ fontSize: "80%" }} className="text-sm">-</span>
-                                                </div>
-                                                <div>
-                                                    <h3 className="title-section m-0">$ 0</h3>
-                                                </div>
-                                            </div>
+                                        "accessories" in userTransaction ?
+                                        userTransaction.accessories.length > 0 ?
+                                        userTransaction.accessories.map((item, index) => (
+                                                    <div className="border-bottom pb-4 mb-3 border-softgray" key={index}>
+                                                        <div className={"d-flex justify-content-between " + (isMobileUa ? "align-items-center" : "")}>
+                                                            <div className="mr-auto">
+                                                                <div>
+                                                                    <span className="text-sm text-gray80">Merchant Name</span>
+                                                                    <h3 style={{ lineHeight: "normal" }} className="title-section">{item.title}</h3>
+                                                                </div>
+                                                            </div>
+                                                            <div style={{ width: !isMobileUa ? "12%" : "30%" }}>
+                                                                <img src={item.picture} className="img-fluid my-1" />
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <div style={{ lineHeight: "16px" }}>
+                                                                <span className="text-xs text-gray80">Size</span><br />
+                                                                <span className="font-weight-bold align-self-center m-auto text-sm">{item.size}</span>
+                                                            </div>
+                                                            <div style={{ lineHeight: "16px" }}>
+                                                                <span className="text-xs text-gray80">Qty</span><br />
+                                                                <span className="align-self-center m-auto text-sm">
+                                                                    <strong>{item.quantity}</strong>
+                                                                </span>
+                                                            </div>
+                                                            <div style={{ lineHeight: "16px" }}>
+                                                                <span className="text-xs text-gray80">Price</span><br />
+                                                                <span className="align-self-center m-auto text-sm text-primary">
+                                                                    <strong dangerouslySetInnerHTML={{ __html: priceAbbr(false, item.price) }}></strong>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )) : '' : ''
                                     }
-
-
                                 </div>
                             </div>
-                        </div>
-                        <div className="mb-4">
-                            <div className="d-flex justify-content-between align-items-center">
-                                <div><h4 className="title-section">Total</h4></div>
-                                <div><h1 className="title-section text-primary">$ {userTransaction.price}</h1></div>
-                            </div>
-                        </div>
+                            <div className="mb-4 d-flex justify-content-between align-items-center">
+                                <div><h4 className="title-section m-0">Total</h4></div>
+                                <div>
+                                    <h4 className="text-primary m-0 font-weight-bold" dangerouslySetInnerHTML={{ __html: priceAbbr(false, userTransaction.price) }}></h4>
+                                    <i className="text-sm text-primary float-right">approximate <b>${kursUsd}</b></i>
+                                </div>
 
-                        {userTransaction.paymentStatus == 'WAITING' ?
+                            </div>
+
+                        {/*userTransaction.paymentStatus == 'WAITING' ?
                             <div className="mt-3">
                                 <a onClick={(e) => this.handleViewConfirm(true, userTransaction.code, e)} className="btn btn-primary d-block text-white">Confirm Payment</a>
                             </div>
-                            : ''}
+                                : ''*/}
                     </div>
                 </div>
 

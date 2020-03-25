@@ -15,19 +15,19 @@ export const getFeaturedTrip = () => async (dispatch) => {
     const url = `${API_URL}/trips/feature`
     const res = await fetch(url)
     const data = await res.json()
-    
+
     return dispatch({ type: actionTypes.TRIP_FEATURED, payload: data.object })
 }
 
-export const getDetailTrip = (id)  => async (dispatch) =>  {
+export const getDetailTrip = (id) => async (dispatch) => {
     const url = `${API_URL}/trip/${id}`
     const res = await fetch(url)
     const data = await res.json()
-    
+
     return dispatch({ type: actionTypes.TRIP_DETAIL, payload: data.object })
 }
 
-export const getPriceTrip  = (id)  => async (dispatch) => {
+export const getPriceTrip = (id) => async (dispatch) => {
 
     const result = await fetch(API_URL + '/trip/' + id + '/price')
     const data = await result.json()
@@ -35,8 +35,8 @@ export const getPriceTrip  = (id)  => async (dispatch) => {
     return dispatch({ type: actionTypes.TRIP_PRICE, payload: data.object })
 }
 
-export const getMotorTrip = (id) => async(dispatch)=>{
-    const result = await fetch(API_URL + '/trip/motor/' + id )
+export const getMotorTrip = (id) => async (dispatch) => {
+    const result = await fetch(API_URL + '/trip/motor/' + id)
     const data = await result.json()
 
     return dispatch({ type: actionTypes.TRIP_MOTOR, payload: data.object })
@@ -62,13 +62,16 @@ export const checkout = async (data) => {
     else {
         dataForm.append('bringOwnMotor', data.bringOwnMotor);
     }
-
-    if (!data.bringOwnHelm) {
-        data.accessories.map((item, key) => {
-            dataForm.append('accessories[' + key + '].id', item.id);
-            dataForm.append('accessories[' + key + '].quantity', item.quantity);
-            dataForm.append('accessories[' + key + '].size', item.size);
-        })
+    if ("accessories" in data) {
+        if (data.accessories) {
+            if (!data.bringOwnHelm && data.accessories.length) {
+                data.accessories.map((item, key) => {
+                    dataForm.append('accessories[' + key + '].id', item.id);
+                    dataForm.append('accessories[' + key + '].quantity', item.quantity);
+                    dataForm.append('accessories[' + key + '].size', item.size);
+                })
+            }
+        }
     }
     else {
         dataForm.append('bringOwnHelm', data.bringOwnHelm);

@@ -88,7 +88,7 @@
 }
 
 .trip-info-center {
-	width: 80%;
+	width: 88%;
 	height: auto;
 	padding: 10px;
 	top: 50%;
@@ -109,7 +109,6 @@
 	&>.substr {
 		overflow: hidden;
 		text-overflow: ellipsis;
-		white-space: nowrap;
 		width: 100%;
 		display: inline-block;
 	}
@@ -133,7 +132,6 @@
 }
 @media only screen and (max-width: 575px) {
 	.trip-info-center {
-		width: 70%;
 
 		&>h4 {
 			font-size: 7vw;

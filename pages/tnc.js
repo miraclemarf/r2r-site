@@ -1,20 +1,13 @@
 import React from 'react';
 import Page from '../components/page';
 
-export default class extends Page {
+export default class extends React.Component {
     static async getInitialProps({ req }) {
         // Inherit standard props from the Page (i.e. with session data)
-        let props = await super.getInitialProps({
-            req
-        });
-
-        if (typeof window === 'undefined') {
-            try {
-                props.nav = 'blue'
-                props.footer = 'transparent'
-                props.scrollHeader = false
-            } catch (e) { }
-        }
+        let props = {}
+        props.nav = 'blue'
+        props.footer = 'transparent'
+        props.scrollHeader = false
         return props;
     }
     constructor(props) {

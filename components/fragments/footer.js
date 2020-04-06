@@ -14,19 +14,19 @@ export default ({ ...props }) => (
 							<ul style={{ 'fontSize': '9pt' }} className="list-inline text-sm text-white font-weight-bold m-0">
 								<li className="list-inline-item">
 									<Link href="/how-it-works" as={process.env.HOST_DOMAIN + '/how-it-works'}>
-										<a className="text-white" href="/how-it-works">About</a>
+										<a className={props.footer != "transparent" ? "text-white" : ""} style={{color : props.footer == "transparent" ? "#212529" : ""}} href="/how-it-works">About</a>
 									</Link>
 								</li>
 								<li className="list-inline-item"><span className="text-gray80">&#8226;</span></li>
 								<li className="list-inline-item">
 									<Link href="/faq" as={process.env.HOST_DOMAIN + '/faq'}>
-										<a className="text-white" href="/faq">FAQ</a>
+										<a className={props.footer != "transparent" ? "text-white" : ""} style={{color : props.footer == "transparent" ? "#212529" : ""}} href="/faq">FAQ</a>
 									</Link>
 								</li>
 								<li className="list-inline-item"><span className="text-gray80">&#8226;</span></li>
 								<li className="list-inline-item">
-									<Link href="/term-condition" as={process.HOST_DOMAIN + '/term-condition'}>
-										<a className="text-white" href="/term-condition">T&C</a>
+									<Link href="/term-condition" as={process.env.HOST_DOMAIN + '/term-condition'}>
+										<a className={props.footer != "transparent" ? "text-white" : ""} style={{color : props.footer == "transparent" ? "#212529" : ""}} href="/term-condition">T&C</a>
 									</Link>
 								</li>
 							</ul>

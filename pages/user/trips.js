@@ -186,7 +186,7 @@ class UserTrip extends React.Component {
 				<Container className="container-sm px-0">
 					<div className={isViewConfirm ? "collapse" : ""}>
 						<div className="container p-0">
-							<div className="d-flex justify-content-between my-1 px-3">
+							<div className="d-flex justify-content-between align-items-center my-1 px-3">
 								<div className="d-flex justify-content-start">
 									<div className="mt-1">
 										<img
@@ -204,7 +204,7 @@ class UserTrip extends React.Component {
 										<span className="text-sm">{user.email}</span>
 									</div>
 								</div>
-								<div>{/* <a href={process.env.HOST_DOMAIN + '/user/profile'} className="text-primary text-sm"><b>EDIT</b></a> */}</div>
+								<div><a href={process.env.HOST_DOMAIN + '/user/profile'} className="text-primary text-sm"><b>EDIT</b></a></div>
 							</div>
 							<div 
 								className="position-sticky py-3 mb-1 px-1 bg-white"

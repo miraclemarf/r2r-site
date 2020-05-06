@@ -4,6 +4,7 @@ export default ({ ...props }) => {
             backgroundImage: 'url(' + props.imgCover + ')'
         },
         CoverIcon: {
+            width: "85%",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",

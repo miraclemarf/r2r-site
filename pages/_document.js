@@ -23,7 +23,7 @@ class MyDocument extends Document {
 					<meta name="msapplication-TileColor" content="#FFFFFF" />
 					<meta name="msapplication-TileImage" content={`${process.env.HOST_DOMAIN}/_next/static/icons/icon_144x144.png`} />
 					<meta name="theme-color" content="#FFFFFF" />
-					<link href={`${process.env.HOST_DOMAIN}/static/r2r-icomoon-010819/style.css`} rel="stylesheet" />
+					<link href={`${process.env.HOST_DOMAIN}/static/r2r-icomoon-291220/style.css`} rel="stylesheet" />
 					<link href={`${process.env.HOST_DOMAIN}/static/font/font.css`} rel="stylesheet" />
 					<script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
 					<script type="text/javascript" src="https://app.midtrans.com/snap/snap.js"data-client-key="Mid-client-bmJN-dz9uTXnr3Ex"></script>

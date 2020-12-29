@@ -76,7 +76,7 @@ class UserRequest extends React.Component {
 
                 <div className="mt-2 mb-3">
                     <div className="p-4 text-sm">
-                        <p>We will review it first, and once the request is approved, Road2Ring Team will contact you!</p>
+                        <p>We will review it first, and once the request is approved, Ranstouring Team will contact you!</p>
 
                     </div>
                 </div>

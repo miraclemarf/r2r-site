@@ -326,7 +326,7 @@ class Checkout extends React.Component {
                                 <div className="pb-4 mb-3">
                                     <div className={!isMobileUa ? "d-flex justify-content-between mt-3" : ""}>
                                         <div className={(!isMobileUa ? "w-75 pt-2" : "pt-4")}>
-                                            <p className={"text-sm mx-3 " + (isMobileUa ? "text-center" : "")}>You are accepting Road2ring’s <a href={process.env.HOST_DOMAIN + '/term-condition'} className="text-primary"><b>Term and Condition</b></a> by clicking make payment button.</p>
+                                            <p className={"text-sm mx-3 " + (isMobileUa ? "text-center" : "")}>You are accepting Ranstouring’s <a href={process.env.HOST_DOMAIN + '/term-condition'} className="text-primary"><b>Term and Condition</b></a> by clicking make payment button.</p>
                                         </div>
                                         <div className="pt-2" style={{ width: !isMobileUa ? "17%" : "" }}>
                                             {

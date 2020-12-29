@@ -109,7 +109,7 @@ export default class extends React.Component {
                 <div className="mt-3 mb-4">
                     <div className="p-4 text-sm" style={{ backgroundColor: "#FFF3D9" }}>
                         <p>Make sure you make your payment before <b><Moment unix format="DD MMM YYYY, HH:mm">{lastPayment / 1000}</Moment></b>, or your booking will be canceled</p>
-                        <p>Please make your payment to <b><br />BCA - Road2ring<br />000 000 0001</b></p>
+                        <p>Please make your payment to <b><br />BCA - Ranstouring<br />000 000 0001</b></p>
                         <hr className="border-black" />
                         <p className="mb-0">
                             If you want to ask something, please contact our customer service via<br />WhatsApp on +62 0800 000 000
@@ -262,7 +262,7 @@ export default class extends React.Component {
                         <div>
                             <div className="pt-4">
                                 <p className="text-center text-sm mx-3">
-                                    You are accepting Road2ring’s <a href={process.env.HOST_DOMAIN+'/term-condition'} className="text-primary"><b>Term and Condition</b></a> by clicking make payment button.
+                                    You are accepting Ranstouring’s <a href={process.env.HOST_DOMAIN+'/term-condition'} className="text-primary"><b>Term and Condition</b></a> by clicking make payment button.
                             </p>
                             </div>
                             <div className="pt-2">

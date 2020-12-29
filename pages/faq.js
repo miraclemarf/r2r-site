@@ -44,7 +44,7 @@ export default class extends React.Component {
 						</div>
 						<UncontrolledCollapse toggler="#acc2">
 							<div>
-								We are sorry, at the moment  road2ring trips is only for those that experienced 250cc up motorcycle before and if you haven’t experience to ride 250 cc motorcycle. Feel free to reach us and simply you can join our community.
+								We are sorry, at the moment Ranstouring trips is only for those that experienced 250cc up motorcycle before and if you haven’t experience to ride 250 cc motorcycle. Feel free to reach us and simply you can join our community.
 							</div>
 						</UncontrolledCollapse>
 					</div>

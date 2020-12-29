@@ -40,10 +40,10 @@ class Home extends React.Component {
 
 
 		this.state = {
-			pageTitle: "Road 2 Ring",
-			pageKeywords: "road2ring,traveling,touring,journey,adventure,trip,community",
-			pageDescription: "ROAD2RING - UNFORGETABLE JOURNEY OF A LIFETIME",
-			pageAuthor: "ROAD2RING",
+			pageTitle: "Ranstouring",
+			pageKeywords: "ranstouring,traveling,touring,journey,adventure,trip,community",
+			pageDescription: "RANSTOURING - UNFORGETABLE JOURNEY OF A LIFETIME",
+			pageAuthor: "RANSTOURING",
 			trips: props.TripData.list,
 			headline: props.HeadlineData,
 			testimonials: props.TestimonialsData,

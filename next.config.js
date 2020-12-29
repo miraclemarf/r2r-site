@@ -23,9 +23,9 @@ module.exports = withCss(withSass(
         }),
         new WebpackPwaManifest({
           filename: 'static/manifest.json',
-          name: 'Road2Ring',
-          short_name: 'R2R',
-          description: 'Road 2 Ring',
+          name: 'Ranstouring',
+          short_name: 'Ranstouring',
+          description: 'Ranstouring',
           orientation: 'portrait',
           start_url: '/',
           display: 'standalone',

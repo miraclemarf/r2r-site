@@ -170,7 +170,7 @@ export default class extends React.Component {
 							</div>
 							<div className="text-center">
 								<p className="text-sm">
-									You are accepting Road2ring’s
+									You are accepting Ranstouring’s
 									<Link href="/tnc" as="/term-condition">
 										<a 
 											href={process.env.HOST_DOMAIN+'/term-condition'} 

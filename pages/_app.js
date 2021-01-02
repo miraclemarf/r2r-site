@@ -88,7 +88,7 @@ class MyApp extends App {
 		return (
 			<div>
 				<Head>
-					<title>Road 2 Ring</title>
+					<title>Ranstouring</title>
 				</Head>
 				<Provider store={store}>
 					{/* <FloatNotif message="Thank you for your registration, Please check your email to verify account" /> */}

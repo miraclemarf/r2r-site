@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { actionTypes } from '../components/types'
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import nextCookie from 'next-cookies';
@@ -116,6 +117,20 @@ export const register = async (data) => {
 		throw new Error(error);
 	}
 };
+export const verification = async(code) => {
+	var dataForm = new FormData();
+	dataForm.append('verificationCode', code);
+	const url = `${process.env.API_URL}/user/verification/code` 
+	const options = {
+		method: 'POST', 
+		body: dataForm
+	}
+	const response = await fetch(url, options)
+	if (!response.ok) {
+		return { status: false, message: response.message }
+	}
+	return { status: true, message: 'Success!' }
+}
 
 export const saveProfile = async (props) => {
 	let formData = new FormData()

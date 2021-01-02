@@ -12,7 +12,7 @@ export default class extends React.Component{
                 <Head>                    
                 <meta charSet="UTF-8" />
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                    <title>{this.props.title + ' - Road 2 Ring'}</title>
+                    <title>{this.props.title + ' - Ranstouring'}</title>
                     <style dangerouslySetInnerHTML={{__html: Styles}}/>
                     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"/>
                 </Head>

@@ -121,6 +121,11 @@ app.prepare().then(() => {
     const queryParams = { id: req.params.id }
     return app.render(req, res, actualPage, queryParams)
   })
+  server.get('/verification/:code', (req, res) => {
+    const actualPage = '/verification'
+    const queryParams = { code: req.params.code }
+    return app.render(req, res, actualPage, queryParams)
+  })
 
   server.all('*', (req, res) => {
     let nextRequestHandler = app.getRequestHandler()

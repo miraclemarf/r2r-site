@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Head from "next/head";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { priceAbbr } from '../../components/functions';
@@ -10,7 +11,7 @@ import 'simplebar/dist/simplebar.min.css';
 import { getLatestMotor, getDetailTrip, getLatestTrips } from '../../utils';
 import SquareCover from '../../components/squareCover';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faStar, faMapMarkerAlt, faUserAlt } from '@fortawesome/free-solid-svg-icons'
+import { faStar, faMapMarkerAlt, faUserAlt } from '@fortawesome/free-solid-svg-icons'
 import {
 	FacebookShareButton, FacebookIcon, WhatsappShareButton, WhatsappIcon
 } from 'react-share';
@@ -23,8 +24,9 @@ class TripDetail extends React.Component {
 			footer: 'collapse',
 			scrollHeader: true,
 			navDesktopdark: true,
-			shareUrl: req ? req.headers ? req.headers.host : location.host : location.host
+			shareUrl: req ? req.headers["x-forwarded-host"] || req.headers["host"] : window.location.host
 		}
+
 
 		await store.dispatch(getLatestMotor());
 		await store.dispatch(getLatestTrips(0, 6));
@@ -156,11 +158,7 @@ class TripDetail extends React.Component {
 	}
 
 	render() {
-
-
 		const motor = this.state.MotorData;
-		console.log(motor);
-
 		const {
 			id,
 			coverLandscape,
@@ -185,6 +183,9 @@ class TripDetail extends React.Component {
 		const otherTrips = this.state.TripData.list
 		return (
 			<div role="main" style={{ paddingTop: !isMobileUa ? '6em' : '0' }}>
+				<Head>
+					<title>Ranstouring - {title}</title>
+				</Head>
 				<div className={!isMobileUa ? "container" : ""}>
 					<div className={!isMobileUa ? "position-fixed cover-scroll" : ""}>
 						<SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
@@ -235,7 +236,7 @@ class TripDetail extends React.Component {
 
 									<div className="d-flex justify-content-start socshare">
 										<FacebookShareButton
-											url={shareUrl}
+											url={shareUrl+'/trip/'+id}
 											quote={title}>
 											<FacebookIcon
 												size={40}
@@ -243,7 +244,7 @@ class TripDetail extends React.Component {
 										</FacebookShareButton>
 										<div className="px-1"></div>
 										<WhatsappShareButton
-											url={shareUrl}
+											url={shareUrl+'/trip/'+id}
 											title={title}>
 											<WhatsappIcon
 												size={40}
@@ -389,7 +390,7 @@ class TripDetail extends React.Component {
 										height="80"
 										src={imageRoadCaptain}
 									/> :
-									<div className="rounded-circle border d-flex justify-content-center align-items-center" style={{ width: "80px", height: "80px", marginRight:"20px" }}>
+									<div className="rounded-circle border d-flex justify-content-center align-items-center" style={{ width: "80px", height: "80px", marginRight: "20px" }}>
 										<FontAwesomeIcon className="rounded-circle" size="3x" icon={faUserAlt} /></div>
 								}
 								<div className="pt-2 float-left text-left" style={{ width: 'calc(100% - 100px)' }}>

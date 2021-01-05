@@ -55,15 +55,15 @@ export default class extends React.Component {
                                 <div className="text-center">
                                     <div><img style={{width:"15%"}} src={process.env.HOST_DOMAIN + "/static/slicing/icon/icon_warning.svg"} /></div>
                                     <div className="py-2" />
-                                    <h2 className="title-section">VERIFICATION EXPIRED!</h2>
+                                    <h2 className="title-section">VERIFICATION INVALID!</h2>
                                 </div>
                                 <div className="mt-4 mb-4">
                                     <div className="text-center">
-                                        <p className="m-0">Your link verification is expired, you can click on the link below to resend new verification email.</p>
+                                        <p className="m-0">Your link verification is invalid, please read your email carefully and click verification link.</p>
                                     </div>
                                 </div>
                                 <div className="mb-3">
-                                    <a href={'#'} className="d-block w-100 btn btn-primary rounded">Resend Email </a>
+                                    <a href={process.env.HOST_DOMAIN} className="d-block w-100 btn btn-primary rounded">Back to Home</a>
                                 </div>
                             </div>
                     }

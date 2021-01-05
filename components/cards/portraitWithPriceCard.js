@@ -5,11 +5,12 @@ export default (props) => {
     const Styles = {
         SliderImage: {
             width: "100%",
-            height: "auto",
+            height: props.slides.coverPortrait ? "auto" : "100%",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            WebkitTransform: "translate(-50%, -50%)"
+            WebkitTransform: "translate(-50%, -50%)",
+            objectFit: props.slides.coverPortrait ? "unset" : "cover"
         },
         videoIcon: {
             top: "10px",
@@ -58,7 +59,7 @@ export default (props) => {
                 <img
                     style={Styles.SliderImage}
                     className="position-absolute"
-                    src={props.slides.coverPortrait ? props.slides.coverPortrait : props.slides.coverPotrait}
+                    src={props.slides.coverPortrait ? props.slides.coverPortrait : props.slides.coverLandscape}
                     alt={props.slides.title}
                 />
                 <div style={Styles.infoWrapper} className="position-absolute d-inline-block w-100 text-white">

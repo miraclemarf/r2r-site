@@ -4,12 +4,12 @@ import "firebase/database";
 import {loginSocial} from "./user"
 
 const prodConfig = {
-    apiKey: "AIzaSyC8FimX5-w42Zcsf9nALmxlEw4b1135OKc",
-    authDomain: "r2r-dev-2020.firebaseapp.com",
-    databaseURL: "https://r2r-dev-2020.firebaseio.com",
-    projectId: "r2r-dev-2020",
-    storageBucket: "r2r-dev-2020.appspot.com",
-    messagingSenderId: "496350443313",
+    apiKey: "AIzaSyAaYPR_Y7kZ9xocH6TBrqdrEAsDSCUQQko",
+    authDomain: "road2ring-prod.firebaseapp.com",
+    databaseURL: "https://road2ring-prod.firebaseio.com",
+    projectId: "road2ring-prod",
+    storageBucket: "road2ring-prod.appspot.com",
+    messagingSenderId: "658784829422",
 };
 
 const devConfig = {

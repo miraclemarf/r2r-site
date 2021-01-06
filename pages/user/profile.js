@@ -22,7 +22,7 @@ class Profile extends React.Component {
 		// Inherit standard props from the Page (i.e. with session data)
 		auth(req)
 		let props = { 
-			maxSize: 100 // in KB
+			maxSize: 10000 // in KB
 		}
 		try {
 			props.nav = 'blue'
@@ -85,7 +85,7 @@ class Profile extends React.Component {
 			this.setState({
 				showModal: true,
 				modalHeadInfo: "File Upload Failed!",
-				modalMessage: `File image to big, file size maximum ${this.props.maxSize}kb.`
+				modalMessage: `File image to big, file size maximum ${this.props.maxSize/1000}mb.`
 			})
 		} else {
 			const name = e.target.name
@@ -180,7 +180,7 @@ class Profile extends React.Component {
 										style={{ 
 											width: '100px', 
 											height: '100px', 
-											backgroundImage: `url(${formUserpicture ? formUserpicture : "https://www.ica.gov.sg/Cwp/assets/ica/images/font-awesome/fa-user-white.png"})`,
+											backgroundImage: `url(${formUserpicture ? formUserpicture : process.env.HOST_DOMAIN + "/static/slicing/img/fa-user-white.png"})`,
 											backgroundSize: `${formUserpicture ? "cover" : "70%" }`,
 											backgroundPosition: "center center",
 											backgroundRepeat: "no-repeat"
@@ -321,7 +321,7 @@ class Profile extends React.Component {
 											onChange={this.handleFileSelect}
 										/>
 									</div>
-									<Label className="text-gray80 text-sm mt-0 mb-0">Max. image size {this.props.maxSize}kb.</Label>
+									<Label className="text-gray80 text-sm mt-0 mb-0">Max. image size {this.props.maxSize/1000}mb.</Label>
 									<Label className={`text-danger font-italic text-sm mt-1 mb-0 ${showIdCardWarningLabel ? '' : 'd-none'}`}>ID Card Cannot Be Empty.</Label>
 								</FormGroup>
 							</Col>
@@ -363,7 +363,7 @@ class Profile extends React.Component {
 											onChange={this.handleFileSelect}
 										/>
 									</div>
-									<Label className="text-gray80 text-sm mt-0 mb-0">Max. image size {this.props.maxSize}kb.</Label>
+									<Label className="text-gray80 text-sm mt-0 mb-0">Max. image size {this.props.maxSize/1000}mb.</Label>
 									<Label className={`text-danger font-italic text-sm mt-1 mb-0 ${showLicenseWarningLabel ? '' : 'd-none'}`}>Driving License Cannot Be Empty.</Label>
 								</FormGroup>
 								<div className="form-check ml-2">

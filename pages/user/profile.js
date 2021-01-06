@@ -14,7 +14,7 @@ const bloodTypes = [
 ]
 const idTypes = [
 	{ value: "KTP", label: "KTP" },
-	{ value: "PASPOR", label: "Paspor" }
+	{ value: "PASSPORT", label: "Paspor" }
 ]
 
 class Profile extends React.Component {
@@ -112,8 +112,7 @@ class Profile extends React.Component {
 		const { 
 			token, formAgreementchecked, formFullname, formEmail, formPhoneNumber, formBirthday, formDriverlicensenumber, formDriverlicensedpicture, formIdtypes,
 			formIdnumber, formIdpicture, formBloodtype, formUserpicture
-		} = this.state
-		console.log(this.state);
+		} = this.state;
 		e.preventDefault()
 
 		// Checl Full Name

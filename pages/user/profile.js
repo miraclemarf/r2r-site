@@ -113,6 +113,7 @@ class Profile extends React.Component {
 			token, formAgreementchecked, formFullname, formEmail, formPhoneNumber, formBirthday, formDriverlicensenumber, formDriverlicensedpicture, formIdtypes,
 			formIdnumber, formIdpicture, formBloodtype, formUserpicture
 		} = this.state
+		console.log(this.state);
 		e.preventDefault()
 
 		// Checl Full Name

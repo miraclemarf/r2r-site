@@ -152,16 +152,16 @@ class Checkout extends React.Component {
                                         <img src={process.env.HOST_DOMAIN + "/static/slicing/img/bca.png"} height="25" alt="BCA" />
                                     </div>
                                     <div>
-                                        <span className="text-sm">Virtual Account </span> <span className="text-sm icon-right-arrow text-primary position-relative" style={{ top: "1px", left: "5px" }} />
+                                        <span className="text-sm">Bank Transfer </span> <span className="text-sm icon-right-arrow text-primary position-relative" style={{ top: "1px", left: "5px" }} />
                                     </div>
                                 </div>
-                                <div className="d-flex justify-content-between align-items-center px-3 border rounded" style={{ height: "45px" }} onClick={this.handleMidtrans}>
+                                {/* <div className="d-flex justify-content-between align-items-center px-3 border rounded" style={{ height: "45px" }} onClick={this.handleMidtrans}>
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="mr-3"><img src={process.env.HOST_DOMAIN + "/static/slicing/img/visa.png"} alt="Visa" height="20" /></div>
                                         <div><img src={process.env.HOST_DOMAIN + "/static/slicing/img/mc.png"} alt="Master Card" height="25" /></div>
                                     </div>
                                     <div><span className="text-sm">Credit Card</span> <span className="text-sm icon-right-arrow text-primary position-relative" style={{ top: "1px", left: "5px" }} /></div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

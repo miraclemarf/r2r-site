@@ -56,14 +56,11 @@ export default class extends React.Component {
 		let idTrip = isHasTransaction ? TripData.detail.id : ""
 		let userBirthday = 0
 		if (this.state.hari && this.state.bulan && this.state.tahun) {
-			let dateuser = this.state.tahun + '-' + this.state.bulan + '-' + this.state.hari
-			userBirthday = Math.round(new Date(dateuser + " 00:00:00.000").getTime())
+			let dateuser = this.state.tahun + '.' + this.state.bulan + '.' + this.state.hari
+			userBirthday = parseInt((new Date(dateuser).getTime()).toFixed(0))			
 		}
 
 		const postData = { 'email': this.state.email, 'password': this.state.password, 'userBirthday': userBirthday, 'isHasTransaction': isHasTransaction, 'idTrip': idTrip }
-		//console.log(postData);
-
-
 		const res = await register(postData)
 		if (res) {
 			this.setState({ 'error': res.message })

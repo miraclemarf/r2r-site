@@ -65,7 +65,7 @@ class TripPrice extends React.Component {
 		}
 	}
 	renderCardDate(data, index) {
-
+		console.log(data);
 		const { TransactionData, isMobileUa } = this.state;
 		const initPrice = TransactionData ? TransactionData.price : 0;
 		return (
@@ -105,7 +105,7 @@ class TripPrice extends React.Component {
 					<div style={{ lineHeight: '14px' }}>
 						<div>
 							<h5 className="d-inline">{data.personPaid}</h5>
-							<span className="text-sm">/10</span>
+							<span className="text-sm">/{data.maxRiders}</span>
 						</div>
 						<div>
 							<span

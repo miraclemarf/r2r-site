@@ -84,7 +84,7 @@ export const myProfile = async (access_token) => {
 			}
 		})
 	const data = await res.json()
-	console.log(data);
+	//console.log(data);
 	
 	return data.object
 }
@@ -176,8 +176,10 @@ export const logout = async () => {
 	Router.push('/login')
 }
 
-export const withAuthSync = (WrappedComponent) => class extends Component {
-	//static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
+const getDisplayName = Component =>
+  Component.displayName || Component.name || "Component";
+export const withAuthSync = WrappedComponent => class extends Component {
+	static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
 	static async getInitialProps(ctx) {
 		const token = auth(ctx)
 		const componentProps = WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx))
@@ -190,6 +192,7 @@ export const withAuthSync = (WrappedComponent) => class extends Component {
 	}
 
 	componentDidMount() {
+		console.log('mount');
 		window.addEventListener('storage', this.syncLogout)
 	}
 
@@ -199,6 +202,8 @@ export const withAuthSync = (WrappedComponent) => class extends Component {
 	}
 
 	syncLogout(event) {
+		console.log('synclog');
+		console.log(event);
 		if (event.key === 'logout') {
 			// console.log('logged out from storage!')
 			Router.push('/login')
@@ -206,6 +211,8 @@ export const withAuthSync = (WrappedComponent) => class extends Component {
 	}
 
 	render() {
+		console.log('asdqwe');
+		console.log(this.props);
 		return <WrappedComponent {...this.props} />;
 	}
 }

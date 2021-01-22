@@ -1,34 +1,13 @@
 import React from 'react'
 import cookies from 'next-cookies'
-import SquareCover from '../../components/squareCover';
-import { getDetailTrip } from '../../utils/trips'
+import SquareCover from '../../components/squareCover'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { getDetailTrip } from '../../utils'
 import { requestTrip } from '../../utils/userTransaction'
 import { withAuthSync } from "../../utils/user"
 
 class UserRequest extends React.Component {
-    static async getInitialProps({ req, query: { id } }) {
-        // Inherit standard props from the Page (i.e. with session data)
-        let props = {};
-        let { token } = cookies({ req })
-        let objToken = JSON.parse(token)
-
-        if (typeof window === 'undefined') {
-            try {
-                
-                const tripData = await getDetailTrip(id);
-                
-                props.idTrip = id
-                props.trip = tripData
-                props.nav = 'blue'
-                props.reqSent = false
-                props.footer = 'transparent'
-                props.scrollHeader = false
-            } catch (e) {
-                props.error = 'Unable to fetch AsyncData on server';
-            }
-        }
-        return props;
-    }
     constructor(props) {
         super(props);
 
@@ -49,8 +28,12 @@ class UserRequest extends React.Component {
         e.preventDefault();
         let startTimestamp = 0
         if (this.state.hari && this.state.bulan && this.state.tahun) {
-            let dateuser = this.state.tahun + '-' + this.state.bulan + '-' + this.state.hari
-            startTimestamp = Math.round(new Date(dateuser + " 00:00:00.000").getTime())
+            let day = parseInt(this.state.hari) < 10 ? '0'+this.state.hari : this.state.hari;
+			let mnt = parseInt(this.state.bulan) < 10 ? '0'+this.state.bulan : this.state.bulan;
+			let dateuser = this.state.tahun + '-' + mnt  + '-' + day;
+            //let dateuser = this.state.tahun + '-' + this.state.bulan + '-' + this.state.hari
+            //startTimestamp = Math.round(new Date(dateuser + " 00:00:00.000").getTime())
+            startTimestamp = parseInt((new Date(dateuser).getTime()).toFixed(0));
         }
 
         const postData = { 'tripId': this.state.idTrip, 'maxRider': this.state.maxRider, 'startTimestamp': startTimestamp }
@@ -58,8 +41,8 @@ class UserRequest extends React.Component {
 
 
         const res = await requestTrip(postData, this.state.token.access_token)
-        if(res.code==200){
-            this.setState({'reqSent':true})
+        if (res.code == 200) {
+            this.setState({ 'reqSent': true })
         }
 
 
@@ -96,15 +79,17 @@ class UserRequest extends React.Component {
         const bulan = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         const tahun = range(2019, 2023)
         let { token, user } = this.props;
-        const { id, coverLandscape, title, iconCover, distance, duration, terrain, maxRider } = this.state.trip
+        const { TripData, isMobileUa } = this.state;
+        const { id, coverLandscape, title, iconCover, distance, duration, terrain, maxRider, description } = TripData.detail
 
         return (
             <div className="">
+                <div style={{ padding: isMobileUa ? "40px" : "60px" }} />
                 <div className={this.state.reqSent ? "collapse" : ""}>
 
                     <form ref={this.form} onSubmit={this.handleSubmit}>
                         <div className="container">
-                            <a className="pt-3 pb-2 d-block text-dark h4 title-section" href={process.env.HOST_DOMAIN+'/trip/'+id} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
+                            <a className="pb-2 d-block text-dark h4 title-section" href={process.env.HOST_DOMAIN + '/trip/' + id} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                         </div>
                         <div>
                             <SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
@@ -144,7 +129,8 @@ class UserRequest extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="pt-2">
+                            <div className="pt-2" dangerouslySetInnerHTML={{ __html: description }} />
+                            <div className="pt-4">
                                 <h2 className="title-section">REQUEST PRIVATE TOUR</h2>
                                 <div className="form-group">
                                     <label className="text-black text-sm">Participant</label>
@@ -201,5 +187,30 @@ class UserRequest extends React.Component {
         )
     }
 }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getDetailTrip: bindActionCreators(getDetailTrip, dispatch)
+    };
+};
+UserRequest.getInitialProps = async ({ req, store, query: { id } }) => {
+    let props = {};
+    let { token } = cookies({ req })
+    let objToken = JSON.parse(token)
+    //if (typeof window === 'undefined') {
+        try {
 
-export default withAuthSync(UserRequest)
+            props.idTrip = id
+            props.nav = 'blue'
+            props.reqSent = false
+            props.footer = 'transparent'
+            props.scrollHeader = false
+        } catch (e) {
+            props.error = 'Unable to fetch AsyncData on server';
+        }
+    //}
+
+    await store.dispatch(getDetailTrip(id));
+    return props;
+}
+export default connect((state) => state, mapDispatchToProps)(withAuthSync(UserRequest));
+//export default withAuthSync(UserRequest)

@@ -4,12 +4,12 @@ import "firebase/database";
 import {loginSocial} from "./user"
 
 const prodConfig = {
-    apiKey: "AIzaSyAaYPR_Y7kZ9xocH6TBrqdrEAsDSCUQQko",
-    authDomain: "road2ring-prod.firebaseapp.com",
-    databaseURL: "https://road2ring-prod.firebaseio.com",
-    projectId: "road2ring-prod",
-    storageBucket: "road2ring-prod.appspot.com",
-    messagingSenderId: "658784829422",
+    apiKey: "AIzaSyCmDX-pMXRNVNkyIphZcR6yBdBSqPys1_g",
+    authDomain: "ranstouring-prod.firebaseapp.com",
+    databaseURL: "https://ranstouring-prod.firebaseio.com",
+    projectId: "ranstouring-prod",
+    storageBucket: "ranstouring-prod.appspot.com",
+    messagingSenderId: "733733567067",
 };
 
 const devConfig = {
@@ -19,12 +19,12 @@ const devConfig = {
     projectId: "r2r-dev-2020",
     storageBucket: "r2r-dev-2020.appspot.com",
     messagingSenderId: "496350443313",*/
-    apiKey: "AIzaSyAaYPR_Y7kZ9xocH6TBrqdrEAsDSCUQQko",
-    authDomain: "road2ring-prod.firebaseapp.com",
-    databaseURL: "https://road2ring-prod.firebaseio.com",
-    projectId: "road2ring-prod",
-    storageBucket: "road2ring-prod.appspot.com",
-    messagingSenderId: "658784829422",
+    apiKey: "AIzaSyCmDX-pMXRNVNkyIphZcR6yBdBSqPys1_g",
+    authDomain: "ranstouring-prod.firebaseapp.com",
+    databaseURL: "https://ranstouring-prod.firebaseio.com",
+    projectId: "ranstouring-prod",
+    storageBucket: "ranstouring-prod.appspot.com",
+    messagingSenderId: "733733567067",
 };
 
 const config = process.env.NODE_ENV === "production" ? prodConfig : devConfig;

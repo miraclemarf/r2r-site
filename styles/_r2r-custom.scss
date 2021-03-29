@@ -58,6 +58,9 @@ body {
 	min-height: 100vh;
 	overflow-x: hidden;
 }
+a.hover-none:hover{
+	text-decoration: none;
+}
 
 //R2R Text
 .r2r-custom .line-normal {

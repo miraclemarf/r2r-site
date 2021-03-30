@@ -246,14 +246,9 @@ $btn-border-radius-sm: 0;
 	height: 6px;
 	border-radius: 100%;
 }
-
-@media screen and (min-width: 768px) {
-	.r2r-custom .carousel {
-		height: 450px;
-		overflow: hidden;
-	}
+.r2r-custom .carousel {
+	overflow: hidden;
 }
-
 /* R2R Pagination */
 $pagination-border-width: 2px;
 $pagination-color: $primary;

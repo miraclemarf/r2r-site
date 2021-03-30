@@ -7,6 +7,7 @@ import { priceAbbr, accTotalPrice } from '../../components/functions'
 import { Collapse, Navbar, NavbarToggler } from 'reactstrap';
 import { logout } from '../../utils/user';
 import { Container } from 'reactstrap';
+import Router from 'next/router'
 
 class Navigate extends React.Component {
 	static async getInitialProps({ req }) {
@@ -24,6 +25,9 @@ class Navigate extends React.Component {
 			txtColor: props.navDesktopdark ? 'text-dark' : 'text-white',
 			headerBg: props.nav != 'blue' ? 'bg-transparent' : 'bg-primary'
 		}
+		Router.events.on('routeChangeComplete', (url) => {
+			this.setState({isOpen:false})
+		});
 	}
 	componentWillReceiveProps(nextProps) {
 		if (this.props !== nextProps) {
@@ -47,7 +51,7 @@ class Navigate extends React.Component {
 				if (e.target.scrollY > 50) {
 					this.setState({ headerBg: 'bg-primary', navDesktopdark: false })
 				} else {
-					this.setState({ headerBg: this.props.nav != 'blue' ? 'bg-transparent' : 'bg-primary', navDesktopdark: this.props.navDesktopdark})
+					this.setState({ headerBg: this.props.nav != 'blue' ? 'bg-transparent' : 'bg-primary', navDesktopdark: this.props.navDesktopdark })
 				}
 			}
 		})
@@ -68,7 +72,7 @@ class Navigate extends React.Component {
 
 	render() {
 		let { token, user, TransactionData, isMobileUa } = this.props;
-		
+
 		let isCheckoutSuccess = false;
 		let totalPrice = [];
 		if (this.props.checkoutStatus) {
@@ -94,8 +98,8 @@ class Navigate extends React.Component {
 									{this.props.navTrans ? isMobileUa ? (
 										<span className="h2 icon-logogram_r2r" />
 									) : (<span className={`h2 icon-logo_ring2ring_full`} />) : (
-											<span className={"h2 icon-logo_ring2ring_full "+ (this.state.headerBg == 'bg-transparent' && this.state.navDesktopdark && !this.state.isMobile ? 'text-dark' : 'text-white')} />
-										)}
+										<span className={"h2 icon-logo_ring2ring_full " + (this.state.headerBg == 'bg-transparent' && this.state.navDesktopdark && !this.state.isMobile ? 'text-dark' : 'text-white')} />
+									)}
 								</div>
 							</Link>
 							{this.props.navTrans ? (
@@ -135,11 +139,11 @@ class Navigate extends React.Component {
 									</div>
 								</div>
 							) : (
-									/* {/* <button className="searchToggle">
-											<span className="icon-icon_search text-white h4" />
-										</button> } */
-									''
-								)}
+								/* {/* <button className="searchToggle">
+										<span className="icon-icon_search text-white h4" />
+									</button> } */
+								''
+							)}
 							{this.props.navTrans ? totalPrice.length ? (
 								<div
 									style={{ lineHeight: '18px', marginTop: '-1px' }}
@@ -152,10 +156,10 @@ class Navigate extends React.Component {
 									</div>
 								</div>
 							) : (
-									''
-								) : (
-									<NavbarToggler style={{ top: "10px", right: "5px" }} className={`position-absolute p-0 ${this.state.txtColor}`} onClick={this.toggle} />
-								)}
+								''
+							) : (
+								<NavbarToggler style={{ top: "10px", right: "5px" }} className={`position-absolute p-0 ${this.state.txtColor}`} onClick={this.toggle} />
+							)}
 							<Collapse
 								style={{ overflowY: 'auto' }}
 								id={!isMobileUa && this.props.navTrans ? "hide-step" : ""}

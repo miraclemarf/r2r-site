@@ -21,7 +21,8 @@ const TripMainCover = (props) => {
         },
         imagesCarousel: {
             width: "100%",
-            height: "auto"
+            height: "100%",
+            objectFit: "cover"
         }
     }
     const [activeIndex, setActiveIndex] = useState(0);
@@ -58,8 +59,7 @@ const TripMainCover = (props) => {
                     {/* <div className="w-100 d-block text-center">
                         <img width="50" height="auto" src={item.icon} />
                     </div> */}
-                    <h4 className="title-section text-white mt-3 mb-0">{item.caption}</h4>
-                    <h1 className="title-section text-white mt-0">{item.header}</h1>
+                    <h1 className="title-section text-white mt-3">{item.header}</h1>
                 </div>
                 
             </CarouselItem>
@@ -72,15 +72,24 @@ const TripMainCover = (props) => {
             {
                 `.custom-height {
                     max-width: 100%;
-                    height: auto;
-                    max-height: 450px;
+                    height: 40vh;
                     overflow: hidden;
                     background: black;
-                }`
+                }
+                @media screen and (min-width: 768px) {
+                    .custom-height {
+                        height: 50vh;
+                    }
+                }
+                .carousel-control-prev, .carousel-control-next{
+                    z-index:5;
+                }
+                `
             }
             </style>
             <Carousel
                 className="mb-5"
+                dataInterval="false"
                 activeIndex={activeIndex}
                 next={next}
                 previous={previous}

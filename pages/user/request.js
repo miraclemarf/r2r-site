@@ -80,7 +80,7 @@ class UserRequest extends React.Component {
         const tahun = range(2019, 2023)
         let { token, user } = this.props;
         const { TripData, isMobileUa } = this.state;
-        const { id, coverLandscape, title, iconCover, distance, duration, terrain, maxRider, description } = TripData.detail
+        const { id, coverLandscape, title, iconCover, distance, duration, terrain, maxRider, description, location } = TripData.detail
 
         return (
             <div className="">
@@ -92,7 +92,7 @@ class UserRequest extends React.Component {
                             <a className="pb-2 d-block text-dark h4 title-section" href={process.env.HOST_DOMAIN + '/trip/' + id} ><span style={{ top: "-1px" }} className="icon-left-arrow text-sm text-primary position-relative"></span> Back</a>
                         </div>
                         <div>
-                            <SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
+                            <SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} location={location} />
                         </div>
                         <div className="container">
                             <div className="py-3">

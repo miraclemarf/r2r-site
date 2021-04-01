@@ -175,7 +175,7 @@ class Checkout extends React.Component {
 
     render() {
         const { idTrip, TransactionData, TripData, token, grandTotal, kursUsd, checkoutStatus, isMobileUa } = this.state
-        const { coverLandscape, iconCover, title } = TripData.detail
+        const { coverLandscape, iconCover, title, location } = TripData.detail
 
         return (
             <div>
@@ -186,7 +186,7 @@ class Checkout extends React.Component {
                         {
                             !isMobileUa ?
                                 <div className={"position-fixed cover-scroll"}>
-                                    <SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
+                                    <SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} location={location} />
                                 </div>
                                 : ''
                         }

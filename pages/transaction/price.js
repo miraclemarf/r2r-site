@@ -134,7 +134,7 @@ class TripPrice extends React.Component {
 		const {
 			coverLandscape,
 			title,
-			iconCover
+			iconCover, location
 		} = TripData.detail;
 		return (
 			<div>
@@ -144,7 +144,7 @@ class TripPrice extends React.Component {
 					{
 						!isMobileUa ?
 							<div className={"position-fixed cover-scroll"}>
-								<SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
+								<SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} location={location} />
 							</div>
 							: ''
 					}

@@ -188,7 +188,7 @@ class TripDetail extends React.Component {
 				</Head>
 				<div className={!isMobileUa ? "container" : ""}>
 					<div className={!isMobileUa ? "position-fixed cover-scroll" : ""}>
-						<SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} />
+						<SquareCover imgCover={coverLandscape} withIcon={true} iconTrip={iconCover} text={title} location={location} />
 					</div>
 					<div className={!isMobileUa ? "sidebar-container" : ""}>
 						<div className="mx-3 position-relative">

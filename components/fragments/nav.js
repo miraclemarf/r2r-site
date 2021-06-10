@@ -35,7 +35,7 @@ class Navigate extends React.Component {
 		}
 	}
 	componentDidMount() {
-		if(!this.props.user){
+		if(!this.props.user && this.props.token){
 			logout();
 		}
 		window.addEventListener('load', e => {
@@ -184,10 +184,10 @@ class Navigate extends React.Component {
 											<div className="fixed-bottom mx-3">
 												<div className="d-flex justify-content-between my-4">
 													<div className="d-block w-50">
-														<h2 className="nav-link m-0 p-0 text-gray">Language</h2>
+														<h2 className="nav-link m-0 p-0 text-gray invisible">Language</h2>
 													</div>
 													<div className="d-block" style={{ width: '33%' }}>
-														<div className="d-flex justify-content-between">
+														<div className="d-flex justify-content-between invisible">
 															<h2 className="nav-link  m-0 p-0 text-secondary">EN</h2>
 															<h2 className="text-gray" style={{ marginTop: '-8px' }}>
 																|

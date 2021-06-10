@@ -297,7 +297,7 @@ class TripDetail extends React.Component {
 												<h3
 													onClick={(e) => this.toggleItinerary(e)}
 													className="title-section text-center text-secondary position-relative py-1 mx-auto rounded"
-													style={{ zIndex: '100', border: '1px solid', width: '160px', top: '-10px' }}
+													style={{ zIndex: '100', border: '1px solid', width: '160px', top: '-10px', cursor:'pointer' }}
 												>
 													Show All
 													</h3>

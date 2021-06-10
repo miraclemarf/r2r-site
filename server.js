@@ -109,6 +109,16 @@ app.prepare().then(() => {
     return app.render(req, res, actualPage)
   })
 
+  server.get('/forgot-password', (req, res) => {
+    const actualPage = '/forgotPassword'
+    return app.render(req, res, actualPage)
+  })
+
+  server.get('/reset-password', (req, res) => {
+    const actualPage = '/resetPassword'
+    return app.render(req, res, actualPage)
+  })
+
   // Scope User
   server.get('/user/trip/:id', (req, res) => {
     const actualPage = '/user/detailTrip'

@@ -5,7 +5,7 @@ import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 import { makeStore } from '../components/store'
 
-import { myProfile } from "../utils/user"
+import { myProfile, logout } from "../utils/user"
 import cookies from 'next-cookies'
 
 import Head from 'next/head'
@@ -38,7 +38,14 @@ class MyApp extends App {
 		}
 		if (token) {
 			pageProps.token = JSON.parse(token)
-			pageProps.user = await myProfile(pageProps.token.access_token)
+			let userObj = await myProfile(pageProps.token.access_token)
+			if (userObj) {
+
+				pageProps.user = userObj
+			}
+			else {
+				pageProps.user = null;
+			}
 		}
 		pageProps.isMobileUa = Boolean((ctx.req
 			? ctx.req.headers['user-agent']
@@ -84,7 +91,7 @@ class MyApp extends App {
 	render() {
 		const { Component, pageProps, store } = this.props
 		const { checkoutStatus, transaction, trip, isMobile } = this.state
-		
+
 		return (
 			<div>
 				<Head>

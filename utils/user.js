@@ -73,8 +73,6 @@ export const loginSocial = async (token) => {
 }
 
 export const myProfile = async (access_token) => {
-	//static async myProfile(access_token) {
-		//console.log(access_token);
 		
 	const url = process.env.API_URL + '/user/profile'
 	const res = await fetch(url,
@@ -84,7 +82,6 @@ export const myProfile = async (access_token) => {
 			}
 		})
 	const data = await res.json()
-	//console.log(data);
 	
 	return data.object
 }
@@ -132,6 +129,39 @@ export const verification = async(code) => {
 	return { status: true, message: 'Success!' }
 }
 
+export const forgotPassword = async(email) => {
+	var dataForm = new FormData();
+	dataForm.append('email', email);
+	const url = `${process.env.API_URL}/user/forgot-password` 
+	const options = {
+		method: 'POST', 
+		body: dataForm
+	}
+	const response = await fetch(url, options)
+	console.log(response);
+	if (!response.ok) {
+		return { status: false, message: response.message }
+	}
+	
+	return { status: true, message: 'Success!' }
+}
+
+export const resetPassword = async(code, password) => {
+	var dataForm = new FormData();
+	dataForm.append('verificationCodePassword', code);
+	dataForm.append('password', password);
+	const url = `${process.env.API_URL}/user/reset-password` 
+	const options = {
+		method: 'POST', 
+		body: dataForm
+	}
+	const response = await fetch(url, options)
+	if (!response.ok) {
+		return { status: false, message: response.message }
+	}
+	return { status: true, message: 'Success!' }
+}
+
 export const saveProfile = async (props) => {
 	let formData = new FormData()
 	formData.append("email", props.formEmail)
@@ -167,12 +197,11 @@ export const saveProfile = async (props) => {
 
 export const getUser = () => {
 	const token = cookie.get('token')
-	console.log(token)
 }
 
 export const logout = async () => {
 	cookie.remove('token')
-	window.localStorage.setItem('logout', Date.now())
+	//window.localStorage.setItem('logout', Date.now())
 	Router.push('/login')
 }
 
@@ -211,8 +240,6 @@ export const withAuthSync = WrappedComponent => class extends Component {
 	}
 
 	render() {
-		console.log('asdqwe');
-		console.log(this.props);
 		return <WrappedComponent {...this.props} />;
 	}
 }

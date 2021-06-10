@@ -35,6 +35,9 @@ class Navigate extends React.Component {
 		}
 	}
 	componentDidMount() {
+		if(!this.props.user){
+			logout();
+		}
 		window.addEventListener('load', e => {
 			this.setState({ isMobile: window.innerWidth < 768 })
 			if (this.props.scrollHeader) {
@@ -72,7 +75,6 @@ class Navigate extends React.Component {
 
 	render() {
 		let { token, user, TransactionData, isMobileUa } = this.props;
-
 		let isCheckoutSuccess = false;
 		let totalPrice = [];
 		if (this.props.checkoutStatus) {

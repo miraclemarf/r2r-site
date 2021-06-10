@@ -5,12 +5,13 @@ import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import MainCover from '../components/mainCover'
 import TripCard from '../components/tripCard'
+import HeadlineCarousel from '../components/headlineCarousel'
 import TestimonialSliderCard from '../components/testimonialSlider'
 import GallerySliderCard from '../components/gallerySlider'
 import BannerHowItWorks from '../components/fragments/bannerHowItWorks'
 import BannerJoinComm from '../components/fragments/bannerJoinComm'
 import { getUser } from '../utils/user'
-import { Container, Row, Col } from 'reactstrap'
+import { Container, Row, Col, Carousel, CarouselItem, CarouselControl, CarouselIndicators } from 'reactstrap'
 import { getHeadline, getLatestGallery, getLatestTestimonial, getLatestTrips } from '../utils'
 
 class Home extends React.Component {
@@ -36,7 +37,7 @@ class Home extends React.Component {
 	}
 	constructor(props) {
 		super(props)
-		getUser()
+		//getUser()
 
 
 		this.state = {
@@ -65,7 +66,6 @@ class Home extends React.Component {
 		const {
 			pageTitle, pageDescription, pageAuthor, pageKeywords, trips, headline, testimonials, gallery, isMobileUa
 		} = this.state
-		// console.log(gallery)
 		return (
 			<div role="main">
 				<Helmet>
@@ -83,7 +83,9 @@ class Home extends React.Component {
                     }`}
 					</script>
 				</Helmet>
-				<MainCover {...headline} />
+				<div>
+					<HeadlineCarousel datas={headline} isMobile={isMobileUa} />
+				</div>
 				<Container className="container-sm">
 					<Row>
 						<Col xs="12" lg="12">
@@ -122,7 +124,7 @@ class Home extends React.Component {
 						</div>
 						<Row>
 							<Col xs="12" lg="12" className="mb-0 px-2 overflow-hidden">
-									<GallerySliderCard {...isMobileUa} sliderData={gallery.slice(0, 6)} />
+								<GallerySliderCard {...isMobileUa} sliderData={gallery.slice(0, 6)} />
 							</Col>
 						</Row>
 					</Container>

@@ -10,7 +10,7 @@ export default (props) => {
                     <NavLink className="h2 m-0" href={`${process.env.HOST_DOMAIN}/`}>Home</NavLink>
                 </NavItem>
                 {
-                    token ?
+                    user ?
                         <NavItem>
                             <NavLink className="h2 m-0" href={`${process.env.HOST_DOMAIN}/user/trips`}>My Trips</NavLink>
                         </NavItem> : ""
@@ -28,13 +28,13 @@ export default (props) => {
                     <NavLink className="h2 m-0" href={`${process.env.HOST_DOMAIN}/faq`}>FAQ</NavLink>
                 </NavItem>
                 {
-                    token ?
+                    user ?
                         <NavItem className="isDesktop mr-1">
                             <NavLink className="h2 m-0" href={`${process.env.HOST_DOMAIN}/user/profile`}>Profile</NavLink>
                         </NavItem> : ""
                 }
                 {
-                    token ?
+                    user ?
                         <div className="isDesktop cursor-pointer bg-white rounded-lg" onClick={props.onClickLogout}>
                             <div className="h2 m-0 nav-link text-primary">Logout</div>
                         </div> : ""
@@ -43,7 +43,7 @@ export default (props) => {
 
                 <div className={isMobile ? "move-up-mobile w-100" : ""}>
                     {
-                        token ?
+                        user ?
                             <div className="isMobile">
                                 {/* <a href={`${process.env.HOST_DOMAIN}/user/profile`}> */}
                                 <div className="navUser d-flex flex-row align-items-center text-white profile">

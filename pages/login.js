@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Container, Label } from 'reactstrap'
+import Link from 'next/link'
 import TabNavigation from '../components/tabNavigation'
 // import Page from '../components/page'
 import { login } from '../utils/user'
@@ -141,13 +142,15 @@ class Login extends React.Component {
 									required
 								/>
 							</div>
-							{/* <div className="py-3 mx-3 text-center">
+							<div className="py-3 mx-3 text-center">
 								<p>
-									<a href="#" className="text-primary">
+								<Link href="/forgot-password" as={process.env.HOST_DOMAIN + '/forgot-password'}>
+                                        <a href="/forgot-password">
 										<b>Forgot Password ?</b>
 									</a>
+									</Link>
 								</p>
-							</div> */}
+							</div>
 							<button
 								className="btn btn-info w-100 my-3 rounded-lg"
 								onClick={this.validate}

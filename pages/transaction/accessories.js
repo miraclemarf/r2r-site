@@ -264,6 +264,7 @@ class Accessories extends React.Component {
                     }
                     .cover-scroll{
                         width:37%;
+                        max-width: 350px;
                         z-index:100;
                     }
                 `}</style>

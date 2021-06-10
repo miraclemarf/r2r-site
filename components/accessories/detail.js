@@ -92,6 +92,7 @@ export default (props) => {
             <style jsx>{`
 				.cover-scroll{
 					width:27%;
+					max-width: 350px;
 					z-index:100;
 				}
 				.sidebar-container{

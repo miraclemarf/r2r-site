@@ -349,6 +349,7 @@ class Checkout extends React.Component {
                     }
                     .cover-scroll{
                         width:27%;
+                        max-width: 350px;
                         z-index:100;
                     }
                     .cover-scroll .squareCover > div.overlay--img__blue{

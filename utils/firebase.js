@@ -11,6 +11,7 @@ const prodConfig = {
     projectId: "ranstouring-prod",
     storageBucket: "ranstouring-prod.appspot.com",
     messagingSenderId: "733733567067",
+    appId: "1:733733567067:web:a1090c7abbe765687b5d7e",
     measurementId: "G-BGS3S1K4GD"
 };
 
@@ -27,6 +28,7 @@ const devConfig = {
     projectId: "ranstouring-prod",
     storageBucket: "ranstouring-prod.appspot.com",
     messagingSenderId: "733733567067",
+    appId: "1:733733567067:web:a1090c7abbe765687b5d7e",
     measurementId: "G-BGS3S1K4GD"
 };
 

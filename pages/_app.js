@@ -48,6 +48,12 @@ class MyApp extends App {
 				pageProps.user = null;
 			}
 		}
+		
+		useEffect(() => {
+			if (process.env.NODE_ENV === 'production') {
+			  analytics();
+			}
+		  }, [])
 		pageProps.isMobileUa = Boolean((ctx.req
 			? ctx.req.headers['user-agent']
 			: navigator.userAgent).match(

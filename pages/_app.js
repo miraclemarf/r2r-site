@@ -1,4 +1,4 @@
-import React, { useEffect }  from 'react'
+import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import App from 'next/app'
 import Router from 'next/router'
@@ -48,12 +48,8 @@ class MyApp extends App {
 				pageProps.user = null;
 			}
 		}
-		
-		useEffect(() => {
-			if (process.env.NODE_ENV === 'production') {
-			  analytics();
-			}
-		  }, [])
+
+
 		pageProps.isMobileUa = Boolean((ctx.req
 			? ctx.req.headers['user-agent']
 			: navigator.userAgent).match(
@@ -61,7 +57,7 @@ class MyApp extends App {
 			))
 
 		return { pageProps, token, user }
-	}	
+	}
 	constructor(props) {
 		super(props)
 		this.state = { ...props.pageProps }
@@ -85,7 +81,13 @@ class MyApp extends App {
 	tripState(data) {
 		this.setState({ trip: { ...data } })
 	}
-
+	componentDidMount() {
+		if (typeof window !== 'undefined') {
+			if (process.env.NODE_ENV === 'production') {
+				analytics()
+			}
+		}
+	}
 	componentWillReceiveProps(nextProps) {
 		//console.log(nextProps);
 

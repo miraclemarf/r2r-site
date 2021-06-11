@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect }  from 'react'
 import { Provider } from 'react-redux'
 import App from 'next/app'
 import Router from 'next/router'
@@ -15,6 +15,7 @@ import FloatNotif from '../components/fragments/floatNotif'
 import '../styles/style.scss'
 import { throws } from 'assert'
 import NProgress from 'nprogress'
+import { analytics } from '../utils/firebase';
 
 Router.onRouteChangeStart = () => NProgress.start()
 
@@ -54,7 +55,7 @@ class MyApp extends App {
 			))
 
 		return { pageProps, token, user }
-	}
+	}	
 	constructor(props) {
 		super(props)
 		this.state = { ...props.pageProps }
@@ -91,7 +92,11 @@ class MyApp extends App {
 	render() {
 		const { Component, pageProps, store } = this.props
 		const { checkoutStatus, transaction, trip, isMobile } = this.state
-
+		useEffect(() => {
+			if (process.env.NODE_ENV === 'production') {
+			  analytics();
+			}
+		  }, [])
 		return (
 			<div>
 				<Head>

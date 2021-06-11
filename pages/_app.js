@@ -92,11 +92,6 @@ class MyApp extends App {
 	render() {
 		const { Component, pageProps, store } = this.props
 		const { checkoutStatus, transaction, trip, isMobile } = this.state
-		useEffect(() => {
-			if (process.env.NODE_ENV === 'production') {
-			  analytics();
-			}
-		  }, [])
 		return (
 			<div>
 				<Head>

@@ -10,6 +10,7 @@ const prodConfig = {
     projectId: "ranstouring-prod",
     storageBucket: "ranstouring-prod.appspot.com",
     messagingSenderId: "733733567067",
+    measurementId: "G-BGS3S1K4GD"
 };
 
 const devConfig = {
@@ -25,12 +26,14 @@ const devConfig = {
     projectId: "ranstouring-prod",
     storageBucket: "ranstouring-prod.appspot.com",
     messagingSenderId: "733733567067",
+    measurementId: "G-BGS3S1K4GD"
 };
 
 const config = process.env.NODE_ENV === "production" ? prodConfig : devConfig;
 
 if (!firebase.apps.length) {
     firebase.initializeApp(config);
+    firebase.analytics();
 }
 
 const db = firebase.database();

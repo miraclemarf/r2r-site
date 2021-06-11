@@ -36,11 +36,11 @@ const config = process.env.NODE_ENV === "production" ? prodConfig : devConfig;
 
 if (!firebase.apps.length) {
     firebase.initializeApp(config);
-    firebase.analytics();
 }
 
 const db = firebase.database();
 const auth = firebase.auth();
+const analytics = firebase.analytics;
 
 var Gprovider = new firebase.auth.GoogleAuthProvider();
 var Fprovider = new firebase.auth.FacebookAuthProvider();
@@ -102,4 +102,4 @@ const signFacebook = () => {
     });
 }
 
-export { db, auth, signGoogle, signFacebook };
+export { db, auth, analytics, signGoogle, signFacebook };

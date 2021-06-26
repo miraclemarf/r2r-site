@@ -470,6 +470,10 @@ class TripDetail extends React.Component {
 				.cover-scroll .squareCover > div.overlay--img__blue::before{
 					border-radius:6px;
 				}
+				#itinerary .inner img{
+					max-width: 100%;
+    				height: auto;
+				}
 				.sidebar-container{
 					max-width:63%;
 					margin-left:auto;

@@ -166,6 +166,11 @@ $navbar-dark-toggler-border-color: rgba($white, 0);
 	display: none;
 }
 
+.tripCard img{
+	height: 235px;
+	object-fit: cover;
+}
+
 @media screen and (max-width: 768px) {
 	.container {
 		min-width: 100%;
